@@ -24,7 +24,7 @@ function Login() {
 	const { handleSubmit } = methods;
 	const dispatch = useDispatch();
 	const onSubmit = async (data: Ilogin) => {
-		let a = await dispatch(loginUser(data));
+		await dispatch(loginUser(data));
 		if (localStorage.getItem('api_token')) {
 			navigate('/learn');
 		}
