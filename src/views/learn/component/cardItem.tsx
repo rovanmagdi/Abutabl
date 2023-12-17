@@ -1,19 +1,14 @@
 import { CardWrapper, Details, ImgWrapper, Title, Unit, Persentage } from '../styles';
 import { Flex, Grid, Progress } from '@mantine/core';
 import { theme } from 'global-styles';
-export default function CardItem({
+import { ISubject } from '../type/subject.type';
+const CardItem: React.FC<ISubject> = ({
 	image,
 	title,
 	units,
 	lesson,
 	progress,
-}: {
-	image: string;
-	title: string;
-	units: string;
-	lesson: string;
-	progress: number;
-}) {
+}) => {
 	return (
 		<CardWrapper>
 			<Flex justify="center" align="center" gap={'xl'} direction={'column'}>
@@ -40,3 +35,5 @@ export default function CardItem({
 		</CardWrapper>
 	);
 }
+
+export default CardItem

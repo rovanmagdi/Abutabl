@@ -10,14 +10,10 @@ export const EmailVerfication: any = createAsyncThunk('EmailVerfication', async 
         const response = await loginRequest(`forgetPassword`, body);
         console.log(response);
 
-        if (response.status == 'passwords.sent') {
-            // notify(response.status, "success");
-        }
-        if (response.status == 'passwords.throttled') {
-            // notify("Reference business is incorrect ", "error");
-        }
+
         return response;
     } catch (error: any) {
+
         toast.error(error?.response?.data?.msg);
     }
 });

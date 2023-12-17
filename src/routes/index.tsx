@@ -3,7 +3,7 @@ import { useIntl } from 'react-intl';
 import { ReactComponent as LearnIcon } from 'assets/images/svg/book.svg';
 import { ReactComponent as ProfileIcon } from 'assets/images/svg/profile.svg';
 import { ReactComponent as SupportIcon } from 'assets/images/svg/messages.svg';
-import LearnDetails from 'views/learnDetails/learnDetails';
+import LearnDetails from 'views/learnDetails';
 
 
 const AuthSections = lazy(() => import('views/auth'));
@@ -101,10 +101,10 @@ export function useRoutesConst() {
 			},
 			learnDetails: {
 				component: <LearnDetails />,
-				path: '/id',
+				path: 'learn/:id',
 				icon: <LearnIcon />,
 				privileges: true,
-				to: () => '/id',
+				to: () => 'learn/:id',
 				fullTitle: () => [{ name: formatMessage({ id: 'learnDetails' }) }],
 				title: () => formatMessage({ id: 'learnDetails' }),
 				sidebarTitle: () => formatMessage({ id: 'learnDetails' }),

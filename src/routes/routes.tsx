@@ -29,7 +29,7 @@ const Routes = () => {
 							element: ROUTES.learn.component,
 						},
 						{
-							path: '/id',
+							path: 'learn/:id',
 							element: ROUTES.learnDetails.component,
 						},
 						{

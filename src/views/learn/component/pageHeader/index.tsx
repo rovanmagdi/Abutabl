@@ -14,7 +14,7 @@ export default function PageHeader() {
 				<Grid.Col xs={12} md={6}>
 					<Flex direction={'column'} align={'flex-start'} gap={8} className="wellcome_wrapper">
 						<Flex gap={16} align={'center'}>
-							<h1>Hi, {JSON.parse(localStorage.getItem('user_info') || "")?.name}</h1>
+							<h1>Hi, {JSON.parse(localStorage.getItem('user_info')!)?.name}</h1>
 							<img src={Wellcomeimage} />
 						</Flex>
 						<p>Let’s Learn something new today!</p>

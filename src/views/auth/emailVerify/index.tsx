@@ -6,7 +6,7 @@ import Input from 'components/input';
 import { FORM_REGEX_VALIDATORS } from 'app-constants/form-validations';
 import { LoginWrapper } from '../styles';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { EmailVerfication } from 'redux-toolkit/reducer/EmailVerficationReducer';
 
 function VerifyEmail() {
@@ -15,14 +15,12 @@ function VerifyEmail() {
     const { handleSubmit } = methods;
     const navigate = useNavigate();
     const dispatch = useDispatch()
-
+    const error = useSelector((state: any) => state.EmailVerficationReducer)
 
 
     const onSubmit = async (data: any) => {
-        await dispatch(EmailVerfication(data))
-        // console.log(data);
-        // localStorage.setItem('verfication-code', data);
-        // navigate(`/`);
+        const result = await dispatch(EmailVerfication(data))
+        result.payload != undefined && navigate('/verify')
     };
 
     return (
@@ -31,23 +29,23 @@ function VerifyEmail() {
                 <FormProvider {...methods}>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <Flex direction={'column'} gap={8} className="wellcome_wrapper">
-                            <h1>{formatMessage({ id: 'Verification Email' })}</h1>
+                            <h1>{formatMessage({ id: 'Verification Code' })}</h1>
                             <p className="text-Grey-body text-sm font-bold">
                                 {formatMessage({ id: 'Please-verify' })}
                             </p>
                         </Flex>
                         <Input
-                            name="email"
-                            label="Email"
-                            placeholder="Email"
+                            name="code"
+                            label="code"
+                            placeholder="code"
                             registerOptions={{
                                 required: {
                                     value: true,
                                     message: 'requiredField',
                                 },
                                 pattern: {
-                                    value: FORM_REGEX_VALIDATORS.email,
-                                    message: formatMessage({ id: 'EmailNumber' }),
+                                    value: FORM_REGEX_VALIDATORS.numbersOnly,
+                                    message: formatMessage({ id: 'code' }),
                                 },
                             }}
                         />

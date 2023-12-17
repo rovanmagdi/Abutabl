@@ -14,7 +14,7 @@ function Verify() {
 	const methods = useForm();
 	const { handleSubmit } = methods;
 	const navigate = useNavigate();
-	const dispatch = useDispatch()
+	const dispatch = useDispatch();
 	const [remainingTime, setRemainingTime] = useState(60); // Initial remaining time in seconds
 	const [isResendDisabled, setIsResendDisabled] = useState(true);
 
@@ -38,10 +38,14 @@ function Verify() {
 		setRemainingTime(60); // Reset the timer to 60 seconds
 	};
 
-	const onSubmit = (data: any) => {
-		dispatch(CodeVerfication(data))
-		localStorage.setItem('verfication-code', data);
-		// navigate(`/`);
+	const onSubmit = async (data: any) => {
+		const result = await dispatch(CodeVerfication(data));
+		console.log(result, "kkkkkkkkkk");
+
+		if (result.payload != undefined) {
+			localStorage.setItem('verfication-code', data);
+			navigate(`/reset-password`);
+		}
 	};
 
 	return (

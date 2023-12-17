@@ -14,9 +14,7 @@ import Overview from './overview';
 const TabsComponent: React.FC = () => {
     const [index, setIndex] = useState(0)
     const handleTabSelect = (index: any) => {
-        console.log('Selected tab index:', index);
         setIndex(index)
-        // You can perform additional actions when a tab is selected
     };
     return (
         <Tabs style={{ display: "block" }} onSelect={handleTabSelect}>

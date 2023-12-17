@@ -24,8 +24,10 @@ function Login() {
 	const { handleSubmit } = methods;
 	const dispatch = useDispatch();
 	const onSubmit = async (data: Ilogin) => {
-		await dispatch(loginUser(data));
-		if (localStorage.getItem('api_token')) {
+		const result = await dispatch(loginUser(data));
+		console.log(result, "result");
+
+		if (localStorage.getItem('api_token') && localStorage.getItem('api_token') != null) {
 			navigate('/learn');
 		}
 	};

@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getRequest } from 'lib/requests';
 
 export const SubjectsList: any = createAsyncThunk('SubjectsList', async (body: any) => {
-    const result = await getRequest(`getSubjects/1`, body);
+    const result = await getRequest(`getSubjects`, body);
     return result;
 });
 

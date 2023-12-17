@@ -11,16 +11,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { SubjectsList } from 'redux-toolkit/reducer/SubjectsReducer';
 import EmptyComp from 'views/Empty';
+import { useNavigate } from 'react-router-dom';
 
 export default function Learn() {
 	/* ------------------------------- Local State ------------------------------ */
 	const langType = useRecoilValue(langState);
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	const statusSubjects = useSelector((state: any) => state.SubjectsReducer);
 
 	useEffect(() => {
 		dispatch(SubjectsList());
 	}, [dispatch]);
+	const handleDetails = (item: { [key: string]: string }) => {
+		navigate(`${item?.id}`)
+	}
 
 	return (
 		<>
@@ -31,7 +36,7 @@ export default function Learn() {
 						{statusSubjects?.subjectsListData?.subjects?.map((item: { [key: string]: string }) => {
 							const progressNumber: number = parseFloat(item?.progress);
 							return (
-								<Grid.Col sm={6} md={4} lg={3}>
+								<Grid.Col sm={6} md={4} lg={3} onClick={() => handleDetails(item)}>
 									<CardItem
 										image={item?.photo}
 										title={item?.name}

@@ -8,15 +8,35 @@ import Sheet from 'assets/images/svg/sheets.svg';
 import Certifaction from 'assets/images/svg/certificate.svg';
 import AccordionComponent from 'views/learnDetails/components/accordion/accordion';
 import { Box, Text } from '@mantine/core';
+import { useSelector } from 'react-redux';
+import { RootState } from 'redux-toolkit/store/store';
+import { ISubjectDetails } from 'views/learnDetails/types/SubjectDetails.type';
 
 const Overview = () => {
+
+    const subjectDetails = useSelector((state: any) => state.DetailsSubjectsReducer.subjectDetailsData
+    )
+    console.log(subjectDetails);
+
     const contant = [
         { image: Video, label: '65 hours on demand videos' },
         { image: Download, label: '49 downloadable resources' },
         { image: Article, label: ' 86 Article' },
-        { image: Quiz, label: ' 50 Quiz' },
-        { image: Game, label: ' 14 games' },
-        { image: Sheet, label: '14 Work sheets' },
+        {
+            image: Quiz, label: subjectDetails?.basic_info?.map((basic: { [key: string]: string }) => {
+                return (<>{basic?.games_count} Quiz</>)
+            })
+        },
+        {
+            image: Game, label: subjectDetails?.basic_info?.map((basic: { [key: string]: string }) => {
+                return (<>{basic?.games_count} Games</>)
+            })
+        },
+        {
+            image: Sheet, label: subjectDetails?.basic_info?.map((basic: { [key: string]: string }) => {
+                return (<>{basic?.games_count} Work sheet</>)
+            })
+        },
         { image: Certifaction, label: 'Certificate of completion' },
     ];
     return (
