@@ -54,7 +54,7 @@ function Login() {
 	return (
 		<>
 			<div className="flex flex-col md:flex-row gap-3 justify-between items-center w-full">
-				<LogoImage />
+				<LogoImage width={100} />
 				<button
 					onClick={switchLang}
 					className="flex justify-center items-center gap-2 text-sm text-LightSeaGreen font-medium"

@@ -5,20 +5,22 @@ export const InputWrapper = styled.div<{ islabelVisible: boolean }>`
 	margin-bottom: ${theme.space_size};
 	.mantine-PasswordInput-input {
 		border: none;
+		border-radius: 16px;
+
 	}
 	label {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		border: 1px solid ${theme.colours.BrightGray};
-		height: 72px;
+		height: 60px;
 		border-radius: 16px;
 		box-shadow: 0px 4px 0px 0px ${theme.colours.Platinum};
 		-webkit-box-shadow: 0px 4px 0px 0px ${theme.colours.Platinum};
 		-moz-box-shadow: 0px 4px 0px 0px ${theme.colours.Platinum};
 		.mantine-Input-icon {
 			width: 40px;
-			height: 40px;
+			height: 20px;
 			border-right: 1px solid #f0eeed;
 		}
 		p {
@@ -42,6 +44,8 @@ export const InputWrapper = styled.div<{ islabelVisible: boolean }>`
 			color: rgb(0, 0, 0);
 			border: none;
 			outline: none;
+		
+			
 			margin-bottom: 9px;
 			&::placeholder {
 				color: ${theme.colours.BrightGray};

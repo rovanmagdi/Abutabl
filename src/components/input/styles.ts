@@ -8,7 +8,7 @@ export const InputWrapper = styled.div<{ islabelVisible: boolean }>`
 		flex-direction: column;
 		justify-content: center;
 		border: 1px solid ${theme.colours.BrightGray};
-		height: 72px;
+		height: 60px;
 		border-radius: 16px;
 		box-shadow: 0px 4px 0px 0px ${theme.colours.Platinum};
 		-webkit-box-shadow: 0px 4px 0px 0px ${theme.colours.Platinum};
@@ -39,6 +39,7 @@ export const InputWrapper = styled.div<{ islabelVisible: boolean }>`
 			color: rgb(0, 0, 0);
 			border: none;
 			outline: none;
+			border-radius:10px;
 			margin-bottom: 9px;
 			&::placeholder {
 				color: ${theme.colours.BrightGray};

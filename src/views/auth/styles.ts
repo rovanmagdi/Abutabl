@@ -6,18 +6,18 @@ export const LoginWrapper = styled.div`
 	form {
 		display: flex;
 		flex-direction: column;
-		gap: 24px;
+		gap: 20px;
 		.wellcome_wrapper {
 			h1 {
 				font-family: ${theme.fonts.Bold};
 				font-weight: 700;
-				font-size: 32px;
+				font-size: 25px;
 			}
 			h3 {
 				color: ${theme.colours.SpanishGray};
 				font-family: ${theme.fonts.Bold};
 				font-weight: 700;
-				font-size: 20px;
+				font-size: 15px;
 			}
 			p {
 				color: ${theme.colours['Grey-body']};
@@ -30,7 +30,7 @@ export const LoginWrapper = styled.div`
 			p {
 				left: unset;
 				top: unset;
-				padding: 0 12px;
+				padding: 0 8px;
 				padding-top: 8px;
 				&:lang(ar) {
 					right: unset;
