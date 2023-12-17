@@ -12,6 +12,7 @@ export default function LoadingPartially() {
 				loop: true,
 				autoplay: true,
 				animationData: LoaderIcon,
+
 			});
 			return () => animation.destroy();
 		}

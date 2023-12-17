@@ -13,36 +13,53 @@ import { RootState } from 'redux-toolkit/store/store';
 import { ISubjectDetails } from 'views/learnDetails/types/SubjectDetails.type';
 
 const Overview = () => {
-
-    const subjectDetails = useSelector((state: any) => state.DetailsSubjectsReducer.subjectDetailsData
-    )
-    console.log(subjectDetails);
+    const subjectDetails = useSelector((state: any) => state.DetailsSubjectsReducer.subjectDetailsData);
 
     const contant = [
-        { image: Video, label: '65 hours on demand videos' },
-        { image: Download, label: '49 downloadable resources' },
-        { image: Article, label: ' 86 Article' },
+        // { image: Video, label: '65 hours on demand videos' },
+        // { image: Download, label: '49 downloadable resources' },
         {
-            image: Quiz, label: subjectDetails?.basic_info?.map((basic: { [key: string]: string }) => {
-                return (<>{basic?.games_count} Quiz</>)
-            })
+            image: Article,
+            label: subjectDetails?.basic_info?.map((basic: { [key: string]: string }) => {
+                return <>{basic?.lessons_count} Lessons</>;
+            }),
         },
         {
-            image: Game, label: subjectDetails?.basic_info?.map((basic: { [key: string]: string }) => {
-                return (<>{basic?.games_count} Games</>)
-            })
+            image: Quiz,
+            label: subjectDetails?.basic_info?.map((basic: { [key: string]: string }) => {
+                return <>{basic?.games_count} Quiz</>;
+            }),
         },
         {
-            image: Sheet, label: subjectDetails?.basic_info?.map((basic: { [key: string]: string }) => {
-                return (<>{basic?.games_count} Work sheet</>)
-            })
+            image: Game,
+            label: subjectDetails?.basic_info?.map((basic: { [key: string]: string }) => {
+                return <>{basic?.games_count} Games</>;
+            }),
         },
-        { image: Certifaction, label: 'Certificate of completion' },
+        {
+            image: Sheet,
+            label: subjectDetails?.basic_info?.map((basic: { [key: string]: string }) => {
+                return <>{basic?.work_sheets_count} Work sheet</>;
+            }),
+        },
+        // { image: Certifaction, label: 'Certificate of completion' },
     ];
+    // console.log(
+    //     subjectDetails?.basic_info?.map((basic: { [key: string]: string }) => { return { basic } })
+    // );
+
     return (
         <Box className="flex justify-between">
             <Box className="w-2/5 mr-5 overview">
-                <img src={book} alt="Book" className="m-auto" />
+                <img
+                    src={subjectDetails?.basic_info?.map((basic: { [key: string]: string }) => {
+                        {
+                            basic?.photo;
+                        }
+                    })}
+                    alt="Book"
+                    className="m-auto"
+                />
                 <Text className="mt-10">This course include</Text>
                 {contant.map((item: { [key: string]: string | JSX.Element }) => {
                     return (

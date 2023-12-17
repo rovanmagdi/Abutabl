@@ -12,6 +12,7 @@ import { useEffect } from 'react';
 import { SubjectsList } from 'redux-toolkit/reducer/SubjectsReducer';
 import EmptyComp from 'views/Empty';
 import { useNavigate } from 'react-router-dom';
+import LoadingPartially from 'components/loading-partially';
 
 export default function Learn() {
 	/* ------------------------------- Local State ------------------------------ */
@@ -29,25 +30,28 @@ export default function Learn() {
 
 	return (
 		<>
+
 			<PageHeader />
 			<ModuleView header={<Header />}>
 				<CardsWrapper>
-					{statusSubjects?.subjectsListData?.subjects?.length == 0 ? <><EmptyComp /></> : <Grid gutter={32}>
-						{statusSubjects?.subjectsListData?.subjects?.map((item: { [key: string]: string }) => {
-							const progressNumber: number = parseFloat(item?.progress);
-							return (
-								<Grid.Col sm={6} md={4} lg={3} onClick={() => handleDetails(item)}>
-									<CardItem
-										image={item?.photo}
-										title={item?.name}
-										units={item?.units}
-										lesson={item?.lessons}
-										progress={progressNumber}
-									/>
-								</Grid.Col>
-							);
-						})}
-					</Grid>}
+					{statusSubjects?.loading ? <LoadingPartially /> : <>
+						{statusSubjects?.subjectsListData?.subjects?.length == 0 ? <><EmptyComp /></> : <Grid gutter={32}>
+							{statusSubjects?.subjectsListData?.subjects?.map((item: { [key: string]: string }) => {
+								const progressNumber: number = parseFloat(item?.progress);
+								return (
+									<Grid.Col sm={6} md={4} lg={3} onClick={() => handleDetails(item)}>
+										<CardItem
+											image={item?.photo}
+											title={item?.name}
+											units={item?.units}
+											lesson={item?.lessons}
+											progress={progressNumber}
+										/>
+									</Grid.Col>
+								);
+							})}
+						</Grid>}
+					</>}
 
 				</CardsWrapper>
 			</ModuleView>

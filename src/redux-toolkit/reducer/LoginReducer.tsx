@@ -20,7 +20,7 @@ export const loginUser: any = createAsyncThunk('auth/login', async (loginData: I
             localStorage.setItem('user_info', JSON.stringify(response?.user));
 
             toast.success('Login Successfully');
-            // navigate('/')
+
             return response.data;
         }
     } catch (error: any) {
