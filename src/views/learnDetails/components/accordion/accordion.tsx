@@ -8,8 +8,14 @@ import {
 } from 'react-accessible-accordion';
 import 'react-accessible-accordion/dist/fancy-example.css';
 import './index.css';
-import Article from 'assets/images/svg/gameGray.svg';
+import Article from 'assets/images/svg/article.svg';
+import Video from 'assets/images/svg/demand_video.svg';
+import Image from 'assets/images/svg/image.svg';
+import Zip from 'assets/images/svg/zip.svg';
+
+import Sheet from 'assets/images/svg/sheets.svg';
 import { useSelector } from 'react-redux';
+import { Box } from '@mantine/core';
 
 const AccordionComponent = () => {
     const subjectDetails = useSelector((state: any) => state.DetailsSubjectsReducer.subjectDetailsData);
@@ -17,83 +23,93 @@ const AccordionComponent = () => {
     const [htmlPass, setHTMLPass] = useState({ __html: '' });
     useEffect(() => {
         {
-            subjectDetails?.basic_info?.map((basic: { [key: string]: string }) => {
-                return setHTMLDesc({ __html: basic?.des }), setHTMLPass({ __html: basic?.pass });
-            });
+            setHTMLDesc({ __html: subjectDetails?.basic_info?.des }),
+                setHTMLPass({ __html: subjectDetails?.basic_info?.pass });
         }
     }, [subjectDetails]);
     return (
-        <Accordion allowMultipleExpanded>
-            <AccordionItem>
-                <AccordionItemHeading>
-                    <AccordionItemButton style={{ borderRadius: '20px 20px 0 0 ' }}>About course</AccordionItemButton>
-                </AccordionItemHeading>
-                <AccordionItemPanel>
-                    <div dangerouslySetInnerHTML={htmlDesc} />
-                </AccordionItemPanel>
-            </AccordionItem>
+        <Box>
 
-            <AccordionItem>
-                <AccordionItemHeading>
-                    <AccordionItemButton>How to pass</AccordionItemButton>
-                </AccordionItemHeading>
-                <AccordionItemPanel>
-                    <div dangerouslySetInnerHTML={htmlPass} />
 
-                </AccordionItemPanel>
-            </AccordionItem>
+            <Accordion allowMultipleExpanded>
+                <AccordionItem>
+                    <AccordionItemHeading>
+                        <AccordionItemButton style={{ borderRadius: '20px 20px 0 0 ' }}>About course</AccordionItemButton>
+                    </AccordionItemHeading>
+                    <AccordionItemPanel>
+                        <div dangerouslySetInnerHTML={htmlDesc} />
+                    </AccordionItemPanel>
+                </AccordionItem>
 
-            <AccordionItem>
-                <AccordionItemHeading>
-                    <AccordionItemButton style={{ borderRadius: '0 0 20px 20px ' }}>Syllabus</AccordionItemButton>
-                </AccordionItemHeading>
-                <AccordionItemPanel>
-                    <div className="detailsUnit">
-                        <div className="flex justify-between items-center border-b-2 border-slate-200 p-6">
-                            <h3 className="text-black font-bold">Unit 1 - Introduction to mathematics</h3>
-                            <div>3 lessons - 1 Quiz</div>
-                        </div>
-                        <div className="pb-5">
-                            <div className="flex justify-between items-center pb-0.5 px-5 pr-5  mt-5">
-                                <div className="flex items-center justify-center">
-                                    <img src={Article} alt="Book" className="mr-2 color-#9C9B9B" />
-                                    <div className="text-stone-400">Video: Get to know number 1 and sing along</div>
-                                </div>
-                                <div>3 min</div>
-                            </div>
-                            <div className="flex justify-between items-center pb-0.5 px-5 pr-5 mt-5 ">
-                                <div className="flex items-center">
-                                    <img src={Article} alt="Book" className="mr-2 color-#9C9B9B" />
-                                    <div className="text-stone-400">Video: Get to know number 1 and sing along</div>
-                                </div>
-                                <div>3 min</div>
-                            </div>{' '}
-                            <div className="flex justify-between items-center pb-0.5 px-5 pr-5  mt-5">
-                                <div className="flex  items-center">
-                                    <img src={Article} alt="Book" className="mr-2 color-#9C9B9B" />
-                                    <div className="text-stone-400">Video: Get to know number 1 and sing along</div>
-                                </div>
-                                <div>3 min</div>
-                            </div>{' '}
-                            <div className="flex justify-between items-center pb-0.5 px-5 pr-5  mt-5">
-                                <div className="flex  items-center">
-                                    <img src={Article} alt="Book" className="mr-2 color-#9C9B9B" />
-                                    <div className="text-stone-400">Video: Get to know number 1 and sing along</div>
-                                </div>
-                                <div>3 min</div>
-                            </div>{' '}
-                            <div className="flex justify-between items-center pb-0.5 px-5 pr-5  mt-5">
-                                <div className="flex  items-center">
-                                    <img src={Article} alt="Book" className="mr-2 color-#9C9B9B" />
-                                    <div className="text-stone-400">Video: Get to know number 1 and sing along</div>
-                                </div>
-                                <div>3 min</div>
-                            </div>
-                        </div>
-                    </div>
-                </AccordionItemPanel>
-            </AccordionItem>
-        </Accordion>
+                <AccordionItem>
+                    <AccordionItemHeading>
+                        <AccordionItemButton>How to pass</AccordionItemButton>
+                    </AccordionItemHeading>
+                    <AccordionItemPanel>
+                        <div dangerouslySetInnerHTML={htmlPass} />
+                    </AccordionItemPanel>
+                </AccordionItem>
+
+                <AccordionItem>
+                    <AccordionItemHeading>
+                        <AccordionItemButton style={{ borderRadius: '0 0 20px 20px ' }}>Syllabus</AccordionItemButton>
+                    </AccordionItemHeading>
+                    <AccordionItemPanel>
+                        {subjectDetails?.units?.map(
+                            (unit: { lessons: []; lessons_count: string; name: string; quizes_count: string }, index: number) => {
+                                return (
+                                    <div className="detailsUnit">
+                                        <div className="flex justify-between items-center border-b-2 border-slate-200 p-6">
+                                            <h3 className="text-black font-bold">
+                                                {' '}
+                                                Unit {index + 1}- {unit?.name}
+                                            </h3>
+                                            <div>
+                                                {unit?.lessons_count} lessons - {unit?.quizes_count} Quiz
+                                            </div>
+                                        </div>
+                                        <div className="pb-5">
+                                            {unit?.lessons?.map(
+                                                (lesson: { contents: { lessons_count: string; name: string; quizes_count: string }[] }) => {
+                                                    return lesson?.contents.map((content: any) => {
+                                                        return (
+                                                            <div className="flex justify-between items-center pb-0.5 px-5 pr-5  mt-5">
+                                                                <div className="flex items-center justify-center">
+                                                                    <img
+                                                                        src={
+                                                                            content?.type == 'video'
+                                                                                ? Video
+                                                                                : content?.type == 'pdf'
+                                                                                    ? Sheet
+                                                                                    : content?.type == 'word'
+                                                                                        ? Article
+                                                                                        : content?.type == 'image'
+                                                                                            ? Image
+                                                                                            : Zip
+                                                                        }
+                                                                        alt="Book"
+                                                                        className="mr-2 color-#9C9B9B"
+                                                                    />
+                                                                    <div className="text-stone-400">
+                                                                        {' '}
+                                                                        {content?.type} : {content?.name}
+                                                                    </div>
+                                                                </div>
+                                                                <div>{content?.period} </div>
+                                                            </div>
+                                                        );
+                                                    });
+                                                }
+                                            )}
+                                        </div>
+                                    </div>
+                                );
+                            }
+                        )}
+                    </AccordionItemPanel>
+                </AccordionItem>
+            </Accordion>
+        </Box>
     );
 };
 

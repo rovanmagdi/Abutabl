@@ -24,9 +24,8 @@ export default function PageHeader() {
 							<Flex align={'center'} justify={'center'} className="notification platinum_shadow">
 								<ArrowBack />
 							</Flex>
-							{subjectDetails?.basic_info?.map((basic: { [key: string]: string }) => {
-								return (<>{basic?.name}</>)
-							})}
+							{subjectDetails?.basic_info?.name
+							}
 						</Flex>
 
 					</Flex>

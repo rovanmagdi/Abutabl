@@ -24,6 +24,8 @@ export const loginUser: any = createAsyncThunk('auth/login', async (loginData: I
             return response.data;
         }
     } catch (error: any) {
+
+
         toast.error(error?.response?.data?.msg);
     }
 });

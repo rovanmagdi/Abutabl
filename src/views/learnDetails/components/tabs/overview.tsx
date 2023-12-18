@@ -20,27 +20,20 @@ const Overview = () => {
         // { image: Download, label: '49 downloadable resources' },
         {
             image: Article,
-            label: subjectDetails?.basic_info?.map((basic: { [key: string]: string }) => {
-                return <>{basic?.lessons_count} Lessons</>;
-            }),
+            label: <> {subjectDetails?.basic_info?.lessons_count} Lessons</>
+
         },
         {
             image: Quiz,
-            label: subjectDetails?.basic_info?.map((basic: { [key: string]: string }) => {
-                return <>{basic?.games_count} Quiz</>;
-            }),
+            label: <> {subjectDetails?.basic_info?.quizes_count} Quizes </>
         },
         {
             image: Game,
-            label: subjectDetails?.basic_info?.map((basic: { [key: string]: string }) => {
-                return <>{basic?.games_count} Games</>;
-            }),
+            label: <>{subjectDetails?.basic_info?.games_count} Games</>,
         },
         {
             image: Sheet,
-            label: subjectDetails?.basic_info?.map((basic: { [key: string]: string }) => {
-                return <>{basic?.work_sheets_count} Work sheet</>;
-            }),
+            label: <>{subjectDetails?.basic_info?.lessons_count} Lessons</>,
         },
         // { image: Certifaction, label: 'Certificate of completion' },
     ];
@@ -52,11 +45,7 @@ const Overview = () => {
         <Box className="flex justify-between">
             <Box className="w-2/5 mr-5 overview">
                 <img
-                    src={subjectDetails?.basic_info?.map((basic: { [key: string]: string }) => {
-                        {
-                            basic?.photo;
-                        }
-                    })}
+                    src={subjectDetails?.basic_info?.photo}
                     alt="Book"
                     className="m-auto"
                 />
