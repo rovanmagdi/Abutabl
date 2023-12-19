@@ -7,17 +7,13 @@ import {
     AccordionItemPanel,
 } from 'react-accessible-accordion';
 import 'react-accessible-accordion/dist/fancy-example.css';
-// import './index.css';
 import BookMark from 'assets/images/svg/bookmark.svg';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Flex, Text } from '@mantine/core';
-import AccordionComponent from '../accordion/accordion';
+import { Box, Text } from '@mantine/core';
 import Video from 'assets/images/svg/demand_video.svg';
 import Image from 'assets/images/svg/image.svg';
-
 import Zip from 'assets/images/svg/zip.svg';
 import Audio from 'assets/images/svg/audio.svg';
-
 import Sheet from 'assets/images/svg/sheets.svg';
 import { UnitsList } from 'redux-toolkit/reducer/UnitsReducer';
 import LoadingPartially from 'components/loading-partially';
@@ -27,14 +23,14 @@ const Units = () => {
     const dispatch = useDispatch();
     const subjectDetails = useSelector((state: any) => state.DetailsSubjectsReducer);
     const lesson = useSelector((state: any) => state.UnitsReducer);
+    const [units, setUnits] = useState(subjectDetails?.subjectDetailsData?.units)
     const [idData, setIdData] = useState<any>();
     const [loading, setLoading] = useState(false);
 
+
     useEffect(() => {
-        if (loading) {
-            setLoading(true);
-        }
-    }, [subjectDetails]);
+        setUnits(subjectDetails?.subjectDetailsData?.units)
+    }, [subjectDetails?.subjectDetailsData])
 
     return (
         <>
@@ -45,10 +41,10 @@ const Units = () => {
                             Course content
                             <Text className="text-stone-400">{subjectDetails?.subjectDetailsData?.units?.length} units</Text>
                         </Box>
-                        {subjectDetails?.subjectDetailsData?.units?.map(
-                            (unit: { lessons: []; lessons_count: string; name: string; quizes_count: string }, index: number) => {
-                                return (
-                                    <Accordion allowMultipleExpanded={false}>
+                        <Accordion allowMultipleExpanded={false} >
+                            {subjectDetails?.subjectDetailsData?.units?.map(
+                                (unit: { lessons: []; lessons_count: string; name: string; quizes_count: string }, index: number) => {
+                                    return (
                                         <AccordionItem>
                                             <AccordionItemHeading>
                                                 <AccordionItemButton>
@@ -74,8 +70,6 @@ const Units = () => {
                                                                     setLoading(true);
                                                                     await dispatch(UnitsList(lesson?.id));
                                                                     setLoading(false);
-
-                                                                    // setUnits([])
                                                                 }}
                                                             >
                                                                 <Box className="flex items-center p-4" key={index}>
@@ -88,10 +82,10 @@ const Units = () => {
                                                 </Box>
                                             </AccordionItemPanel>
                                         </AccordionItem>
-                                    </Accordion>
-                                );
-                            }
-                        )}
+                                    );
+                                }
+                            )}
+                        </Accordion>
                     </Box>
                     <Box className="w-3/5 ">
                         {loading ? (

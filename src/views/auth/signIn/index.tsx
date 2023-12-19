@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Checkbox, Flex } from '@mantine/core';
 import { useIntl } from 'react-intl';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
@@ -13,20 +13,25 @@ import Cookies from 'js-cookie';
 import { COOKIES_KEYS } from 'app-constants/constants';
 import { langState } from 'store';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from 'redux-toolkit/reducer/LoginReducer';
 import { Ilogin } from '../types/login.type';
+import LoadingPartially from 'components/loading-partially';
 
 function Login() {
 	const { formatMessage } = useIntl();
 	const navigate = useNavigate();
+
+	const [loading, setLoading] = useState(false)
 	const methods = useForm<Ilogin>();
 	const { handleSubmit } = methods;
 	const dispatch = useDispatch();
 	const onSubmit = async (data: Ilogin) => {
+
+		setLoading(true)
 		const result = await dispatch(loginUser(data));
 		console.log(result, "result");
-
+		setLoading(false)
 		if (localStorage.getItem('api_token') && localStorage.getItem('api_token') != null) {
 			navigate('/learn');
 		}
@@ -50,6 +55,7 @@ function Login() {
 		if (!getLangSelected) return;
 		setLang(getLangSelected as 'ar' | 'en');
 	}, [getLangSelected, setLang]);
+
 
 	return (
 		<>
@@ -111,7 +117,10 @@ function Login() {
 								py={16}
 								size="xl"
 							>
-								<span className="text-Lotion font-medium">{formatMessage({ id: 'Login' })}</span>
+								{loading ? <div ><LoadingPartially />
+								</div> : <span className="text-Lotion font-medium">{formatMessage({ id: 'Login' })}</span>}
+								{ }
+
 							</Button>
 						</form>
 					</FormProvider>

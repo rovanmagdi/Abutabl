@@ -42,10 +42,10 @@ function SideBarItem({ routes, className, count }: TProps) {
 
 		console.log(pathname.split("/")[1] == paths, paths, "jjjjjj");
 		console.log(
-			matchPath(paths, pathname), "jjjjj"
+			matchPath(paths, pathname.split("/")[1]), "jjjjj"
 		);
 
-		return matchPath(paths, pathname) !== null ? true : false;
+		return (paths == pathname.split("/")[1]) ? true : false;
 	}
 
 	return (

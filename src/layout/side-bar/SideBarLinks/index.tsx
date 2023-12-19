@@ -7,7 +7,7 @@ export default function SideBarLinksSection() {
 
 	return (
 		<SideBarLinks>
-			<SideBarItem routes={ROUTES.learn} />
+			<SideBarItem routes={ROUTES.learn || ROUTES.learnDetails} />
 			<SideBarItem routes={ROUTES.profile} />
 			<SideBarItem routes={ROUTES.support} />
 		</SideBarLinks>
