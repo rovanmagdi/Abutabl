@@ -107,7 +107,7 @@ export function useRoutesConst() {
 				to: () => 'learn/:id',
 				fullTitle: () => [{ name: formatMessage({ id: 'learnDetails' }) }],
 				title: () => formatMessage({ id: 'learnDetails' }),
-				sidebarTitle: () => formatMessage({ id: 'learnDetails' }),
+				sidebarTitle: () => formatMessage({ id: 'learn' }),
 			},
 			profile: {
 				component: <Profile />,

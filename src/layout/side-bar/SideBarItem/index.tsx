@@ -21,6 +21,8 @@ function SideBarItem({ routes, className, count }: TProps) {
 	const setSidebarOpen = useSetRecoilState(isSideBarOpenAtom);
 	const { pathname } = useLocation();
 
+
+
 	function isLinkActive(paths: string | string[]): boolean {
 		if (Array.isArray(paths)) {
 			return paths.some((path) => isLinkActive(path));
@@ -30,13 +32,18 @@ function SideBarItem({ routes, className, count }: TProps) {
 		if (routes.subLinks && routes.subLinks.length > 0) {
 			const subLinksMatch = routes.subLinks.map((subLink) => {
 				const formattedPath = `/${routes.path}/${subLink}`.replace(/\/+/g, '/');
-				return pathname.includes(formattedPath);
+				return pathname.split("/")[1].includes(formattedPath);
 			});
 
 			if (subLinksMatch.includes(true)) {
 				return true;
 			}
 		}
+
+		console.log(pathname.split("/")[1] == paths, paths, "jjjjjj");
+		console.log(
+			matchPath(paths, pathname), "jjjjj"
+		);
 
 		return matchPath(paths, pathname) !== null ? true : false;
 	}

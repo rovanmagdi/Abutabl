@@ -28,10 +28,10 @@ const AccordionComponent = () => {
         }
     }, [subjectDetails]);
     return (
-        <Box>
+        <Box className='overviewAccordion'>
 
 
-            <Accordion allowMultipleExpanded>
+            <Accordion allowMultipleExpanded={false}>
                 <AccordionItem>
                     <AccordionItemHeading>
                         <AccordionItemButton style={{ borderRadius: '20px 20px 0 0 ' }}>About course</AccordionItemButton>

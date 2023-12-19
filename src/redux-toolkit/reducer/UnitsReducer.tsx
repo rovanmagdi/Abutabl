@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getRequest } from 'lib/requests';
 
-export const UnitsList: any = createAsyncThunk('UnitsList', async (body: any) => {
-    const result = await getRequest(`subjectUnits`, body);
+export const UnitsList: any = createAsyncThunk('UnitsList', async (id: number) => {
+    const result = await getRequest(`/lessons/show/${id}`);
     return result;
 });
 

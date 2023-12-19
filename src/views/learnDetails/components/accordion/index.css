@@ -1,4 +1,4 @@
-.accordion {
+.overviewAccordion > .accordion {
 	border-radius: 20px;
 }
 .accordion__button {
@@ -8,7 +8,7 @@
 .accordion__item {
 	position: relative;
 }
-.accordion__button:before {
+.overviewAccordion > .accordion__button:before {
 	position: absolute;
 	top: 30px;
 	right: 15px;
@@ -16,11 +16,26 @@
 	color: #ffad0d;
 }
 
-.accordion__panel {
+.unitsAccordion .accordion__button:before {
+	position: absolute;
+	top: 30px;
+	left: 20px;
+	margin-top: -6px;
+	color: #ffad0d;
+}
+.unitsAccordion .accordion__panel {
 	background-color: white;
 	border-radius: 20px;
 	color: #9e9e9e;
 	font-size: 14px;
+	padding: 0px !important;
+}
+.overviewAccordion .accordion__panel {
+	background-color: white;
+	border-radius: 20px;
+	color: #9e9e9e;
+	font-size: 14px;
+	padding: 20px !important;
 }
 .detailsUnit {
 	border-radius: 20px;

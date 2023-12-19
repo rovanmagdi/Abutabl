@@ -37,9 +37,7 @@ const Overview = () => {
         },
         // { image: Certifaction, label: 'Certificate of completion' },
     ];
-    // console.log(
-    //     subjectDetails?.basic_info?.map((basic: { [key: string]: string }) => { return { basic } })
-    // );
+
 
     return (
         <Box className="flex justify-between">

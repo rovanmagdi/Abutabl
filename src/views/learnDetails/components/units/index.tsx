@@ -8,73 +8,131 @@ import {
 } from 'react-accessible-accordion';
 import 'react-accessible-accordion/dist/fancy-example.css';
 // import './index.css';
-import Article from 'assets/images/svg/gameGray.svg';
+import BookMark from 'assets/images/svg/bookmark.svg';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Text } from '@mantine/core';
+import { Box, Flex, Text } from '@mantine/core';
 import AccordionComponent from '../accordion/accordion';
+import Video from 'assets/images/svg/demand_video.svg';
+import Image from 'assets/images/svg/image.svg';
+
+import Zip from 'assets/images/svg/zip.svg';
+import Audio from 'assets/images/svg/audio.svg';
+
+import Sheet from 'assets/images/svg/sheets.svg';
 import { UnitsList } from 'redux-toolkit/reducer/UnitsReducer';
-
+import LoadingPartially from 'components/loading-partially';
+import './index.css';
+import CircleProgress from 'components/CircleProgress';
 const Units = () => {
-    const subjectDetails = useSelector((state: any) => state.DetailsSubjectsReducer.subjectDetailsData);
-    const [htmlDesc, setHTMLDesc] = useState({ __html: '' });
-    const [htmlPass, setHTMLPass] = useState({ __html: '' });
-
     const dispatch = useDispatch();
+    const subjectDetails = useSelector((state: any) => state.DetailsSubjectsReducer);
+    const lesson = useSelector((state: any) => state.UnitsReducer);
+    const [idData, setIdData] = useState<any>();
+    const [loading, setLoading] = useState(false);
+
     useEffect(() => {
-        // dispatch(UnitsList())
-    }, [dispatch]);
+        if (loading) {
+            setLoading(true);
+        }
+    }, [subjectDetails]);
 
     return (
         <>
-            <Box className="flex justify-between">
-                <Box className="w-2/5 mr-5 ">
-                    {subjectDetails?.units?.map(
-                        (unit: { lessons: []; lessons_count: string; name: string; quizes_count: string }, index: number) => {
-                            return (
-                                <Accordion allowMultipleExpanded>
-                                    <AccordionItem>
-                                        <AccordionItemHeading>
-                                            <AccordionItemButton >
-                                                {index + 1} Unit - {unit?.name}
-                                                <Text className="text-stone-400 mx-2">
-                                                    {unit?.lessons_count} Lessons - {unit?.quizes_count
-                                                    } Quiz
-                                                </Text>
-                                            </AccordionItemButton>
-                                        </AccordionItemHeading>
-                                        <AccordionItemPanel>
-                                            {subjectDetails?.units?.map(
-                                                (
-                                                    unit: { lessons: []; lessons_count: string; name: string; quizes_count: string },
-                                                    index: number
-                                                ) => {
-                                                    return (
-                                                        <Box className="">
-                                                            {unit?.lessons?.map((lesson: { name: string }) => {
-                                                                return (
-                                                                    <Box className="flex justify-between items-center pb-0.5 px-5 pr-5  mt-1">
-                                                                        <Box className="flex items-center justify-center">
-                                                                            <img src={Article} alt="Book" className="mr-2 color-#9C9B9B" />
-                                                                            <Text className="text-stone-400"> {lesson?.name}</Text>
-                                                                        </Box>
-                                                                    </Box>
-                                                                );
-                                                            })}
+            <Box className="flex justify-between unitsAccordion">
+                <>
+                    <Box className="w-2/5 mr-5 ">
+                        <Box className="contentCourse">
+                            Course content
+                            <Text className="text-stone-400">{subjectDetails?.subjectDetailsData?.units?.length} units</Text>
+                        </Box>
+                        {subjectDetails?.subjectDetailsData?.units?.map(
+                            (unit: { lessons: []; lessons_count: string; name: string; quizes_count: string }, index: number) => {
+                                return (
+                                    <Accordion allowMultipleExpanded={false}>
+                                        <AccordionItem>
+                                            <AccordionItemHeading>
+                                                <AccordionItemButton>
+                                                    <Box className="flex justify-between mx-5">
+                                                        <Box className="px-5">
+                                                            {index + 1} Unit - {unit?.name}
+                                                            <Text className="text-stone-400 ">
+                                                                {unit?.lessons_count} Lessons - {unit?.quizes_count} Quiz
+                                                            </Text>
                                                         </Box>
-                                                    );
-                                                }
-                                            )}
-                                        </AccordionItemPanel>
-                                    </AccordionItem>
-                                </Accordion>
-                            );
-                        }
-                    )}
-                </Box>
-                <Box className="w-3/5 ">
-                    <img src="" alt="Book" className="m-auto" />
-                    <Text className="mt-10">This course include</Text>
-                </Box>
+                                                        <CircleProgress childern="20" />
+                                                    </Box>
+                                                </AccordionItemButton>
+                                            </AccordionItemHeading>
+                                            <AccordionItemPanel>
+                                                <Box className="">
+                                                    {unit?.lessons?.map((lesson: { name: string; id: number }, index: number) => {
+                                                        return (
+                                                            <Box
+                                                                className={`flex  mt-1 px-5 ${idData === lesson?.name && 'activeLesson'}`}
+                                                                onClick={async (event: any) => {
+                                                                    setIdData(event.target.innerText);
+                                                                    setLoading(true);
+                                                                    await dispatch(UnitsList(lesson?.id));
+                                                                    setLoading(false);
+
+                                                                    // setUnits([])
+                                                                }}
+                                                            >
+                                                                <Box className="flex items-center p-4" key={index}>
+                                                                    <img src={BookMark} alt="Book" className="mr-2 color-#9C9B9B" />
+                                                                    <Text className="text-stone-900 mb-2"> {lesson?.name}</Text>
+                                                                </Box>
+                                                            </Box>
+                                                        );
+                                                    })}
+                                                </Box>
+                                            </AccordionItemPanel>
+                                        </AccordionItem>
+                                    </Accordion>
+                                );
+                            }
+                        )}
+                    </Box>
+                    <Box className="w-3/5 ">
+                        {loading ? (
+                            <Box style={{ marginTop: '120px' }}>
+                                <LoadingPartially />
+                            </Box>
+                        ) : (
+                            <>
+                                <Text className="headerLesson p-2">
+                                    {lesson?.UnitsListData?.lesson?.name}
+                                    {/* Lesson 2 content */}
+                                </Text>
+                                <Box className="flex w-200 flex-wrap">
+                                    {lesson?.UnitsListData?.contents?.map((lesson: any) => {
+                                        return (
+                                            <Box className="contentLesson">
+                                                <Box className="contentIcons">
+                                                    {lesson?.type == 'video' ? (
+                                                        <img src={Video} alt="imag" />
+                                                    ) : lesson?.type == 'scrom' ? (
+                                                        <img src={Zip} alt="imag" />
+                                                    ) : lesson?.type == ('word' || 'pdf') ? (
+                                                        <img src={Sheet} alt="imag" />
+                                                    ) : lesson?.type == 'audio' ? (
+                                                        <img src={Audio} alt="imag" />
+                                                    ) : (
+                                                        lesson?.type == 'image' ?
+                                                            <img src={Image} alt="imag" /> :
+                                                            <img src={Sheet} alt="imag" />
+                                                    )}
+                                                </Box>
+                                                <Text>{lesson?.name}</Text>
+                                                <Text className="text-stone-400">{lesson?.period}</Text>
+                                            </Box>
+                                        );
+                                    })}
+                                </Box>
+                            </>
+                        )}
+                    </Box>
+                </>
             </Box>
         </>
     );
