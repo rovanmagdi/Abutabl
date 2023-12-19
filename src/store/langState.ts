@@ -4,5 +4,5 @@ import Cookies from 'js-cookie';
 
 export const langState = atom<'ar' | 'en'>({
 	key: ATOMS_KEYS.LANGSTATE,
-	default: (Cookies.get('LanguageAdded') as 'en' | 'ar') ?? 'ar',
+	default: (Cookies.get('LanguageAdded') as 'en' | 'ar') ?? 'en',
 });
