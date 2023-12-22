@@ -9,7 +9,7 @@ import PageHeader from './components/pageHeader';
 
 import TabsComponent from './components/tabs/tabs';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { SubjectDetails } from 'redux-toolkit/reducer/DetailsSubjectsReducer';
 import { useParams } from 'react-router-dom';
 
@@ -19,14 +19,19 @@ export default function LearnDetails() {
     const langType = useRecoilValue(langState);
     const dispatch = useDispatch()
     const { id } = useParams()
+    const subjectDetails = useSelector((state: any) => state.DetailsSubjectsReducer);
+
 
     useEffect(() => {
         dispatch(SubjectDetails(id))
-    }, [])
+    }, [dispatch])
+
+    console.log(subjectDetails);
+
 
     return (
         <>
-            <PageHeader />
+            <PageHeader title={subjectDetails?.subjectDetailsData?.basic_info?.name} route='/learn' />
             <TabsComponent />
 
         </>

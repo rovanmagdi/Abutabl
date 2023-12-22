@@ -32,6 +32,7 @@ const Routes = () => {
 							path: 'learn/:id',
 							element: ROUTES.learnDetails.component,
 						},
+
 						{
 							path: ROUTES.profile.path,
 							element: <Outlet />,
@@ -67,6 +68,11 @@ const Routes = () => {
 							element: ROUTES.restPassword.component,
 						},
 					],
+				},
+				{
+					path: 'learn/:idUnit/:id',
+					element: ROUTES.learnDetailsUnit.component,
+
 				},
 			],
 		},

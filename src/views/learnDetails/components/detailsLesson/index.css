@@ -1,0 +1,32 @@
+.accordion__panel .accordionLesson {
+	padding: 0px !important;
+	/* background-color: aqua; */
+}
+
+.accordion__button .accordionLesson {
+	padding: 2px !important;
+}
+
+.accordionLessonContainer {
+	width: 300px;
+}
+
+.accordion__item {
+	position: relative;
+}
+.accordionLesson .box_accordion {
+	padding: 10px 10px 10px 45px;
+	background-color: #f4f4f4;
+}
+.accordionLesson .accordion__button:before {
+	position: absolute;
+	top: 30px;
+	right: 15px;
+	margin-top: -2px;
+	color: #ffad0d;
+}
+.subLesson {
+	padding: 22px 22px 22px 60px;
+	border-bottom: 2px solid #f4f4f4;
+	align-items: center;
+}

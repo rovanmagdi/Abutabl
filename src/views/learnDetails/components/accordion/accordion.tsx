@@ -14,11 +14,16 @@ import Image from 'assets/images/svg/image.svg';
 import Zip from 'assets/images/svg/zip.svg';
 
 import Sheet from 'assets/images/svg/sheets.svg';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Box } from '@mantine/core';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { setLessonIds } from 'redux-toolkit/reducer/UnitsReducer';
+import { SubjectDetails } from 'redux-toolkit/reducer/DetailsSubjectsReducer';
 
 const AccordionComponent = () => {
     const subjectDetails = useSelector((state: any) => state.DetailsSubjectsReducer.subjectDetailsData);
+    const { id } = useParams()
+    const dispatch = useDispatch()
     const [htmlDesc, setHTMLDesc] = useState({ __html: '' });
     const [htmlPass, setHTMLPass] = useState({ __html: '' });
     useEffect(() => {
@@ -58,7 +63,7 @@ const AccordionComponent = () => {
                         {subjectDetails?.units?.map(
                             (unit: { lessons: []; lessons_count: string; name: string; quizes_count: string }, index: number) => {
                                 return (
-                                    <div className="detailsUnit">
+                                    <div className="detailsUnit mt-2">
                                         <div className="flex justify-between items-center border-b-2 border-slate-200 p-6">
                                             <h3 className="text-black font-bold">
                                                 {' '}
@@ -70,33 +75,43 @@ const AccordionComponent = () => {
                                         </div>
                                         <div className="pb-5">
                                             {unit?.lessons?.map(
-                                                (lesson: { contents: { lessons_count: string; name: string; quizes_count: string }[] }) => {
+                                                (lesson: { id: number, contents: { lessons_count: string; name: string; quizes_count: string }[] }) => {
                                                     return lesson?.contents.map((content: any) => {
                                                         return (
-                                                            <div className="flex justify-between items-center pb-0.5 px-5 pr-5  mt-5">
-                                                                <div className="flex items-center justify-center">
-                                                                    <img
-                                                                        src={
-                                                                            content?.type == 'video'
-                                                                                ? Video
-                                                                                : content?.type == 'pdf'
-                                                                                    ? Sheet
-                                                                                    : content?.type == 'word'
-                                                                                        ? Article
-                                                                                        : content?.type == 'image'
-                                                                                            ? Image
-                                                                                            : Zip
-                                                                        }
-                                                                        alt="Book"
-                                                                        className="mr-2 color-#9C9B9B"
-                                                                    />
-                                                                    <div className="text-stone-400">
-                                                                        {' '}
-                                                                        {content?.type} : {content?.name}
+                                                            <Link to={`/learn/${id}/${lesson?.id}`} target='_blank'>
+                                                                <div className="flex justify-between items-center pb-0.5 px-5 pr-5  mt-5 " onClick={() => {
+
+                                                                    // nagivate(`/learn/${id}/${lesson?.id}`)
+                                                                    dispatch(setLessonIds({ id: content?.id }))
+
+                                                                }}
+                                                                >
+
+
+                                                                    <div className="flex items-center justify-center">
+                                                                        <img
+                                                                            src={
+                                                                                content?.type == 'video'
+                                                                                    ? Video
+                                                                                    : content?.type == 'pdf'
+                                                                                        ? Sheet
+                                                                                        : content?.type == 'word'
+                                                                                            ? Article
+                                                                                            : content?.type == 'image'
+                                                                                                ? Image
+                                                                                                : Zip
+                                                                            }
+                                                                            alt="Book"
+                                                                            className="mr-2 color-#9C9B9B"
+                                                                        />
+                                                                        <div className="text-stone-400">
+                                                                            {' '}
+                                                                            {content?.type} : {content?.name}
+                                                                        </div>
                                                                     </div>
+                                                                    <div>{content?.period} </div>
                                                                 </div>
-                                                                <div>{content?.period} </div>
-                                                            </div>
+                                                            </Link>
                                                         );
                                                     });
                                                 }

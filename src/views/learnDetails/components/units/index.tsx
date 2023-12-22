@@ -15,7 +15,7 @@ import Image from 'assets/images/svg/image.svg';
 import Zip from 'assets/images/svg/zip.svg';
 import Audio from 'assets/images/svg/audio.svg';
 import Sheet from 'assets/images/svg/sheets.svg';
-import { UnitsList } from 'redux-toolkit/reducer/UnitsReducer';
+import { lessonContent } from 'redux-toolkit/reducer/UnitsReducer';
 import LoadingPartially from 'components/loading-partially';
 import './index.css';
 import CircleProgress from 'components/CircleProgress';
@@ -23,19 +23,18 @@ const Units = () => {
     const dispatch = useDispatch();
     const subjectDetails = useSelector((state: any) => state.DetailsSubjectsReducer);
     const lesson = useSelector((state: any) => state.UnitsReducer);
-    const [units, setUnits] = useState(subjectDetails?.subjectDetailsData?.units)
     const [idData, setIdData] = useState<any>();
     const [loading, setLoading] = useState(false);
 
 
-    useEffect(() => {
-        setUnits(subjectDetails?.subjectDetailsData?.units)
-    }, [subjectDetails?.subjectDetailsData])
+
 
     return (
         <>
             <Box className="flex justify-between unitsAccordion">
                 <>
+
+
                     <Box className="w-2/5 mr-5 ">
                         <Box className="contentCourse">
                             Course content
@@ -68,7 +67,7 @@ const Units = () => {
                                                                 onClick={async (event: any) => {
                                                                     setIdData(event.target.innerText);
                                                                     setLoading(true);
-                                                                    await dispatch(UnitsList(lesson?.id));
+                                                                    await dispatch(lessonContent(lesson?.id));
                                                                     setLoading(false);
                                                                 }}
                                                             >
@@ -95,11 +94,11 @@ const Units = () => {
                         ) : (
                             <>
                                 <Text className="headerLesson p-2">
-                                    {lesson?.UnitsListData?.lesson?.name}
+                                    {lesson?.lessonContentData?.lesson?.name}
                                     {/* Lesson 2 content */}
                                 </Text>
                                 <Box className="flex w-200 flex-wrap">
-                                    {lesson?.UnitsListData?.contents?.map((lesson: any) => {
+                                    {lesson?.lessonContentData?.contents?.map((lesson: any) => {
                                         return (
                                             <Box className="contentLesson">
                                                 <Box className="contentIcons">

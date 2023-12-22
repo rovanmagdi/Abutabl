@@ -3,11 +3,13 @@ import { useIntl } from 'react-intl';
 import { ReactComponent as LearnIcon } from 'assets/images/svg/book.svg';
 import { ReactComponent as ProfileIcon } from 'assets/images/svg/profile.svg';
 import { ReactComponent as SupportIcon } from 'assets/images/svg/messages.svg';
-import LearnDetails from 'views/learnDetails';
+
 
 
 const AuthSections = lazy(() => import('views/auth'));
 const Learn = lazy(() => import('views/learn'));
+const LearnDetails = lazy(() => import('views/learnDetails'));
+const DetailsUnit = lazy(() => import('views/learnDetails/components/detailsLesson'));
 const Profile = lazy(() => import('views/profile'));
 const Support = lazy(() => import('views/support'));
 const Login = lazy(() => import('views/auth/signIn'));
@@ -36,7 +38,8 @@ export interface IRoutes {
 	learn: IRoute;
 	profile: IRoute;
 	support: IRoute;
-	learnDetails: IRoute
+	learnDetails: IRoute;
+	learnDetailsUnit: IRoute;
 }
 
 export function useRoutesConst() {
@@ -109,6 +112,17 @@ export function useRoutesConst() {
 				to: () => 'learn/:id',
 				fullTitle: () => [{ name: formatMessage({ id: 'learnDetails' }) }],
 				title: () => formatMessage({ id: 'learnDetails' }),
+				sidebarTitle: () => formatMessage({ id: 'learn' }),
+			},
+			learnDetailsUnit: {
+				component: <DetailsUnit />,
+				path: 'learn/:id/:id',
+				icon: <LearnIcon />,
+				privileges: true,
+
+				to: () => 'learn/:id/:id',
+				fullTitle: () => [{ name: formatMessage({ id: 'learnDetailsUnit' }) }],
+				title: () => formatMessage({ id: 'learnDetailsUnit' }),
 				sidebarTitle: () => formatMessage({ id: 'learn' }),
 			},
 			profile: {

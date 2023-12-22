@@ -7,10 +7,13 @@ import { HeaderWrapper } from './styles';
 import { Progress } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-export default function PageHeader() {
+interface IHeader {
+	title: string;
+	route: string
+}
+export default function PageHeader({ title, route }: IHeader) {
 	const navigate = useNavigate()
-	const subjectDetails = useSelector((state: any) => state?.DetailsSubjectsReducer?.subjectDetailsData
-	)
+
 
 
 	return (
@@ -19,13 +22,12 @@ export default function PageHeader() {
 				<Grid.Col xs={12} md={6}>
 					<Flex direction={'column'} align={'flex-start'} gap={8} className="wellcome_wrapper">
 						<Flex gap={16} align={'center'} onClick={() => {
-							navigate('/learn')
+							navigate(route)
 						}}>
 							<Flex align={'center'} justify={'center'} className="notification platinum_shadow">
 								<ArrowBack />
 							</Flex>
-							{subjectDetails?.basic_info?.name
-							}
+							{title}
 						</Flex>
 
 					</Flex>

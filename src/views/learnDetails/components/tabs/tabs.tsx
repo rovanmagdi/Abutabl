@@ -13,6 +13,7 @@ import LoadingPartially from 'components/loading-partially';
 import { useSelector } from 'react-redux';
 import AccordionComponent from '../units';
 import Units from '../units';
+import ModuleView from 'components/module-view';
 
 const TabsComponent: React.FC = () => {
     const [index, setIndex] = useState(0);
@@ -53,8 +54,9 @@ const TabsComponent: React.FC = () => {
                         <Overview />
                     </TabPanel>
                     <TabPanel>
-                        <Units />
 
+
+                        <Units />
 
                     </TabPanel>
                 </>

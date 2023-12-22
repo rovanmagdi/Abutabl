@@ -1,28 +1,33 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getRequest } from 'lib/requests';
 
-export const UnitsList: any = createAsyncThunk('UnitsList', async (id: number) => {
+export const lessonContent: any = createAsyncThunk('lessonContent', async (id: number) => {
     const result = await getRequest(`/lessons/show/${id}`);
     return result;
 });
 
 const initialState: any = {
     loading: true,
-    UnitsListData: []
+    lessonContentData: [],
+    lessonId: null
 };
 
-const UnitsListSlice: any = createSlice({
-    name: 'UnitsListSlice',
+const lessonContentSlice: any = createSlice({
+    name: 'lessonContentSlice',
     initialState,
-    reducers: {},
+    reducers: {
+        setLessonIds: (state = initialState, action) => {
+            state.lessonId = action.payload.id
+        }
+    },
 
     extraReducers(builder) {
-        builder.addCase(UnitsList.fulfilled, (state, action) => {
+        builder.addCase(lessonContent.fulfilled, (state, action) => {
             state.loading = false;
-            state.UnitsListData = action.payload
+            state.lessonContentData = action.payload
         });
     },
 });
 
-export const { } = UnitsListSlice.actions;
-export default UnitsListSlice.reducer;
+export const { setLessonIds } = lessonContentSlice.actions;
+export default lessonContentSlice.reducer;
