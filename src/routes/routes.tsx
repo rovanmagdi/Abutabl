@@ -48,11 +48,8 @@ const Routes = () => {
 							element: <Outlet />,
 							children: [{ index: true, element: ROUTES.support.component }],
 						},
-						{
-							path: '/details/:idUnit/:id',
-							element: ROUTES.learnDetailsUnit.component,
 
-						},
+
 					],
 				},
 				{
@@ -72,8 +69,17 @@ const Routes = () => {
 							path: ROUTES.restPassword.path,
 							element: ROUTES.restPassword.component,
 						},
+
 					],
 				},
+
+
+				{
+					path: '/details/:idUnit/:id',
+					element: ROUTES.learnDetailsUnit.component,
+
+				},
+
 
 			],
 		},
