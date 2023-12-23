@@ -78,7 +78,7 @@ const AccordionComponent = () => {
                                                 (lesson: { id: number, contents: { lessons_count: string; name: string; quizes_count: string }[] }) => {
                                                     return lesson?.contents.map((content: any) => {
                                                         return (
-                                                            <Link to={`/learn/${id}/${lesson?.id}`} target='_blank' onClick={() => {
+                                                            <Link to={`${lesson?.id}`} target='_blank' onClick={() => {
                                                                 dispatch(setLessonIds({ id: content?.id }))
                                                                 localStorage.setItem('id', content?.id)
                                                                 console.log("hhhhhhh", content?.id);
