@@ -48,6 +48,11 @@ const Routes = () => {
 							element: <Outlet />,
 							children: [{ index: true, element: ROUTES.support.component }],
 						},
+						{
+							path: '/details/:idUnit/:id',
+							element: ROUTES.learnDetailsUnit.component,
+
+						},
 					],
 				},
 				{
@@ -72,15 +77,11 @@ const Routes = () => {
 
 			],
 		},
-		{
-			path: '*',
-			element: <NoMatch />,
-		},
-		{
-			path: '/details/:idUnit/:id',
-			element: ROUTES.learnDetailsUnit.component,
+		// {
+		// 	path: '*',
+		// 	element: <NoMatch />,
+		// },
 
-		},
 	]);
 	return routes;
 };
