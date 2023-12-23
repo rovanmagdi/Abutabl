@@ -19,8 +19,8 @@ export default function Layout() {
 
 	return (
 		<Fragment>
-			{isPartiallyLoading && <LoadingPartially />}
-			<Suspense fallback={<LoadingPartially />}>
+
+			<Suspense >
 				<Outlet />
 			</Suspense>
 		</Fragment>

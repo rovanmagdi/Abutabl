@@ -51,26 +51,18 @@ const DetailsUnit = () => {
 
   useEffect(() => {
     localStorage.setItem('id', activeId);
-
-
   }, [activeId]);
-  useEffect(() => {
-    lessonContentList?.lessonContentData?.contents?.map((item: any) => {
-
-
-      if (item?.id == localStorage.getItem('id')) {
-
-        setItem(item);
-        setActiveId(item.id);
-      }
-    });
-  }, [lessonContentList?.lessonContentData]);
 
   useEffect(() => {
     const arr: any = [];
     subjectDetails?.subjectDetailsData?.units?.map((unit: { lessons: [] }) => {
       unit?.lessons?.map((lesson: { contents: [] }) => {
         lesson?.contents?.map((content: any) => {
+          if (content?.id == localStorage.getItem('id')) {
+            setItem(content);
+            setActiveId(content.id);
+          }
+
           arr.push(content);
         });
       });
@@ -89,14 +81,14 @@ const DetailsUnit = () => {
         >
           <LogoImage width={80} />
         </Box>
-        <Text className={`${show ? "ms-5" : "ms-48"} text-LightSeaGreen text-xl font-semibold`}>{item?.name}</Text>
+        <Text className={`${show ? 'ms-5' : 'ms-48'} text-LightSeaGreen text-xl font-semibold`}>{item?.name}</Text>
         <Flex className="justify-between ml-auto">
           <button
             className={`hover:font-black hover:text-lg transition-all mx-5 ${contentArr?.findIndex((item: any) => {
               return item.id == activeId;
             }) == 0 || activeId == ''
-              ? 'text-gray'
-              : 'text-Warning'
+                ? 'text-gray'
+                : 'text-Warning'
               }`}
             disabled={
               contentArr?.findIndex((item: any) => {
@@ -134,9 +126,9 @@ const DetailsUnit = () => {
             className={` hover:font-black hover:text-lg transition-all ${contentArr?.findIndex((item: any) => {
               return item.id == activeId;
             }) ==
-              contentArr?.length - 1 || activeId == ''
-              ? 'text-gray'
-              : 'text-Warning'
+                contentArr?.length - 1 || activeId == ''
+                ? 'text-gray'
+                : 'text-Warning'
               } `}
             disabled={
               contentArr?.findIndex((item: any) => {
@@ -202,10 +194,12 @@ const DetailsUnit = () => {
                                                 className={`cursor-pointer subLesson ${activeId == content?.id && 'activeLesson'
                                                   }`}
                                                 onClick={() => {
-
-
                                                   setActiveId(content?.id);
-                                                  setItem({ path: content?.path, name: content?.name });
+                                                  setItem({
+                                                    path: content?.path,
+                                                    name: content?.name,
+                                                    type: content?.type,
+                                                  });
                                                 }}
                                               >
                                                 <img
@@ -258,9 +252,12 @@ const DetailsUnit = () => {
           >
             <Box>{show ? <img src={Arrow} alt="" /> : <img src={Arrow2} alt="" />}</Box>
           </Box>
-          <Box className="w-full">
-            <iframe src={item?.path} allowFullScreen
-              style={{ width: "100%", height: "94vh" }} scrolling="no" />
+          <Box className="content w-full">
+            {item?.type == 'image' ? (
+              <img src={item?.path} style={{ width: '100%', height: '90vh' }} />
+            ) : (
+              <iframe src={item?.path} allowFullScreen style={{ width: '100%', height: '94vh' }} scrolling="no" />
+            )}
           </Box>
         </Flex>
       )}

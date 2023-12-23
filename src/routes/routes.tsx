@@ -70,7 +70,7 @@ const Routes = () => {
 					],
 				},
 				{
-					path: 'learn/:idUnit/:id',
+					path: '/details/:idUnit/:id',
 					element: ROUTES.learnDetailsUnit.component,
 
 				},
