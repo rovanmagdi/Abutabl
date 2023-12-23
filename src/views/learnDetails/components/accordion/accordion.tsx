@@ -78,13 +78,7 @@ const AccordionComponent = () => {
                                                 (lesson: { id: number, contents: { lessons_count: string; name: string; quizes_count: string }[] }) => {
                                                     return lesson?.contents.map((content: any) => {
                                                         return (
-                                                            <Box onClick={() => {
-
-
-                                                                window.open(
-                                                                    `/details/${id}/${lesson?.id}`,
-                                                                    "_blank"
-                                                                );
+                                                            <Link to={`/details/${id}/${lesson?.id}`} target='_blank' className='cursor-pointer' onClick={() => {
 
                                                                 dispatch(setLessonIds({ id: content?.id }))
                                                                 localStorage.setItem('id', content?.id)
@@ -118,7 +112,7 @@ const AccordionComponent = () => {
                                                                     </div>
                                                                     <div>{content?.period} </div>
                                                                 </div>
-                                                            </Box>
+                                                            </Link>
                                                         );
                                                     });
                                                 }

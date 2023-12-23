@@ -116,11 +116,11 @@ export function useRoutesConst() {
 			},
 			learnDetailsUnit: {
 				component: <DetailsUnit />,
-				path: 'learn/:id/:id',
+				path: 'details/:idUnit/:id',
 				icon: <LearnIcon />,
 				privileges: true,
 
-				to: () => 'learn/:id/:id',
+				to: () => 'details/:idUnit/:id',
 				fullTitle: () => [{ name: formatMessage({ id: 'learnDetailsUnit' }) }],
 				title: () => formatMessage({ id: 'learnDetailsUnit' }),
 				sidebarTitle: () => formatMessage({ id: 'learn' }),

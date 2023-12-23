@@ -69,16 +69,17 @@ const Routes = () => {
 						},
 					],
 				},
-				{
-					path: '/details/:idUnit/:id',
-					element: ROUTES.learnDetailsUnit.component,
 
-				},
 			],
 		},
 		{
 			path: '*',
 			element: <NoMatch />,
+		},
+		{
+			path: '/details/:idUnit/:id',
+			element: ROUTES.learnDetailsUnit.component,
+
 		},
 	]);
 	return routes;
