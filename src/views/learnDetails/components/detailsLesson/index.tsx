@@ -15,52 +15,149 @@ import Image from 'assets/images/svg/image.svg';
 import Zip from 'assets/images/svg/zip.svg';
 import Audio from 'assets/images/svg/audio.svg';
 import Article from 'assets/images/svg/article.svg';
+import Arrow from 'assets/images/svg/arrow.svg';
+import Arrow2 from 'assets/images/svg/arrow2.svg';
+import { useNavigate } from 'react-router-dom';
 
 import Sheet from 'assets/images/svg/sheets.svg';
 import { lessonContent } from 'redux-toolkit/reducer/UnitsReducer';
 import LoadingPartially from 'components/loading-partially';
 import './index.css';
-import CircleProgress from 'components/CircleProgress';
+import { ReactComponent as LogoImage } from 'assets/images/svg/logo-aboutabl-dark 2.svg';
+
 import { useParams } from 'react-router-dom';
 import { SubjectDetails } from 'redux-toolkit/reducer/DetailsSubjectsReducer';
 const DetailsUnit = () => {
   const dispatch = useDispatch();
+  const nagivate = useNavigate();
   const subjectDetails = useSelector((state: any) => state.DetailsSubjectsReducer);
   const lessonContentList = useSelector((state: any) => state.UnitsReducer);
   const { id, idUnit } = useParams();
-  const [item, setItem] = useState<any>();
-  useEffect(() => {
-    const l = dispatch(lessonContent(id));
+  const [item, setItem] = useState<any>(localStorage.getItem('id'));
+  const [contentArr, setContentArr] = useState<any>();
+  const [activeId, setActiveId] = useState<any>(localStorage.getItem('id'));
+  const [dataType, setDataType] = useState<any>('');
+  const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-    dispatch(SubjectDetails(idUnit));
+  useEffect(() => {
+    (async () => {
+      setLoading(true);
+      await dispatch(lessonContent(id));
+      await dispatch(SubjectDetails(idUnit));
+      setLoading(false);
+    })();
   }, [id, dispatch]);
 
   useEffect(() => {
-    lessonContentList?.lessonContentData?.contents?.map((lesson: any, index: number) => {
-      if (index === 0) {
-        setItem(lesson);
-        console.log(lesson, 'firstElement');
-      }
-    });
+    localStorage.setItem('id', activeId);
 
+
+  }, [activeId]);
+  useEffect(() => {
     lessonContentList?.lessonContentData?.contents?.map((item: any) => {
-      if (item?.id == lessonContentList?.lessonId) {
+
+
+      if (item?.id == localStorage.getItem('id')) {
+
         setItem(item);
+        setActiveId(item.id);
       }
     });
-  }, [lessonContentList?.lessonContentData?.contents]);
+  }, [lessonContentList?.lessonContentData]);
 
-  console.log(subjectDetails, 'hhhh');
+  useEffect(() => {
+    const arr: any = [];
+    subjectDetails?.subjectDetailsData?.units?.map((unit: { lessons: [] }) => {
+      unit?.lessons?.map((lesson: { contents: [] }) => {
+        lesson?.contents?.map((content: any) => {
+          arr.push(content);
+        });
+      });
+    });
+    setContentArr(arr);
+  }, [subjectDetails]);
 
   return (
-    <Flex>
-      <Box className="flex justify-between unitsAccordion">
-        <>
-          <Box className=" mr-5">
-            <Box className="contentCourse">
-              Course content
-              <Text className="text-stone-400">{subjectDetails?.subjectDetailsData?.units?.length} units</Text>
-            </Box>
+    <>
+      <Box className="flex items-center mx-5 w-100 mt-3 mb-3">
+        <Box
+          className="cursor-pointer mx-5"
+          onClick={() => {
+            nagivate('/learn');
+          }}
+        >
+          <LogoImage width={80} />
+        </Box>
+        <Text className={`${show ? "ms-5" : "ms-48"} text-LightSeaGreen text-xl font-semibold`}>{item?.name}</Text>
+        <Flex className="justify-between ml-auto">
+          <button
+            className={`hover:font-black hover:text-lg transition-all mx-5 ${contentArr?.findIndex((item: any) => {
+              return item.id == activeId;
+            }) == 0 || activeId == ''
+              ? 'text-gray'
+              : 'text-Warning'
+              }`}
+            disabled={
+              contentArr?.findIndex((item: any) => {
+                return item.id == activeId;
+              }) == 0 || activeId == ''
+            }
+            onClick={() => {
+              let index = contentArr?.findIndex((item: any) => {
+                return item.id == activeId;
+              });
+
+              if (typeof index === 'number' && index != -1) {
+                setDataType(contentArr[index - 1]?.type);
+                setActiveId(contentArr[index - 1]?.id);
+                setItem(contentArr[index - 1]);
+              }
+            }}
+          >
+            <span className="mx-2">{/* <KeyboardBackspaceIcon /> */}</span>
+            Previous
+          </button>
+
+          <button
+            onClick={() => {
+              let index = contentArr?.findIndex((item: any) => {
+                return item.id == activeId;
+              });
+
+              if (typeof index === 'number' && index != -1) {
+                setDataType(contentArr[index + 1]?.type);
+                setActiveId(contentArr[index + 1]?.id);
+                setItem(contentArr[index + 1]);
+              }
+            }}
+            className={` hover:font-black hover:text-lg transition-all ${contentArr?.findIndex((item: any) => {
+              return item.id == activeId;
+            }) ==
+              contentArr?.length - 1 || activeId == ''
+              ? 'text-gray'
+              : 'text-Warning'
+              } `}
+            disabled={
+              contentArr?.findIndex((item: any) => {
+                return item.id == activeId;
+              }) ==
+              contentArr?.length - 1 || activeId == ''
+            }
+          >
+            Next
+            <span className="mx-2">{/* <KeyboardBackspaceIcon className="rotate-180" /> */}</span>
+          </button>
+        </Flex>
+      </Box>
+
+      {loading ? (
+        <Box className="mt-48">
+          <LoadingPartially />
+        </Box>
+      ) : (
+        <Flex>
+          <Box className={`${show && 'hidden'} transition-all`}>
             <Accordion className="accordionLessonContainer">
               {subjectDetails?.subjectDetailsData?.units?.map(
                 (unit: { lessons: []; lessons_count: string; name: string; quizes_count: string }, index: number) => {
@@ -82,62 +179,62 @@ const DetailsUnit = () => {
                         <Box>
                           {unit?.lessons?.map((lesson: { name: string; id: number; contents: [] }, index: number) => {
                             return (
-                              <
-                                // className={`flex  mt-1 px-5 ${idData === lesson?.name && 'activeLesson'}`}
-                                // onClick={async (event: any) => {
-                                //     setIdData(event.target.innerText);
-                                //     setLoading(true);
-                                //     await dispatch(lessonContent(lesson?.id));
-                                //     setLoading(false);
-                                // }}
-                                >
+                              <>
                                 <Accordion>
                                   <AccordionItem>
                                     <AccordionItemHeading>
-                                      <AccordionItemButton className="box_accordion">
-                                        {/* {item.heading} */}
-                                        <Box className="flex items-center " key={index}>
-                                          <img src={BookMark} alt="Book" className="mr-2 color-#9C9B9B" />
-                                          <Text className="text-stone-900 mb-2">{lesson?.name}</Text>
+                                      <AccordionItemButton>
+                                        <Box className="flex justify-between ">
+                                          {/* {item.heading} */}
+                                          <Box className="flex items-center " key={index}>
+                                            <img src={BookMark} alt="Book" className="mr-2 color-#9C9B9B" />
+                                            <Text className="text-stone-900 mb-2">{lesson?.name}</Text>
+                                          </Box>
                                         </Box>
                                       </AccordionItemButton>
                                     </AccordionItemHeading>
-                                    {lesson?.contents?.map((content: { name: string; type: string; path: string }) => {
-                                      return (
-                                        <>
-                                          <AccordionItemPanel className="">
-                                            <Flex
-                                              className="subLesson"
-                                              onClick={() => {
-                                                setItem({ path: content?.path, name: content?.name });
-                                              }}
-                                            >
-                                              <img
-                                                src={
-                                                  content?.type == 'video'
-                                                    ? Video
-                                                    : content?.type == 'pdf'
-                                                      ? Sheet
-                                                      : content?.type == 'word'
-                                                        ? Article
-                                                        : content?.type == 'image'
-                                                          ? Image
-                                                          : content?.type == 'audio'
-                                                            ? Audio
-                                                            : Zip
-                                                }
-                                                alt="Book"
-                                                className="mr-2 color-#9C9B9B"
-                                              />
-                                              <div className="text-stone-400">
-                                                {' '}
-                                                {content?.type} : {content?.name}
-                                              </div>
-                                            </Flex>
-                                          </AccordionItemPanel>
-                                        </>
-                                      );
-                                    })}
+                                    <AccordionItemPanel className="accordionLesson">
+                                      {lesson?.contents?.map(
+                                        (content: { name: string; type: string; path: string; id: number }) => {
+                                          return (
+                                            <>
+                                              <Flex
+                                                className={`cursor-pointer subLesson ${activeId == content?.id && 'activeLesson'
+                                                  }`}
+                                                onClick={() => {
+
+
+                                                  setActiveId(content?.id);
+                                                  setItem({ path: content?.path, name: content?.name });
+                                                }}
+                                              >
+                                                <img
+                                                  src={
+                                                    content?.type == 'video'
+                                                      ? Video
+                                                      : content?.type == 'pdf'
+                                                        ? Sheet
+                                                        : content?.type == 'word'
+                                                          ? Article
+                                                          : content?.type == 'image'
+                                                            ? Image
+                                                            : content?.type == 'audio'
+                                                              ? Audio
+                                                              : Zip
+                                                  }
+                                                  alt="Book"
+                                                  className="mr-2 color-#9C9B9B"
+                                                />
+                                                <div className="text-stone-400">
+                                                  {' '}
+                                                  {content?.type} : {content?.name}
+                                                </div>
+                                              </Flex>
+                                            </>
+                                          );
+                                        }
+                                      )}
+                                    </AccordionItemPanel>
                                   </AccordionItem>
                                 </Accordion>
 
@@ -153,28 +250,21 @@ const DetailsUnit = () => {
               )}
             </Accordion>
           </Box>
-        </>
-      </Box>
-
-      <Box>
-        {/* <Text
-          onClick={() => {
-            console.log(lessonContentList?.lessonContentData?.contents[2]);
-          }}
-        >
-          next
-        </Text> */}
-
-        <Text>{item?.name}</Text>
-        <Box style={{ overflow: 'hidden' }}>
-          {item?.type == 'image' ? (
-            <img src={item?.path} />
-          ) : (
-            <iframe src={item?.path} style={{ height: '93vh', width: '68vw', border: 'none' }} />
-          )}
-        </Box>
-      </Box>
-    </Flex>
+          <Box
+            className={`${show ? 'absoluteIconAfter' : 'absoluteIcon'} cursor-pointer`}
+            onClick={() => {
+              setShow(!show);
+            }}
+          >
+            <Box>{show ? <img src={Arrow} alt="" /> : <img src={Arrow2} alt="" />}</Box>
+          </Box>
+          <Box className="w-full">
+            <iframe src={item?.path} allowFullScreen
+              style={{ width: "100%", height: "94vh" }} scrolling="no" />
+          </Box>
+        </Flex>
+      )}
+    </>
   );
 };
 

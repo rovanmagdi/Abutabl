@@ -8,7 +8,9 @@
 }
 
 .accordionLessonContainer {
-	width: 300px;
+	width: 290px;
+	height: 93vh;
+	border: 1px solid #f4f4f4;
 }
 
 .accordion__item {
@@ -26,7 +28,25 @@
 	color: #ffad0d;
 }
 .subLesson {
-	padding: 22px 22px 22px 60px;
+	padding: 20px 20px 20px 30px;
 	border-bottom: 2px solid #f4f4f4;
 	align-items: center;
+}
+
+.activeLesson {
+	background-color: #f3fffa;
+	/* margin-top: 20px; */
+	border-left: 3px solid #1ebba3;
+}
+.absoluteIcon {
+	position: absolute;
+	left: 290px;
+	z-index: 28;
+}
+.absoluteIconAfter {
+	/* left: 0; */
+	/* left: 2033px; */
+	z-index: 28;
+
+	position: absolute;
 }

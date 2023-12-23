@@ -17,7 +17,7 @@ const lessonContentSlice: any = createSlice({
     initialState,
     reducers: {
         setLessonIds: (state = initialState, action) => {
-            state.lessonId = action.payload.id
+            state.lessonId = action.payload
         }
     },
 

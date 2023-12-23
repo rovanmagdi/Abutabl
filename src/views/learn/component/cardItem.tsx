@@ -10,7 +10,7 @@ const CardItem: React.FC<ISubject> = ({
 	progress,
 }) => {
 	return (
-		<CardWrapper>
+		<CardWrapper className='cursor-pointer'>
 			<Flex justify="center" align="center" gap={'xl'} direction={'column'}>
 				<ImgWrapper>
 					<img src={image} alt="Book" />

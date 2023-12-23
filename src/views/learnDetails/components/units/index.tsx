@@ -19,8 +19,10 @@ import { lessonContent } from 'redux-toolkit/reducer/UnitsReducer';
 import LoadingPartially from 'components/loading-partially';
 import './index.css';
 import CircleProgress from 'components/CircleProgress';
+import { Link, useParams } from 'react-router-dom';
 const Units = () => {
     const dispatch = useDispatch();
+    const { id } = useParams()
     const subjectDetails = useSelector((state: any) => state.DetailsSubjectsReducer);
     const lesson = useSelector((state: any) => state.UnitsReducer);
     const [idData, setIdData] = useState<any>();
@@ -100,25 +102,32 @@ const Units = () => {
                                 <Box className="flex w-200 flex-wrap">
                                     {lesson?.lessonContentData?.contents?.map((lesson: any) => {
                                         return (
-                                            <Box className="contentLesson">
-                                                <Box className="contentIcons">
-                                                    {lesson?.type == 'video' ? (
-                                                        <img src={Video} alt="imag" />
-                                                    ) : lesson?.type == 'scrom' ? (
-                                                        <img src={Zip} alt="imag" />
-                                                    ) : lesson?.type == ('word' || 'pdf') ? (
-                                                        <img src={Sheet} alt="imag" />
-                                                    ) : lesson?.type == 'audio' ? (
-                                                        <img src={Audio} alt="imag" />
-                                                    ) : (
-                                                        lesson?.type == 'image' ?
-                                                            <img src={Image} alt="imag" /> :
+                                            <Link to={`/learn/${id}/${lesson?.id}`} target='_blank' onClick={() => {
+
+                                                localStorage.setItem('id', lesson?.id)
+
+
+                                            }}>
+                                                <Box className="contentLesson">
+                                                    <Box className="contentIcons">
+                                                        {lesson?.type == 'video' ? (
+                                                            <img src={Video} alt="imag" />
+                                                        ) : lesson?.type == 'scrom' ? (
+                                                            <img src={Zip} alt="imag" />
+                                                        ) : lesson?.type == ('word' || 'pdf') ? (
                                                             <img src={Sheet} alt="imag" />
-                                                    )}
+                                                        ) : lesson?.type == 'audio' ? (
+                                                            <img src={Audio} alt="imag" />
+                                                        ) : (
+                                                            lesson?.type == 'image' ?
+                                                                <img src={Image} alt="imag" /> :
+                                                                <img src={Sheet} alt="imag" />
+                                                        )}
+                                                    </Box>
+                                                    <Text>{lesson?.name}</Text>
+                                                    <Text className="text-stone-400">{lesson?.period}</Text>
                                                 </Box>
-                                                <Text>{lesson?.name}</Text>
-                                                <Text className="text-stone-400">{lesson?.period}</Text>
-                                            </Box>
+                                            </Link>
                                         );
                                     })}
                                 </Box>

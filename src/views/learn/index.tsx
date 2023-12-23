@@ -39,7 +39,7 @@ export default function Learn() {
 							{statusSubjects?.subjectsListData?.subjects?.map((item: { [key: string]: string }) => {
 								const progressNumber: number = parseFloat(item?.progress);
 								return (
-									<Grid.Col sm={6} md={4} lg={3} onClick={() => handleDetails(item)}>
+									<Grid.Col sm={6} md={4} lg={3} onClick={() => handleDetails(item)} >
 										<CardItem
 											image={item?.photo}
 											title={item?.name}
