@@ -78,11 +78,10 @@ const AccordionComponent = () => {
                                                 (lesson: { id: number, contents: { lessons_count: string; name: string; quizes_count: string }[] }) => {
                                                     return lesson?.contents.map((content: any) => {
                                                         return (
-                                                            <Link to={`details/${lesson?.id}`} target='_blank' rel="noopener noreferrer" className='cursor-pointer' onClick={() => {
+                                                            <Link to={`details/${lesson?.id}`} rel="noopener noreferrer" className='cursor-pointer' onClick={(event) => {
 
-                                                                dispatch(setLessonIds({ id: content?.id }))
                                                                 localStorage.setItem('id', content?.id)
-                                                                console.log("hhhhhhh", content?.id);
+
 
                                                             }}>
                                                                 <div className="flex justify-between items-center pb-0.5 px-5 pr-5  mt-5 "

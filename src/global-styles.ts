@@ -77,7 +77,7 @@ export const GlobalStyles = createGlobalStyle`
 	};
 
 	html, body, #root, .App{
-		min-height: 100vh;
+		// min-height: 100vh;
 	}
 	.Bold{
 		font-family: ${theme.fonts.Bold};

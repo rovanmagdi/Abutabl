@@ -41,6 +41,7 @@ const DetailsUnit = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    console.log(lessonContentList, "1");
 
 
     (async () => {
@@ -157,12 +158,14 @@ const DetailsUnit = () => {
         </Box>
       ) : (
         <Flex>
+
+
           <Box className={`${show && 'hidden'} transition-all`}>
-            <Accordion className="accordionLessonContainer">
+            <Accordion className="accordionLessonContainer" allowMultipleExpanded>
               {subjectDetails?.subjectDetailsData?.units?.map(
-                (unit: { lessons: []; lessons_count: string; name: string; quizes_count: string }, index: number) => {
+                (unit: { lessons: []; lessons_count: string; name: string; quizes_count: string, id: number }, index: number) => {
                   return (
-                    <AccordionItem className="accordionLesson">
+                    <AccordionItem className="accordionLesson" key={unit.id}>
                       <AccordionItemHeading>
                         <AccordionItemButton>
                           <Box className="flex justify-between ">
@@ -175,72 +178,71 @@ const DetailsUnit = () => {
                           </Box>
                         </AccordionItemButton>
                       </AccordionItemHeading>
-                      <AccordionItemPanel className="accordionLesson">
+                      <AccordionItemPanel className="accordionLesson" >
                         <Box>
                           {unit?.lessons?.map((lesson: { name: string; id: number; contents: [] }, index: number) => {
                             return (
-                              <>
-                                <Accordion>
-                                  <AccordionItem>
-                                    <AccordionItemHeading>
-                                      <AccordionItemButton>
-                                        <Box className="flex justify-between ">
-                                          {/* {item.heading} */}
-                                          <Box className="flex items-center " key={index}>
-                                            <img src={BookMark} alt="Book" className="mr-2 color-#9C9B9B" />
-                                            <Text className="text-stone-900 mb-2">{lesson?.name}</Text>
-                                          </Box>
+
+                              <Accordion allowMultipleExpanded>
+                                <AccordionItem key={lesson.id}>
+                                  <AccordionItemHeading>
+                                    <AccordionItemButton>
+                                      <Box className="flex justify-between ">
+                                        {/* {item.heading} */}
+                                        <Box className="flex items-center " key={index}>
+                                          <img src={BookMark} alt="Book" className="mr-2 color-#9C9B9B" />
+                                          <Text className="text-stone-900 mb-2">{lesson?.name}</Text>
                                         </Box>
-                                      </AccordionItemButton>
-                                    </AccordionItemHeading>
-                                    <AccordionItemPanel className="accordionLesson">
-                                      {lesson?.contents?.map(
-                                        (content: { name: string; type: string; path: string; id: number }) => {
-                                          return (
-                                            <>
-                                              <Flex
-                                                className={`cursor-pointer subLesson ${activeId == content?.id && 'activeLesson'
-                                                  }`}
-                                                onClick={() => {
+                                      </Box>
+                                    </AccordionItemButton>
+                                  </AccordionItemHeading>
+                                  <AccordionItemPanel className="accordionLesson" >
+                                    {lesson?.contents?.map(
+                                      (content: { name: string; type: string; path: string; id: number }) => {
+                                        return (
+                                          <>
+                                            <Flex
+                                              className={`cursor-pointer subLesson ${activeId == content?.id && 'activeLesson'
+                                                }`}
+                                              onClick={() => {
 
 
-                                                  setActiveId(content?.id);
-                                                  setItem({ path: content?.path, name: content?.name, type: content?.type });
+                                                setActiveId(content?.id);
+                                                setItem({ path: content?.path, name: content?.name, type: content?.type });
 
-                                                }}
-                                              >
-                                                <img
-                                                  src={
-                                                    content?.type == 'video'
-                                                      ? Video
-                                                      : content?.type == 'pdf'
-                                                        ? Sheet
-                                                        : content?.type == 'word'
-                                                          ? Article
-                                                          : content?.type == 'image'
-                                                            ? Image
-                                                            : content?.type == 'audio'
-                                                              ? Audio
-                                                              : Zip
-                                                  }
-                                                  alt="Book"
-                                                  className="mr-2 color-#9C9B9B"
-                                                />
-                                                <div className="text-stone-400">
-                                                  {' '}
-                                                  {content?.type} : {content?.name}
-                                                </div>
-                                              </Flex>
-                                            </>
-                                          );
-                                        }
-                                      )}
-                                    </AccordionItemPanel>
-                                  </AccordionItem>
-                                </Accordion>
+                                              }}
+                                            >
+                                              <img
+                                                src={
+                                                  content?.type == 'video'
+                                                    ? Video
+                                                    : content?.type == 'pdf'
+                                                      ? Sheet
+                                                      : content?.type == 'word'
+                                                        ? Article
+                                                        : content?.type == 'image'
+                                                          ? Image
+                                                          : content?.type == 'audio'
+                                                            ? Audio
+                                                            : Zip
+                                                }
+                                                alt="Book"
+                                                className="mr-2 color-#9C9B9B"
+                                              />
+                                              <div className="text-stone-400">
+                                                {' '}
+                                                {content?.type} : {content?.name}
+                                              </div>
+                                            </Flex>
+                                          </>
+                                        );
+                                      }
+                                    )}
+                                  </AccordionItemPanel>
+                                </AccordionItem>
+                              </Accordion>
 
-                                {/* </Box> */}
-                              </>
+
                             );
                           })}
                         </Box>
@@ -274,3 +276,5 @@ const DetailsUnit = () => {
 };
 
 export default DetailsUnit;
+
+
