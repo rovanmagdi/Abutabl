@@ -78,7 +78,7 @@ const AccordionComponent = () => {
                                                 (lesson: { id: number, contents: { lessons_count: string; name: string; quizes_count: string }[] }) => {
                                                     return lesson?.contents.map((content: any) => {
                                                         return (
-                                                            <Link to={`details/${lesson?.id}`} rel="noopener noreferrer" className='cursor-pointer' onClick={(event) => {
+                                                            <Link to={`details/${lesson?.id}`} target="_blank" rel="noopener noreferrer" className='cursor-pointer' onClick={(event) => {
 
                                                                 localStorage.setItem('id', content?.id)
 
