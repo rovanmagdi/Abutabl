@@ -1,5 +1,5 @@
 import { HTMLInputTypeAttribute, InputHTMLAttributes } from 'react';
-import { PasswordInput  as MantineInput, InputProps } from '@mantine/core';
+import { PasswordInput as MantineInput, InputProps } from '@mantine/core';
 import { useFormContext, RegisterOptions } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import { InputWrapper } from './styles';
@@ -30,8 +30,9 @@ function InputPassword({
 	labelVisibility = true,
 	className,
 	disabled,
+	defaultValue,
 	value,
-	onChange
+	onChange,
 }: IProps) {
 	const { register, formState } = useFormContext();
 	const { errors } = formState;
@@ -44,7 +45,7 @@ function InputPassword({
 	};
 	return (
 		<InputWrapper islabelVisible={labelVisibility} className={className}>
-			<label className={`${disabled?'disabled':''}`}>
+			<label className={`${disabled ? 'disabled' : ''}`}>
 				{label && (
 					<p>
 						{label}
@@ -57,6 +58,7 @@ function InputPassword({
 					{...register(name, registerOptions)}
 					value={value}
 					onChange={onChangeHandler}
+					defaultValue={defaultValue}
 				/>
 			</label>
 

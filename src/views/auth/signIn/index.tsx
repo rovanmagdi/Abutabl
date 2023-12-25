@@ -22,16 +22,15 @@ function Login() {
 	const { formatMessage } = useIntl();
 	const navigate = useNavigate();
 
-	const [loading, setLoading] = useState(false)
+	const [loading, setLoading] = useState(false);
 	const methods = useForm<Ilogin>();
 	const { handleSubmit } = methods;
 	const dispatch = useDispatch();
 	const onSubmit = async (data: Ilogin) => {
-
-		setLoading(true)
+		setLoading(true);
 		const result = await dispatch(loginUser(data));
-		console.log(result, "result");
-		setLoading(false)
+		console.log(result, 'result');
+		setLoading(false);
 		if (localStorage.getItem('api_token') && localStorage.getItem('api_token') != null) {
 			navigate('/learn');
 		}
@@ -55,7 +54,6 @@ function Login() {
 		if (!getLangSelected) return;
 		setLang(getLangSelected as 'ar' | 'en');
 	}, [getLangSelected, setLang]);
-
 
 	return (
 		<>
@@ -91,6 +89,7 @@ function Login() {
 										message: formatMessage({ id: 'numberOnly' }),
 									},
 								}}
+								defaultValue="54415"
 							/>
 							<InputPassword
 								name="password"
@@ -102,6 +101,7 @@ function Login() {
 										message: 'requiredField',
 									},
 								}}
+								defaultValue="123456789"
 							/>
 
 							<div className="text-sm flex justify-between items-center">
@@ -117,10 +117,14 @@ function Login() {
 								py={16}
 								size="xl"
 							>
-								{loading ? <div ><LoadingPartially />
-								</div> : <span className="text-Lotion font-medium">{formatMessage({ id: 'Login' })}</span>}
-								{ }
-
+								{loading ? (
+									<div>
+										<LoadingPartially />
+									</div>
+								) : (
+									<span className="text-Lotion font-medium">{formatMessage({ id: 'Login' })}</span>
+								)}
+								{}
 							</Button>
 						</form>
 					</FormProvider>
