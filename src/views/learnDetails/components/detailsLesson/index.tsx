@@ -269,12 +269,7 @@ const DetailsUnit = () => {
           </Box>
           <Box className="content w-full">
 
-            {item?.type == "image" ?
-              <div className='imageIframe'>
-                <img src={item?.path} />
-              </div>
-
-              :
+            {
               item?.type == "word" ?
                 <iframe
                   title="Word and excel Viewer"
@@ -285,7 +280,9 @@ const DetailsUnit = () => {
                     "https://view.officeapps.live.com/op/embed.aspx?src=" +
                     item?.path
                   }
-                ></iframe>
+                >
+
+                </iframe>
                 :
                 <iframe src={item?.path} allowFullScreen
                   style={{ width: "100%", height: "90vh" }} scrolling="no" />
