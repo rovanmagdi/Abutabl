@@ -22,7 +22,7 @@ export const ClassNumber = styled.span`
 `;
 
 export const CardWrapper = styled.div`
-	border-radius: 36px;
+	border-radius: 20px;
 	border: 2px solid ${theme.colours.Platinum};
 	box-shadow: 0px 6px 0px 0px ${theme.colours.Platinum};
 	padding: 24px;

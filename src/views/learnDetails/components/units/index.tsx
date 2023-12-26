@@ -61,7 +61,7 @@ const Units = () => {
                                                 </AccordionItemButton>
                                             </AccordionItemHeading>
                                             <AccordionItemPanel>
-                                                <Box className="">
+                                                <Box >
                                                     {unit?.lessons?.map((lesson: { name: string; id: number }, index: number) => {
                                                         return (
                                                             <Box

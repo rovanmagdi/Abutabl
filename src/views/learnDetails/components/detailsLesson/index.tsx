@@ -90,7 +90,7 @@ const DetailsUnit = () => {
         >
           <LogoImage width={80} />
         </Box>
-        <Text className={`${show ? "ms-5" : "ms-48"} text-LightSeaGreen text-xl font-semibold`}>{item?.name}</Text>
+        <Text className={`${show ? "ms-5" : "ms-48"} text-LightSeaGreen text-l font-semibold`}>{item?.name}</Text>
         <Flex className="justify-between ml-auto">
           <button
             className={`hover:font-black hover:text-lg transition-all mx-5 ${contentArr?.findIndex((item: any) => {
@@ -161,7 +161,7 @@ const DetailsUnit = () => {
 
 
           <Box className={`${show && 'hidden'} transition-all`}>
-            <Accordion className="accordionLessonContainer" allowMultipleExpanded>
+            <Accordion className="accordionLessonContainer" allowZeroExpanded>
               {subjectDetails?.subjectDetailsData?.units?.map(
                 (unit: { lessons: []; lessons_count: string; name: string; quizes_count: string, id: number }, index: number) => {
                   return (
@@ -183,8 +183,8 @@ const DetailsUnit = () => {
                           {unit?.lessons?.map((lesson: { name: string; id: number; contents: [] }, index: number) => {
                             return (
 
-                              <Accordion allowMultipleExpanded>
-                                <AccordionItem key={lesson.id}>
+                              <Accordion allowZeroExpanded>
+                                <AccordionItem key={index}>
                                   <AccordionItemHeading>
                                     <AccordionItemButton>
                                       <Box className="flex justify-between ">
@@ -264,9 +264,13 @@ const DetailsUnit = () => {
           <Box className="content w-full">
 
             {item?.type == "image" ?
-              <img src={item?.path} style={{ width: "100%", height: "90vh" }} /> :
+              <div className='imageIframe'>
+                <img src={item?.path} />
+              </div>
+
+              :
               <iframe src={item?.path} allowFullScreen
-                style={{ width: "100%", height: "94vh" }} scrolling="no" />}
+                style={{ width: "100%", height: "90vh" }} scrolling="no" />}
 
           </Box>
         </Flex>

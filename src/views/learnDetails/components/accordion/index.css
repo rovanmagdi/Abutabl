@@ -1,9 +1,9 @@
 .overviewAccordion > .accordion {
 	border-radius: 20px;
 }
-.accordion__button {
+.unitsAccordion .accordion__button {
 	background-color: #f5f5f5;
-	padding: 12px;
+	padding: 8px;
 }
 
 .accordion__item {

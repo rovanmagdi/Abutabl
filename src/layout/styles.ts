@@ -41,7 +41,7 @@ export const LayoutContainer = styled.div`
 			width: 1px;
 		}
 		@media (min-width: 767px) {
-			padding: 0 32px;
+			padding: 0 50px;
 		}
 	}
 `;

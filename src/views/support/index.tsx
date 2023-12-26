@@ -21,7 +21,7 @@ export const ModuleViewBodyWrapper = styled.div`
 	// padding: 32px;
 	overflow: hidden;
 	background-color: ${theme.colours.white};
-	border-radius: 36px;
+	border-radius: 20px;
 	min-height: 100%;
 `;
 
@@ -125,14 +125,12 @@ export default function Support() {
 														setSelectedId(item.id);
 													}}
 													key={item.id}
-													className={`transition duration-300 w-full focus:outline-none ticket grid grid-cols-[3.5rem_1fr] gap-4 p-6 overflow-hidden text-ellipsis border-b border-[#eee] ${
-														item.id === selectedId ? 'bg-[#F3FFFA]' : ''
-													}`}
+													className={`transition duration-300 w-full focus:outline-none ticket grid grid-cols-[3.5rem_1fr] gap-4 p-6 overflow-hidden text-ellipsis border-b border-[#eee] ${item.id === selectedId ? 'bg-[#F3FFFA]' : ''
+														}`}
 												>
 													<div
-														className={`icon w-14 h-14 rounded-full shadow flex justify-center items-center transition duration-300 ${
-															item.status === 'Closed' ? 'bg-[#FAF9F9]' : 'bg-white'
-														}`}
+														className={`icon w-14 h-14 rounded-full shadow flex justify-center items-center transition duration-300 ${item.status === 'Closed' ? 'bg-[#FAF9F9]' : 'bg-white'
+															}`}
 													>
 														<TicketSideBarIcon />
 													</div>

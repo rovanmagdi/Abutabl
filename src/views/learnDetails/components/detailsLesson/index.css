@@ -9,8 +9,9 @@
 
 .accordionLessonContainer {
 	width: 290px;
-	height: 93vh;
+	height: 90vh;
 	border: 1px solid #f4f4f4;
+	overflow: scroll;
 }
 
 .accordion__item {
@@ -44,13 +45,23 @@
 	z-index: 28;
 }
 .absoluteIconAfter {
-	/* left: 0; */
-	/* left: 2033px; */
 	z-index: 28;
 
 	position: absolute;
 }
 
 .content {
-	background-color: #f7f9fa;
+	/* background-color: #f7f9fa; */
+	height: auto;
+	/* background-color: #1ebba3; */
+	width: 100%;
+	height: 90vh;
+}
+.content .imageIframe {
+	width: 100%;
+	height: 100%;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
