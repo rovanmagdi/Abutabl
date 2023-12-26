@@ -17,6 +17,7 @@ import Audio from 'assets/images/svg/audio.svg';
 import Article from 'assets/images/svg/article.svg';
 import Arrow from 'assets/images/svg/arrow.svg';
 import Arrow2 from 'assets/images/svg/arrow2.svg';
+import ArrowCursor from 'assets/images/svg/arrowCursor.svg';
 import { useNavigate } from 'react-router-dom';
 
 import Sheet from 'assets/images/svg/sheets.svg';
@@ -97,7 +98,7 @@ const DetailsUnit = () => {
               return item.id == activeId;
             }) == 0 || activeId == ''
               ? 'text-gray'
-              : 'text-Warning'
+              : 'text-LightSeaGreen'
               }`}
             disabled={
               contentArr?.findIndex((item: any) => {
@@ -116,8 +117,13 @@ const DetailsUnit = () => {
               }
             }}
           >
-            <span className="mx-2">{/* <KeyboardBackspaceIcon /> */}</span>
-            Previous
+            <div className="mx-2 flex justify-center">
+
+              <div>
+
+                Previous
+              </div>
+            </div>
           </button>
 
           <button
@@ -137,7 +143,7 @@ const DetailsUnit = () => {
             }) ==
               contentArr?.length - 1 || activeId == ''
               ? 'text-gray'
-              : 'text-Warning'
+              : 'text-LightSeaGreen'
               } `}
             disabled={
               contentArr?.findIndex((item: any) => {
@@ -269,8 +275,22 @@ const DetailsUnit = () => {
               </div>
 
               :
-              <iframe src={item?.path} allowFullScreen
-                style={{ width: "100%", height: "90vh" }} scrolling="no" />}
+              item?.type == "word" ?
+                <iframe
+                  title="Word and excel Viewer"
+                  className="w-full h-full"
+                  height={"100%"}
+                  width={"100%"}
+                  src={
+                    "https://view.officeapps.live.com/op/embed.aspx?src=" +
+                    item?.path
+                  }
+                ></iframe>
+                :
+                <iframe src={item?.path} allowFullScreen
+                  style={{ width: "100%", height: "90vh" }} scrolling="no" />
+
+            }
 
           </Box>
         </Flex>
