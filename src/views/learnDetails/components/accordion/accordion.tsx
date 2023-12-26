@@ -36,7 +36,7 @@ const AccordionComponent = () => {
         <Box className='overviewAccordion'>
 
 
-            <Accordion allowMultipleExpanded={false} preExpanded={['first']}>
+            <Accordion allowZeroExpanded>
                 <AccordionItem uuid="first">
                     <AccordionItemHeading>
                         <AccordionItemButton style={{ borderRadius: '20px 20px 0 0 ' }}>About course</AccordionItemButton>

@@ -2,7 +2,7 @@ import { theme } from '../../global-styles';
 import styled from 'styled-components';
 
 export const SideBarWrapper = styled.aside`
-	padding: calc(${theme.space_size} * 4) calc(${theme.space_size});
+	// padding: calc(${theme.space_size} * 4) calc(${theme.space_size});
 	transition: all 0.5s;
 	background-color: ${theme.colours.white};
 	box-shadow: 0px 1px 10px 0px #00000014;
@@ -135,7 +135,7 @@ export const NavItem = styled.div<{ activeLink: boolean }>`
 `;
 
 export const SideBarHelpersActionWrapper = styled.div`
-	padding: 0 24px;
+	padding: 0 10px;
 	.langWrapper {
 		div {
 			cursor: pointer;

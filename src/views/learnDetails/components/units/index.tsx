@@ -42,11 +42,11 @@ const Units = () => {
                             Course content
                             <Text className="text-stone-400">{subjectDetails?.subjectDetailsData?.units?.length} units</Text>
                         </Box>
-                        <Accordion allowMultipleExpanded={false} >
+                        <Accordion allowZeroExpanded>
                             {subjectDetails?.subjectDetailsData?.units?.map(
-                                (unit: { lessons: []; lessons_count: string; name: string; quizes_count: string }, index: number) => {
+                                (unit: { lessons: []; lessons_count: string; name: string; quizes_count: string, id: number }, index: number) => {
                                     return (
-                                        <AccordionItem>
+                                        <AccordionItem key={id}>
                                             <AccordionItemHeading>
                                                 <AccordionItemButton>
                                                     <Box className="flex justify-between mx-5">
@@ -102,7 +102,7 @@ const Units = () => {
                                 <Box className="flex w-200 flex-wrap">
                                     {lesson?.lessonContentData?.contents?.map((lesson: any) => {
                                         return (
-                                            <Link to={`/learn/${id}/${lesson?.id}`} target='_blank' onClick={() => {
+                                            <Link to={`details/${lesson?.id}`} target='_blank' onClick={() => {
 
                                                 localStorage.setItem('id', lesson?.id)
 

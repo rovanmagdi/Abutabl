@@ -3,8 +3,8 @@ import styled from 'styled-components';
 
 export const HeaderWrapper = styled.section`
 	position: relative;
+	padding: 8px 0px 20px 0px;
 	background-color: ${theme.colours.PaoloVeroneseGreen};
-	padding: 32px 0;
 	.wellcome_wrapper {
 		color: ${theme.colours.white};
 		h1 {
@@ -16,14 +16,12 @@ export const HeaderWrapper = styled.section`
 			font-family: ${theme.fonts.Medium};
 		}
 	}
-	.search_wrapper {
-		border: 2px solid ${theme.colours.Platinum};
-	}
+
 	.notification {
 		background-color: ${theme.colours.white};
-		width: 56px;
-		height: 56px;
-		border-radius: 16px;
+		width: 38px;
+		height: 38px;
+		border-radius: 12px;
 		border: 2px solid ${theme.colours.Platinum};
 	}
 `;

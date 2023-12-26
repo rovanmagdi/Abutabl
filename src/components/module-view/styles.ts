@@ -15,8 +15,8 @@ export const ModuleHeaderWrapper = styled.div`
 	background-color: ${theme.colours.BrightGray};
 	border-top-right-radius: 36px;
 	border-top-left-radius: 36px;
-	height: 91px;
-	line-height: 91px;
+	height: 60px;
+	line-height: 60px;
 	padding: 0 32px;
 	border-bottom: 1px solid #fcfcfc;
 `;

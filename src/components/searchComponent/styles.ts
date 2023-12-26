@@ -4,7 +4,7 @@ import styled from 'styled-components';
 export const SearchWrapper = styled.div`
 	flex: 1;
 	.search_wrapper {
-		padding: 10px 16px;
+		padding: 3px;
 		border-radius: 16px;
 		background-color: ${theme.colours.white};
 		input {

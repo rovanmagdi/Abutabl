@@ -26,6 +26,7 @@ export const CardWrapper = styled.div`
 	border: 2px solid ${theme.colours.Platinum};
 	box-shadow: 0px 6px 0px 0px ${theme.colours.Platinum};
 	padding: 24px;
+	// height:300px
 `;
 
 export const ImgWrapper = styled.div`
