@@ -269,7 +269,15 @@ const DetailsUnit = () => {
           </Box>
           <Box className="content w-full">
 
-            {
+            {item?.type == "image" ?
+              <div className="imageIframe">
+                <img src={item?.path}
+                />
+
+              </div>
+
+
+              :
               item?.type == "word" ?
                 <iframe
                   title="Word and excel Viewer"
