@@ -56,6 +56,9 @@ const DetailsGames = () => {
         setActiveId(statusGames?.gamesDetailstData?.game?.id);
     }, [statusGames?.gamesDetailstData]);
 
+    useEffect(() => {
+        setContentArr(statusGames?.gamesListData?.games)
+    }, [statusGames?.gamesListData?.games]);
     return (
         <>
             <Box className="flex items-center mx-5 w-100 mt-3 mb-3">
@@ -73,8 +76,8 @@ const DetailsGames = () => {
                         className={`hover:font-black hover:text-lg transition-all mx-5 ${contentArr?.findIndex((item: any) => {
                             return item.id == activeId;
                         }) == 0 || activeId == ''
-                                ? 'text-gray'
-                                : 'text-LightSeaGreen'
+                            ? 'text-gray'
+                            : 'text-LightSeaGreen'
                             }`}
                         disabled={
                             contentArr?.findIndex((item: any) => {
@@ -113,9 +116,9 @@ const DetailsGames = () => {
                         className={` hover:font-black hover:text-lg transition-all ${contentArr?.findIndex((item: any) => {
                             return item.id == activeId;
                         }) ==
-                                contentArr?.length - 1 || activeId == ''
-                                ? 'text-gray'
-                                : 'text-LightSeaGreen'
+                            contentArr?.length - 1 || activeId == ''
+                            ? 'text-gray'
+                            : 'text-LightSeaGreen'
                             } `}
                         disabled={
                             contentArr?.findIndex((item: any) => {
