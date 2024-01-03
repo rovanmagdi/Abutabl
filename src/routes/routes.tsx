@@ -79,6 +79,11 @@ const Routes = () => {
 					element: ROUTES.learnDetailsUnit.component,
 
 				},
+				{
+					path: 'learn/:id/detailsGame/:idGame',
+					element: ROUTES.learnDetailsGame.component,
+
+				},
 
 
 			],

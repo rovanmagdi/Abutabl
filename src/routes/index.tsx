@@ -3,6 +3,7 @@ import { useIntl } from 'react-intl';
 import { ReactComponent as LearnIcon } from 'assets/images/svg/book.svg';
 import { ReactComponent as ProfileIcon } from 'assets/images/svg/profile.svg';
 import { ReactComponent as SupportIcon } from 'assets/images/svg/messages.svg';
+import DetailsGames from 'views/learnDetails/components/detailsGame';
 
 
 
@@ -40,6 +41,7 @@ export interface IRoutes {
 	support: IRoute;
 	learnDetails: IRoute;
 	learnDetailsUnit: IRoute;
+	learnDetailsGame: IRoute
 }
 
 export function useRoutesConst() {
@@ -123,6 +125,17 @@ export function useRoutesConst() {
 				to: () => 'details/:idUnit/:id',
 				fullTitle: () => [{ name: formatMessage({ id: 'learnDetailsUnit' }) }],
 				title: () => formatMessage({ id: 'learnDetailsUnit' }),
+				sidebarTitle: () => formatMessage({ id: 'learn' }),
+			},
+			learnDetailsGame: {
+				component: <DetailsGames />,
+				path: 'learn/:id/detailsGame/:idGame',
+				icon: <LearnIcon />,
+				privileges: true,
+
+				to: () => 'learn/:id/detailsGame/:idGames',
+				fullTitle: () => [{ name: formatMessage({ id: 'learnDetailsGame' }) }],
+				title: () => formatMessage({ id: 'learnDetailsGame' }),
 				sidebarTitle: () => formatMessage({ id: 'learn' }),
 			},
 			profile: {

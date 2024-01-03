@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import DetailsSubjectsReducer from "redux-toolkit/reducer/DetailsSubjectsReducer";
+import GamesReducer from "redux-toolkit/reducer/GamesReducer";
 import LoginReducer from "redux-toolkit/reducer/LoginReducer";
 import SubjectsReducer from "redux-toolkit/reducer/SubjectsReducer";
 import UnitsReducer from "redux-toolkit/reducer/UnitsReducer";
@@ -9,7 +10,8 @@ export const store = configureStore({
         LoginReducer: LoginReducer,
         SubjectsReducer: SubjectsReducer,
         DetailsSubjectsReducer: DetailsSubjectsReducer,
-        UnitsReducer: UnitsReducer
+        UnitsReducer: UnitsReducer,
+        GamesReducer: GamesReducer,
 
     }
 })

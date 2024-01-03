@@ -17,10 +17,12 @@ const CardItem: React.FC<ISubject> = ({
 				</ImgWrapper>
 				<Details>
 					<Flex justify="center" align="start" gap={8} direction={'column'}>
+
 						<Title className="title">{title}</Title>
-						<Unit>
+						{units && <Unit>
 							{units} units - {lesson} lessons
-						</Unit>
+						</Unit>}
+
 						<Grid align="center" style={{ width: '100%' }}>
 							<Grid.Col span={10}>
 								<Progress color={theme.colours.Warning} h={4} value={progress} />
