@@ -31,6 +31,7 @@ export const CardWrapper = styled.div`
 
 export const ImgWrapper = styled.div`
 	padding: 24px;
+	height:150px
 `;
 
 export const Details = styled.div`

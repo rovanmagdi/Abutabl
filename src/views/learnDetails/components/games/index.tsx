@@ -46,11 +46,11 @@ export default function LearnDetailsGames() {
                             {statusGames?.gamesListData?.games?.map((item: { [key: string]: string }) => {
                                 const progressNumber: number = parseFloat(item?.progress);
                                 return (
-                                    <Link to={`/learn/${id}/detailsGame/${item?.id}`} target='_blank'>
-                                        <Grid.Col sm={6} md={4} lg={3} >
+                                    <Grid.Col sm={6} md={4} lg={3} >
+                                        <Link to={`/learn/${id}/detailsGame/${item?.id}`} target='_blank'>
                                             <CardItem image={item?.background} title={item?.name} progress={progressNumber} />
-                                        </Grid.Col>
-                                    </Link>
+                                        </Link>
+                                    </Grid.Col>
                                 );
                             })}
                         </Grid>
