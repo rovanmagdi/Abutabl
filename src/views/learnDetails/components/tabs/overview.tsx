@@ -9,11 +9,11 @@ import Certifaction from 'assets/images/svg/certificate.svg';
 import AccordionComponent from 'views/learnDetails/components/accordion/accordion';
 import { Box, Text } from '@mantine/core';
 import { useSelector } from 'react-redux';
-import { RootState } from 'redux-toolkit/store/store';
-import { ISubjectDetails } from 'views/learnDetails/types/SubjectDetails.type';
+
 
 const Overview = () => {
-    const subjectDetails = useSelector((state: any) => state.DetailsSubjectsReducer.subjectDetailsData);
+    const subjectDetails = useSelector((state: any) => state.SubjectsReducer.subjectDetailsData);
+    console.log(subjectDetails);
 
     const contant = [
         // { image: Video, label: '65 hours on demand videos' },

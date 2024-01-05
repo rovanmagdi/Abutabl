@@ -15,16 +15,17 @@ import Image from 'assets/images/svg/image.svg';
 import Zip from 'assets/images/svg/zip.svg';
 import Audio from 'assets/images/svg/audio.svg';
 import Sheet from 'assets/images/svg/sheets.svg';
-import { lessonContent } from 'redux-toolkit/reducer/UnitsReducer';
+
 import LoadingPartially from 'components/loading-partially';
 import './index.css';
 import CircleProgress from 'components/CircleProgress';
 import { Link, useParams } from 'react-router-dom';
+import { lessonContent } from 'redux-toolkit/reducer/LessonReducer';
 const Units = () => {
     const dispatch = useDispatch();
     const { id } = useParams()
-    const subjectDetails = useSelector((state: any) => state.DetailsSubjectsReducer);
-    const lesson = useSelector((state: any) => state.UnitsReducer);
+    const subjectDetails = useSelector((state: any) => state.SubjectsReducer);
+    const lesson = useSelector((state: any) => state.LessonReducer);
     const [idData, setIdData] = useState<any>();
     const [loading, setLoading] = useState(false);
 

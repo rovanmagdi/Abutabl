@@ -5,10 +5,14 @@ export const SubjectsList: any = createAsyncThunk('SubjectsList', async (body: a
     const result = await getRequest(`getSubjects`, body);
     return result;
 });
+export const SubjectDetails: any = createAsyncThunk('SubjectDetails', async (id: string) => {
+    const result = await getRequest(`viewSubject/${id}`);
+    return result;
+});
 
 const initialState: any = {
     loading: true,
-    subjectsListData: []
+    subjectsListData: [], subjectDetailsData: {}
 };
 
 const SubjectsListSlice: any = createSlice({
@@ -20,6 +24,10 @@ const SubjectsListSlice: any = createSlice({
         builder.addCase(SubjectsList.fulfilled, (state, action) => {
             state.loading = false;
             state.subjectsListData = action.payload
+        });
+        builder.addCase(SubjectDetails.fulfilled, (state, action) => {
+            state.loading = false;
+            state.subjectDetailsData = action.payload
         });
     },
 });

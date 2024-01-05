@@ -21,7 +21,7 @@ import ArrowCursor from 'assets/images/svg/arrowCursor.svg';
 import { useNavigate } from 'react-router-dom';
 
 import Sheet from 'assets/images/svg/sheets.svg';
-import { lessonContent } from 'redux-toolkit/reducer/UnitsReducer';
+import { lessonContent } from 'redux-toolkit/reducer/lessonsReducer';
 import LoadingPartially from 'components/loading-partially';
 import './index.css';
 import { ReactComponent as LogoImage } from 'assets/images/svg/logo-aboutabl-dark 2.svg';

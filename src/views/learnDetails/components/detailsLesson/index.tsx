@@ -21,18 +21,20 @@ import ArrowCursor from 'assets/images/svg/arrowCursor.svg';
 import { useNavigate } from 'react-router-dom';
 
 import Sheet from 'assets/images/svg/sheets.svg';
-import { lessonContent } from 'redux-toolkit/reducer/UnitsReducer';
+
 import LoadingPartially from 'components/loading-partially';
 import './index.css';
 import { ReactComponent as LogoImage } from 'assets/images/svg/logo-aboutabl-dark 2.svg';
 
 import { useParams } from 'react-router-dom';
-import { SubjectDetails } from 'redux-toolkit/reducer/DetailsSubjectsReducer';
+import { SubjectDetails } from 'redux-toolkit/reducer/SubjectsReducer';
+import { lessonContent } from 'redux-toolkit/reducer/LessonReducer';
+
 const DetailsUnit = () => {
   const dispatch = useDispatch();
   const nagivate = useNavigate();
-  const subjectDetails = useSelector((state: any) => state.DetailsSubjectsReducer);
-  const lessonContentList = useSelector((state: any) => state.UnitsReducer);
+  const subjectDetails = useSelector((state: any) => state.SubjectsReducer);
+  const lessonContentList = useSelector((state: any) => state.LessonReducer);
   const { id, idUnit } = useParams();
   const [item, setItem] = useState<any>(localStorage.getItem('id'));
   const [contentArr, setContentArr] = useState<any>();
@@ -256,7 +258,7 @@ const DetailsUnit = () => {
           </Box>
           <Box className={`${show ? "contentShow" : "content"} w-full`}>
             {item?.type == 'image' ? (
-              <img src={item?.path} style={{ maxWidth: '100%', maxHeight: '90vh', marginLeft: 'auto', marginRight: "auto", marginTop: "100px" }} />
+              <img src={item?.path} style={{ maxWidth: '100%', maxHeight: '90vh', marginLeft: 'auto', marginRight: "auto" }} />
             ) : item?.type == 'word' ? (
               <iframe
                 title="Word and excel Viewer"

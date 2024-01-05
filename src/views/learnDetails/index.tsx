@@ -10,8 +10,9 @@ import PageHeader from './components/pageHeader';
 import TabsComponent from './components/tabs/tabs';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { SubjectDetails } from 'redux-toolkit/reducer/DetailsSubjectsReducer';
+
 import { useParams } from 'react-router-dom';
+import { SubjectDetails } from 'redux-toolkit/reducer/SubjectsReducer';
 
 
 export default function LearnDetails() {
@@ -19,7 +20,7 @@ export default function LearnDetails() {
     const langType = useRecoilValue(langState);
     const dispatch = useDispatch()
     const { id } = useParams()
-    const subjectDetails = useSelector((state: any) => state.DetailsSubjectsReducer);
+    const subjectDetails = useSelector((state: any) => state.SubjectsReducer);
 
 
     useEffect(() => {

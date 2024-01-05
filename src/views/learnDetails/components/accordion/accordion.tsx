@@ -17,13 +17,11 @@ import Sheet from 'assets/images/svg/sheets.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box } from '@mantine/core';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { setLessonIds } from 'redux-toolkit/reducer/UnitsReducer';
-import { SubjectDetails } from 'redux-toolkit/reducer/DetailsSubjectsReducer';
+
+
 
 const AccordionComponent = () => {
-    const subjectDetails = useSelector((state: any) => state.DetailsSubjectsReducer.subjectDetailsData);
-    const { id } = useParams()
-    const dispatch = useDispatch()
+    const subjectDetails = useSelector((state: any) => state.SubjectsReducer.subjectDetailsData);
     const [htmlDesc, setHTMLDesc] = useState({ __html: '' });
     const [htmlPass, setHTMLPass] = useState({ __html: '' });
     useEffect(() => {
