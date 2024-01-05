@@ -45,7 +45,9 @@ const Overview = () => {
                 <img
                     src={subjectDetails?.basic_info?.photo}
                     alt="Book"
-                    className="m-auto"
+                    className="m-auto heightImg"
+
+
                 />
                 <Text className="mt-10">This course include</Text>
                 {contant.map((item: { [key: string]: string | JSX.Element }) => {

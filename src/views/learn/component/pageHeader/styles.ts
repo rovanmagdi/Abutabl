@@ -2,7 +2,7 @@ import { theme } from 'global-styles';
 import styled from 'styled-components';
 
 export const HeaderWrapper = styled.section`
-	position: relative;
+	 position: relative;
 	background-color: ${theme.colours.PaoloVeroneseGreen};
 	padding: 8px 0px 20px 0px;
 	.wellcome_wrapper {

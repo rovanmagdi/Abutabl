@@ -57,7 +57,7 @@ const DetailsGames = () => {
     }, [statusGames?.gamesDetailstData]);
 
     useEffect(() => {
-        setContentArr(statusGames?.gamesListData?.games)
+        setContentArr(statusGames?.gamesListData?.games);
     }, [statusGames?.gamesListData?.games]);
     return (
         <>
@@ -73,7 +73,7 @@ const DetailsGames = () => {
                 <Text className={`${show ? 'ms-5' : 'ms-48'} text-LightSeaGreen text-l font-semibold`}>{item?.name}</Text>
                 <Flex className="justify-between ml-auto">
                     <button
-                        className={`hover:font-black hover:text-lg transition-all mx-5 ${contentArr?.findIndex((item: any) => {
+                        className={`hover:font-semibold hover:text-base transition-all mx-5 ${contentArr?.findIndex((item: any) => {
                             return item.id == activeId;
                         }) == 0 || activeId == ''
                             ? 'text-gray'
@@ -84,15 +84,20 @@ const DetailsGames = () => {
                                 return item.id == activeId;
                             }) == 0 || activeId == ''
                         }
-                        onClick={() => {
+                        onClick={async () => {
                             let index = contentArr?.findIndex((item: any) => {
                                 return item.id == activeId;
                             });
 
                             if (typeof index === 'number' && index != -1) {
-                                setDataType(contentArr[index - 1]?.type);
+
                                 setActiveId(contentArr[index - 1]?.id);
                                 setItem(contentArr[index - 1]);
+                                setLoading(true);
+
+                                await dispatch(gameDetails(contentArr[index - 1].id));
+
+                                setLoading(false);
                             }
                         }}
                     >
@@ -102,18 +107,23 @@ const DetailsGames = () => {
                     </button>
 
                     <button
-                        onClick={() => {
+                        onClick={async () => {
                             let index = contentArr?.findIndex((item: any) => {
                                 return item.id == activeId;
                             });
 
                             if (typeof index === 'number' && index != -1) {
-                                setDataType(contentArr[index + 1]?.type);
+
                                 setActiveId(contentArr[index + 1]?.id);
                                 setItem(contentArr[index + 1]);
+                                setLoading(true);
+
+                                await dispatch(gameDetails(contentArr[index + 1].id));
+
+                                setLoading(false);
                             }
                         }}
-                        className={` hover:font-black hover:text-lg transition-all ${contentArr?.findIndex((item: any) => {
+                        className={` hover:font-semibold hover:text-base transition-all ${contentArr?.findIndex((item: any) => {
                             return item.id == activeId;
                         }) ==
                             contentArr?.length - 1 || activeId == ''
@@ -133,39 +143,41 @@ const DetailsGames = () => {
                 </Flex>
             </Box>
 
-            {loading ? (
-                <Box className="mt-48">
-                    <LoadingPartially />
-                </Box>
-            ) : (
-                <Flex>
-                    <Box className={`${show && 'hidden'} transition-all`}>
-                        <Box className="accordionLessonContainer">
-                            {statusGames?.gamesListData?.games?.map((game: { name: string; id: number; index: number }) => {
-                                return (
-                                    <Box
-                                        className={`cursor-pointer subLesson ${activeId == game?.id && 'activeLesson'}`}
-                                        onClick={() => {
-                                            setItem(game);
-                                            dispatch(gameDetails(game.id));
-                                        }}
-                                    >
-                                        <Box className="accordionGames" key={id}>
-                                            {game.name}
-                                        </Box>
+            <Flex>
+                <Box className={`${show && 'hidden'} transition-all`}>
+                    <Box className="accordionLessonContainer">
+                        {statusGames?.gamesListData?.games?.map((game: { name: string; id: number; index: number }) => {
+                            return (
+                                <Box
+                                    className={`cursor-pointer subLesson ${activeId == game?.id && 'activeLesson'}`}
+                                    onClick={async () => {
+                                        setActiveId(game.id)
+                                        setLoading(true);
+                                        setItem(game);
+                                        await dispatch(gameDetails(game.id));
+
+                                        setLoading(false);
+                                    }}
+                                >
+                                    <Box className="accordionGames" key={id}>
+                                        {game.name}
                                     </Box>
-                                );
-                            })}
-                        </Box>
+                                </Box>
+                            );
+                        })}
                     </Box>
-                    <Box
-                        className={`${show ? 'absoluteIconAfter' : 'absoluteIcon'} cursor-pointer`}
-                        onClick={() => {
-                            setShow(!show);
-                        }}
-                    >
-                        <Box>{show ? <img src={Arrow} alt="" /> : <img src={Arrow2} alt="" />}</Box>
-                    </Box>
+                </Box>
+                <Box
+                    className={`${show ? 'absoluteIconAfter' : 'absoluteIcon'} cursor-pointer`}
+                    onClick={() => {
+                        setShow(!show);
+                    }}
+                >
+                    <Box>{show ? <img src={Arrow} alt="" /> : <img src={Arrow2} alt="" />}</Box>
+                </Box>
+                {loading ? (
+                    <LoadingPartially />
+                ) : (
                     <Box className="content w-full">
                         {item?.type == 'image' ? (
                             <div className="imageIframe">
@@ -183,8 +195,8 @@ const DetailsGames = () => {
                             <iframe src={item?.path} allowFullScreen style={{ width: '100%', height: '90vh' }} scrolling="no" />
                         )}
                     </Box>
-                </Flex>
-            )}
+                )}
+            </Flex>
         </>
     );
 };

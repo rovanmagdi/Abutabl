@@ -10,11 +10,8 @@ import { SubjectsList } from 'redux-toolkit/reducer/SubjectsReducer';
 import EmptyComp from 'views/Empty';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import LoadingPartially from 'components/loading-partially';
-import PageHeader from '../pageHeader';
-import Header from 'layout/header';
-import CardItem from 'views/learn/component/cardItem';
-import { CardsWrapper } from 'views/learn/styles';
 import { gamesList } from 'redux-toolkit/reducer/GamesReducer';
+import CardItem from '../cardItem';
 
 export default function LearnDetailsGames() {
     /* ------------------------------- Local State ------------------------------ */

@@ -42,8 +42,7 @@ const DetailsUnit = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    console.log(lessonContentList, "1");
-
+    console.log(lessonContentList, '1');
 
     (async () => {
       setLoading(true);
@@ -55,10 +54,7 @@ const DetailsUnit = () => {
 
   useEffect(() => {
     localStorage.setItem('id', activeId);
-
-
   }, [activeId]);
-
 
   useEffect(() => {
     const arr: any = [];
@@ -66,12 +62,8 @@ const DetailsUnit = () => {
       unit?.lessons?.map((lesson: { contents: [] }) => {
         lesson?.contents?.map((content: any) => {
           if (content?.id == localStorage.getItem('id')) {
-
-
             setItem(content);
             setActiveId(content.id);
-
-
           }
           arr.push(content);
         });
@@ -91,10 +83,10 @@ const DetailsUnit = () => {
         >
           <LogoImage width={80} />
         </Box>
-        <Text className={`${show ? "ms-5" : "ms-48"} text-LightSeaGreen text-l font-semibold`}>{item?.name}</Text>
+        <Text className={`${show ? 'ms-5' : 'ms-48'} text-LightSeaGreen text-l font-semibold`}>{item?.name}</Text>
         <Flex className="justify-between ml-auto">
           <button
-            className={`hover:font-black hover:text-lg transition-all mx-5 ${contentArr?.findIndex((item: any) => {
+            className={`hover:font-semibold hover:text-base transition-all mx-5 ${contentArr?.findIndex((item: any) => {
               return item.id == activeId;
             }) == 0 || activeId == ''
               ? 'text-gray'
@@ -118,11 +110,7 @@ const DetailsUnit = () => {
             }}
           >
             <div className="mx-2 flex justify-center">
-
-              <div>
-
-                Previous
-              </div>
+              <div>Previous</div>
             </div>
           </button>
 
@@ -138,7 +126,7 @@ const DetailsUnit = () => {
                 setItem(contentArr[index + 1]);
               }
             }}
-            className={` hover:font-black hover:text-lg transition-all ${contentArr?.findIndex((item: any) => {
+            className={`hover:font-semibold hover:text-base transition-all ${contentArr?.findIndex((item: any) => {
               return item.id == activeId;
             }) ==
               contentArr?.length - 1 || activeId == ''
@@ -164,12 +152,13 @@ const DetailsUnit = () => {
         </Box>
       ) : (
         <Flex>
-
-
           <Box className={`${show && 'hidden'} transition-all`}>
             <Accordion className="accordionLessonContainer" allowZeroExpanded>
               {subjectDetails?.subjectDetailsData?.units?.map(
-                (unit: { lessons: []; lessons_count: string; name: string; quizes_count: string, id: number }, index: number) => {
+                (
+                  unit: { lessons: []; lessons_count: string; name: string; quizes_count: string; id: number },
+                  index: number
+                ) => {
                   return (
                     <AccordionItem className="accordionLesson" key={unit.id}>
                       <AccordionItemHeading>
@@ -184,11 +173,10 @@ const DetailsUnit = () => {
                           </Box>
                         </AccordionItemButton>
                       </AccordionItemHeading>
-                      <AccordionItemPanel className="accordionLesson" >
+                      <AccordionItemPanel className="accordionLesson">
                         <Box>
                           {unit?.lessons?.map((lesson: { name: string; id: number; contents: [] }, index: number) => {
                             return (
-
                               <Accordion allowZeroExpanded>
                                 <AccordionItem key={index}>
                                   <AccordionItemHeading>
@@ -202,7 +190,7 @@ const DetailsUnit = () => {
                                       </Box>
                                     </AccordionItemButton>
                                   </AccordionItemHeading>
-                                  <AccordionItemPanel className="accordionLesson" >
+                                  <AccordionItemPanel className="accordionLesson">
                                     {lesson?.contents?.map(
                                       (content: { name: string; type: string; path: string; id: number }) => {
                                         return (
@@ -211,11 +199,12 @@ const DetailsUnit = () => {
                                               className={`cursor-pointer subLesson ${activeId == content?.id && 'activeLesson'
                                                 }`}
                                               onClick={() => {
-
-
                                                 setActiveId(content?.id);
-                                                setItem({ path: content?.path, name: content?.name, type: content?.type });
-
+                                                setItem({
+                                                  path: content?.path,
+                                                  name: content?.name,
+                                                  type: content?.type,
+                                                });
                                               }}
                                             >
                                               <img
@@ -247,8 +236,6 @@ const DetailsUnit = () => {
                                   </AccordionItemPanel>
                                 </AccordionItem>
                               </Accordion>
-
-
                             );
                           })}
                         </Box>
@@ -267,36 +254,20 @@ const DetailsUnit = () => {
           >
             <Box>{show ? <img src={Arrow} alt="" /> : <img src={Arrow2} alt="" />}</Box>
           </Box>
-          <Box className="content w-full">
-
-            {item?.type == "image" ?
-              <div className="imageIframe">
-                <img src={item?.path}
-                />
-
-              </div>
-
-
-              :
-              item?.type == "word" ?
-                <iframe
-                  title="Word and excel Viewer"
-                  className="w-full h-full"
-                  height={"100%"}
-                  width={"100%"}
-                  src={
-                    "https://view.officeapps.live.com/op/embed.aspx?src=" +
-                    item?.path
-                  }
-                >
-
-                </iframe>
-                :
-                <iframe src={item?.path} allowFullScreen
-                  style={{ width: "100%", height: "90vh" }} scrolling="no" />
-
-            }
-
+          <Box className={`${show ? "contentShow" : "content"} w-full`}>
+            {item?.type == 'image' ? (
+              <img src={item?.path} style={{ maxWidth: '100%', maxHeight: '90vh', marginLeft: 'auto', marginRight: "auto", marginTop: "100px" }} />
+            ) : item?.type == 'word' ? (
+              <iframe
+                title="Word and excel Viewer"
+                allowFullScreen
+                style={{ width: '100%', height: '90vh' }}
+                scrolling="no"
+                src={'https://view.officeapps.live.com/op/embed.aspx?src=' + item?.path}
+              ></iframe>
+            ) : (
+              <iframe src={item?.path} allowFullScreen style={{ width: '100%', height: '90vh' }} scrolling="no" />
+            )}
           </Box>
         </Flex>
       )}
@@ -305,5 +276,3 @@ const DetailsUnit = () => {
 };
 
 export default DetailsUnit;
-
-

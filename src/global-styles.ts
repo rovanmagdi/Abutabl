@@ -65,7 +65,7 @@ export const GlobalStyles = createGlobalStyle`
 	${fonts}
 
 	*{
-		position: relative;
+	 position: relative;
 		padding: 0;
 		margin: 0;
 		direction: rtl;

@@ -27,3 +27,15 @@
 	/* width: 0%; */
 	border-radius: 10px;
 }
+.line {
+	width: 100%;
+	text-align: center;
+	border-bottom: 1px solid #1ebba3;
+	line-height: 0.1em;
+	margin: 30px 0 20px;
+}
+.lineChildren {
+	background-color: #ffffff;
+	font-weight: 600;
+	padding: 10px;
+}

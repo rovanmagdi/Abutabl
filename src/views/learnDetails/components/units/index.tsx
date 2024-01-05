@@ -44,7 +44,7 @@ const Units = () => {
                         </Box>
                         <Accordion allowZeroExpanded>
                             {subjectDetails?.subjectDetailsData?.units?.map(
-                                (unit: { lessons: []; lessons_count: string; name: string; quizes_count: string, id: number }, index: number) => {
+                                (unit: { lessons: []; lessons_count: string; name: string; quizes_count: string, id: number, quizesUnit: [] }, index: number) => {
                                     return (
                                         <AccordionItem key={id}>
                                             <AccordionItemHeading>
@@ -61,7 +61,7 @@ const Units = () => {
                                                 </AccordionItemButton>
                                             </AccordionItemHeading>
                                             <AccordionItemPanel>
-                                                <Box >
+                                                <Box>
                                                     {unit?.lessons?.map((lesson: { name: string; id: number }, index: number) => {
                                                         return (
                                                             <Box
@@ -73,9 +73,33 @@ const Units = () => {
                                                                     setLoading(false);
                                                                 }}
                                                             >
-                                                                <Box className="flex items-center p-4" key={index}>
+                                                                <Box className="flex items-center p-4 cursor-pointer" key={index}>
                                                                     <img src={BookMark} alt="Book" className="mr-2 color-#9C9B9B" />
                                                                     <Text className="text-stone-900 mb-2"> {lesson?.name}</Text>
+                                                                </Box>
+                                                            </Box>
+                                                        );
+                                                    })}
+                                                </Box>
+                                                {/* ------------------ */}
+                                                {unit?.quizesUnit?.length != 0 && <Text className="text-stone-900 m-5 line">
+                                                    <span className="text-stone-900  lineChildren">Quizes
+                                                    </span></Text>}
+                                                <Box>
+                                                    {unit?.quizesUnit?.map((quiz: { title: string, id: number }) => {
+                                                        return (
+                                                            <Box
+                                                                className={`flex px-5 ${idData === lesson?.title && 'activeLesson'}`}
+                                                                onClick={async (event: any) => {
+                                                                    setIdData(event.target.innerText);
+                                                                    setLoading(true);
+                                                                    await dispatch(lessonContent(quiz?.id));
+                                                                    setLoading(false);
+                                                                }}
+                                                            >
+                                                                <Box className="flex items-center p-4 cursor-pointer" key={index}>
+                                                                    <img src={BookMark} alt="Book" className="mr-2 color-#9C9B9B" />
+                                                                    <Text className="text-stone-900 mb-2"> {quiz?.title}</Text>
                                                                 </Box>
                                                             </Box>
                                                         );

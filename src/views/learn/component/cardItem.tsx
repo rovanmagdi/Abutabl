@@ -19,7 +19,7 @@ const CardItem: React.FC<ISubject> = ({
 					<Flex justify="center" align="start" gap={8} direction={'column'}>
 
 						<Title className="title">{title}</Title>
-						{units && <Unit>
+						{<Unit>
 							{units} units - {lesson} lessons
 						</Unit>}
 
