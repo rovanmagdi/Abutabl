@@ -3,7 +3,7 @@ import { useIntl } from 'react-intl';
 import { ReactComponent as LearnIcon } from 'assets/images/svg/book.svg';
 import { ReactComponent as ProfileIcon } from 'assets/images/svg/profile.svg';
 import { ReactComponent as SupportIcon } from 'assets/images/svg/messages.svg';
-import DetailsGames from 'views/learnDetails/components/detailsGame';
+
 
 
 
@@ -17,6 +17,9 @@ const Login = lazy(() => import('views/auth/signIn'));
 const Verify = lazy(() => import('views/auth/otpVerify'));
 const VerifyEmail = lazy(() => import('views/auth/emailVerify'));
 const Reset = lazy(() => import('views/auth/resetPassword'));
+const DetailsGames = lazy(() => import('views/learnDetails/components/detailsGame'));
+const QuizDetails = lazy(() => import('views/learnDetails/components/detailsQuiz/start'));
+const Quiz = lazy(() => import('views/learnDetails/components/detailsQuiz/quiz'));
 
 export interface IRoute<T = any> {
 	component: JSX.Element;
@@ -41,7 +44,9 @@ export interface IRoutes {
 	support: IRoute;
 	learnDetails: IRoute;
 	learnDetailsUnit: IRoute;
-	learnDetailsGame: IRoute
+	learnDetailsGame: IRoute;
+	learnQuizDetails: IRoute;
+	learnQuiz: IRoute;
 }
 
 export function useRoutesConst() {
@@ -138,6 +143,28 @@ export function useRoutesConst() {
 				title: () => formatMessage({ id: 'learnDetailsGame' }),
 				sidebarTitle: () => formatMessage({ id: 'learn' }),
 			},
+
+			learnQuizDetails: {
+				component: <QuizDetails />,
+				path: 'learn/:id/quiz/:idQuiz',
+				icon: <LearnIcon />,
+				privileges: true,
+				to: () => 'learn/:id/quiz/:idQuiz',
+				fullTitle: () => [{ name: formatMessage({ id: 'learnQuizDetails' }) }],
+				title: () => formatMessage({ id: 'learnQuizDetails' }),
+				sidebarTitle: () => formatMessage({ id: 'learn' }),
+			},
+			learnQuiz: {
+				component: <Quiz />,
+				path: 'learn/quiz/:idQuiz',
+				icon: <LearnIcon />,
+				privileges: true,
+				to: () => 'learn/quiz/:idQuiz',
+				fullTitle: () => [{ name: formatMessage({ id: 'learnQuiz' }) }],
+				title: () => formatMessage({ id: 'learnQuiz' }),
+				sidebarTitle: () => formatMessage({ id: 'learn' }),
+			},
+
 			profile: {
 				component: <Profile />,
 				path: 'profile',

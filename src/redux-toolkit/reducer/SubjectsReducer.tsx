@@ -12,7 +12,8 @@ export const SubjectDetails: any = createAsyncThunk('SubjectDetails', async (id:
 
 const initialState: any = {
     loading: true,
-    subjectsListData: [], subjectDetailsData: {}
+    subjectsListData: [],
+    subjectDetailsData: {}
 };
 
 const SubjectsListSlice: any = createSlice({

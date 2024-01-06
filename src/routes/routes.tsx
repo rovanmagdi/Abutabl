@@ -32,7 +32,14 @@ const Routes = () => {
 							path: 'learn/:id',
 							element: ROUTES.learnDetails.component,
 						},
-
+						{
+							path: 'learn/:id/quiz/:idQuiz',
+							element: ROUTES.learnQuizDetails.component,
+						},
+						{
+							path: 'learn/quiz/:idQuiz',
+							element: ROUTES.learnQuiz.component,
+						},
 						{
 							path: ROUTES.profile.path,
 							element: <Outlet />,

@@ -11,7 +11,7 @@ import EmptyComp from 'views/Empty';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import LoadingPartially from 'components/loading-partially';
 import { gamesList } from 'redux-toolkit/reducer/GamesReducer';
-import CardItem from '../cardItem';
+import CardItem from '../cardItem/cardItem';
 
 export default function LearnDetailsGames() {
     /* ------------------------------- Local State ------------------------------ */

@@ -6,7 +6,7 @@ import Quiz from 'assets/images/svg/quiz.svg';
 import Game from 'assets/images/svg/gameColor.svg';
 import Sheet from 'assets/images/svg/sheets.svg';
 import Certifaction from 'assets/images/svg/certificate.svg';
-import AccordionComponent from 'views/learnDetails/components/accordion/accordion';
+import AccordionComponent from 'views/learnDetails/components/tabs/accordion/accordion';
 import { Box, Text } from '@mantine/core';
 import { useSelector } from 'react-redux';
 

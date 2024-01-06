@@ -3,7 +3,7 @@ import { ReactComponent as Empty } from '../../assets/images/svg/empty.svg';
 
 const EmptyComp = () => {
     return (
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", padding: "100px" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", padding: "140px" }}>
             <div>
                 <Empty />
                 <div style={{ textAlign: "center" }}>

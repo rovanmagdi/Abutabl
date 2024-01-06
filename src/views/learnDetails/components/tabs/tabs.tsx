@@ -11,18 +11,21 @@ import './index.css';
 import Overview from './overview';
 import LoadingPartially from 'components/loading-partially';
 import { useSelector } from 'react-redux';
-import AccordionComponent from '../units';
+
 import Units from '../units';
-import ModuleView from 'components/module-view';
+
 import LearnDetailsGames from '../games';
 
-const TabsComponent: React.FC = () => {
+const TabsComponent = (loading: { loading: boolean }) => {
     const [index, setIndex] = useState(0);
-    const subjectDetails = useSelector((state: any) => state.DetailsSubjectsReducer);
+    const subjectDetails = useSelector((state: any) => state.SubjectsReducer);
 
     const handleTabSelect = (index: any) => {
         setIndex(index);
     };
+    console.log(loading, "loading");
+
+
     return (
         <Tabs style={{ display: 'block' }} onSelect={handleTabSelect}>
             <TabList>
@@ -45,7 +48,7 @@ const TabsComponent: React.FC = () => {
                     Games
                 </Tab>
             </TabList>
-            {subjectDetails?.loading ? (
+            {loading.loading ? (
                 <TabPanel>
                     <LoadingPartially />
                 </TabPanel>
@@ -55,16 +58,10 @@ const TabsComponent: React.FC = () => {
                         <Overview />
                     </TabPanel>
                     <TabPanel>
-
-
                         <Units />
-
                     </TabPanel>
                     <TabPanel>
-
-
                         <LearnDetailsGames />
-
                     </TabPanel>
                 </>
             )}

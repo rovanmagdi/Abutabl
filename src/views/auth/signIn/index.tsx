@@ -124,7 +124,7 @@ function Login() {
 								) : (
 									<span className="text-Lotion font-medium">{formatMessage({ id: 'Login' })}</span>
 								)}
-								{}
+								{ }
 							</Button>
 						</form>
 					</FormProvider>

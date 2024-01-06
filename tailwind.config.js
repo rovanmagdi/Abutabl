@@ -6,6 +6,7 @@ export default {
 			boxShadow: {
 				'custom-sm': '0px 4px 0px 0px #E5E5E5;',
 				'custom-sm-green': '0px 4px 0px 0px #1B9582;',
+				'custom-sm-warning': '0px 4px 0px 0px #FFAD0D;',
 			},
 			backgroundImage: {
 				lines: "url('./src/assets/images/png/lines.png')",

@@ -1,7 +1,7 @@
 import { CardWrapper, Details, ImgWrapper, Title, Unit, Persentage } from './styles';
 import { Flex, Grid, Progress } from '@mantine/core';
 import { theme } from 'global-styles';
-import { ISubject } from '../../learn/type/subject.type';
+import { ISubject } from '../../../learn/type/subject.type';
 const CardItem: React.FC<ISubject> = ({
     image,
     title,
