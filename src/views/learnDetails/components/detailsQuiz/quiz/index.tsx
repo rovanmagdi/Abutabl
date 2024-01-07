@@ -53,7 +53,7 @@ export default function Quiz() {
 
         const newItems = items.filter((_, index) => index !== draggedItem);
 
-        // setItems(newItems);
+        setItems(newItems);
 
         setDraggedItem(null);
     };
@@ -124,7 +124,7 @@ export default function Quiz() {
                                 <Flex className="gap-3">
                                     <Box className="gap-3" onDrop={(e: any) => handleDrop(e)}>
 
-                                        {items.map((item, index) => (
+                                        {mergeArrays(droppedItems).length == 0 && items.map((item, index) => (
                                             <Box
                                                 onDragOver={(e: any) => handleDragOver(e, index)}
 
@@ -136,15 +136,27 @@ export default function Quiz() {
                                         ))}
                                     </Box>
                                     <Box>
+                                        <Box onDrop={(e: any) => handleDrop(e)}>
+                                            {mergeArrays(droppedItems).map((item: any, index: any) => (
+                                                <>                                            {item == undefined ? <Box
+                                                    onDragOver={(e: any) => handleDragOver(e, index)}
 
-                                        {mergeArrays(droppedItems).map((item: any, index: any) => (
-                                            <Box
-                                                className=" border-2 border-Platinum rounded-[30px] p-5 m-5  hover:bg-Lotion cursor-pointer h-[100px] w-[100px] text-xs text-gray"
-                                                key={index}
-                                            >
-                                                {item}
-                                            </Box>
-                                        ))}
+                                                    className="border-dashed border-2 border-Platinum rounded-[30px] p-5 m-5 hover:bg-Lotion cursor-pointer h-[100px] w-[100px] text-xs text-gray"
+                                                    key={index}
+                                                >
+                                                    Drag your answer here
+                                                </Box> : <Box
+                                                    className=" border-2 border-Platinum rounded-[30px] p-5 m-5  hover:bg-Lotion cursor-pointer h-[100px] w-[100px] text-xs text-gray"
+                                                    key={index}
+                                                >
+                                                    {console.log(item)
+                                                    }
+                                                    {item}
+                                                </Box>}
+                                                </>
+
+                                            ))}
+                                        </Box>
                                     </Box>
                                 </Flex>
                                 {/* //////////////////////// */}
