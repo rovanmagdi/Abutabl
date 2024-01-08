@@ -33,6 +33,7 @@
 		"debounce": "^1.2.1",
 		"i": "^0.3.7",
 		"js-cookie": "^3.0.5",
+		"jwt-decode": "^4.0.0",
 		"lottie-web": "^5.11.0",
 		"mantine-datatable": "^2.4.15",
 		"mantine-react-table": "^1.0.0-beta.7",

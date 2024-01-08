@@ -6,7 +6,7 @@ import { InputWrapper } from './styles';
 
 interface IProps
 	extends Pick<InputHTMLAttributes<HTMLInputElement>, 'maxLength' | 'disabled' | 'min' | 'max'>,
-		InputProps {
+	InputProps {
 	name: string;
 	registerOptions?: RegisterOptions;
 	type?: Exclude<HTMLInputTypeAttribute, 'range' | 'reset' | 'submit' | 'search'>;
@@ -49,7 +49,7 @@ function Input({
 	};
 	return (
 		<InputWrapper islabelVisible={labelVisibility} className={className}>
-			<label className={`${disabled?'disabled':''}`}>
+			<label className={`${disabled ? 'disabled' : ''}`}>
 				{label && (
 					<p>
 						{label}

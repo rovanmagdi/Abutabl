@@ -3,7 +3,7 @@ import { loginRequest } from 'lib/requests';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Ilogin } from 'views/auth/types/login.type';
-
+import { jwtDecode } from 'jwt-decode'
 export const loginUser: any = createAsyncThunk('auth/login', async (loginData: Ilogin) => {
     try {
         const response = await loginRequest('login', loginData);
@@ -13,7 +13,11 @@ export const loginUser: any = createAsyncThunk('auth/login', async (loginData: I
         }
 
         if (response?.user?.verify == 1) {
-            localStorage.setItem('api_token', JSON.stringify(response?.user?.api_token));
+            localStorage.setItem('api_token', (JSON.stringify(response?.user?.api_token)));
+            // console.log(jwtDecode(JSON.stringify(response?.user?.api_token)));
+            // console.log(JSON.stringify(response?.user?.api_token));
+
+
             localStorage.setItem('user_info', JSON.stringify(response?.user));
 
             toast.success('Login Successfully');

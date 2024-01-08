@@ -3,13 +3,17 @@ import iol from 'assets/images/svg/Group_quiz.svg';
 import quizes from 'assets/images/svg/Background_Complete.svg';
 import Quiz from 'assets/images/svg/quiz.svg';
 import Star from 'assets/images/svg/star.svg';
+import Code from 'assets/images/svg/code.svg';
+import Time from 'assets/images/svg/time.svg';
+import Date from 'assets/images/svg/date.svg';
 import man from 'assets/images/svg/background_quiz.svg';
 import { Box, Button, Flex, Text } from '@mantine/core';
 import PageHeader from '../../pageHeader';
-import { useEffect } from 'react';
+import { ReactElement, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { quizDetails } from 'redux-toolkit/reducer/QuizReducer';
 import { useNavigate, useParams } from 'react-router-dom';
+import LoadingPartially from 'components/loading-partially';
 export default function QuizDetails() {
     const { idQuiz } = useParams();
     const dispatch = useDispatch();
@@ -19,8 +23,56 @@ export default function QuizDetails() {
         dispatch(quizDetails(idQuiz));
     }, [dispatch]);
 
+
+    const contant = [
+        // { image: Video, label: '65 hours on demand videos' },
+        // { image: Download, label: '49 downloadable resources' },
+        {
+            image: Quiz,
+            title: detailsQuiz?.gamesDetailstData?.quize?.title_en,
+            label: <> Title</>
+
+        },
+        {
+            image: Star,
+            title: `${detailsQuiz?.gamesDetailstData?.quize?.score_to_pass} Points`,
+            label: <> for each question</>
+
+        },
+        {
+            image: Date,
+            title: `${detailsQuiz?.gamesDetailstData?.quize?.start_date}`,
+            label: <> Start Date</>
+
+        },
+        {
+            image: Date,
+            title: `${detailsQuiz?.gamesDetailstData?.quize?.due_date}`,
+            label: <> End Date</>
+
+        },
+        {
+            image: Time,
+            title: `${detailsQuiz?.gamesDetailstData?.quize?.time_limit}`,
+            label: <> Time Limit</>
+
+        },
+        {
+            image: Time,
+            title: `${detailsQuiz?.gamesDetailstData?.quize?.type_time}`,
+            label: <>Type Time </>
+
+        },
+        {
+            image: Code,
+            title: `${detailsQuiz?.gamesDetailstData?.quize?.code}`,
+            label: <>Code</>
+
+        },
+    ];
+
     return (
-        // {detailsQuiz?.gamesDetailstData?.quize[0]?.title}
+        // {detailsQuiz?.gamesDetailstData?.quize?.title}
         <>
             <PageHeader title='' route="/learn" />
             <div className="bg-PaoloVeroneseGreen transition-all flex flex-col justify-start items-center relative">
@@ -29,39 +81,44 @@ export default function QuizDetails() {
 
                 <div className="w-full h-[85vh] md:p-0 flex justify-center relative">
                     <img src={quizes} className="absolute" alt="" />
+
                     <Box>
-                        <img src={man} alt="" className="mx-32" />
+                        <img src={man} alt="" className="m-auto w-[100px] h-[100px]" />
 
                         <div className="border border-Platinum bg-white w-[90%] p-5 md:p-10 flex flex-col justify-start items-center gap-6  rounded-[25px] shadow-custom-sm mx-2 ">
-                            <Text className="font-bold text-lg text-DavysGrey">Interesting quiz awaits you</Text>
-                            <Text className="text-gray">Play quizzes and get points to reach the next level</Text>
-                            <Flex className="gap-5">
-                                <Box className="border border-Platinum rounded-[15px] p-5 flex flex-col justify-start items-center ">
-                                    <img src={Quiz} />
-                                    <Text className="font-bold text-l">{detailsQuiz?.gamesDetailstData?.questions?.length}</Text>
-                                    <Text className="text-gray text-xs">Total Question</Text>
-                                </Box>
-                                <Box className="border border-Platinum rounded-[15px] p-5 flex flex-col justify-start items-center ">
-                                    <img src={Star} />
-                                    <Text className="font-bold text-l">{ } points</Text>
-                                    <Text className="text-gray text-xs">for each question</Text>
-                                </Box>
-                            </Flex>
-                            <Button
-                                type="submit"
-                                className="bg-Sunglow hover:bg-Sunglow rounded-[15px] shadow-custom-sm-warning w-[100%]"
-                                onClick={() => {
-                                    nagivate(`/learn/quiz/${idQuiz}`)
-                                }}
-                            >
-                                Start quiz
-                            </Button>
-                            <Button
-                                type="submit"
-                                className="text-EerieBlack border-Platinum hover:bg-white rounded-[15px] shadow-custom-sm w-[100%]"
-                            >
-                                Skip
-                            </Button>
+                            {!detailsQuiz?.loading ? <>
+
+                                <Text className="font-bold text-lg text-DavysGrey">Interesting quiz awaits you</Text>
+                                <Text className="text-gray">Play quizzes and get points to reach the next level</Text>
+                                <Flex className="gap-5 m-5">
+                                    {contant?.map((item: { [key: string]: string | JSX.Element }) => {
+                                        return (
+
+                                            <Box className="border border-Platinum rounded-[15px]  flex flex-col justify-start items-center mw-[100px] h-[130px] m-auto p-5">
+                                                <img src={`${item.image}`} />
+                                                <Text className="font-medium text-l">{item.title}</Text>
+                                                <Text className="text-gray text-xs">{item.label}</Text>
+                                            </Box>
+
+                                        )
+                                    })}
+                                </Flex>
+                                <Button
+                                    type="submit"
+                                    className="bg-Sunglow hover:bg-Sunglow rounded-[15px] shadow-custom-sm-warning w-[100%]"
+                                    onClick={() => {
+                                        nagivate(`/learn/quiz/${idQuiz}`)
+                                    }}
+                                >
+                                    Start quiz
+                                </Button>
+                                <Button
+                                    type="submit"
+                                    className="text-EerieBlack border-Platinum hover:bg-white rounded-[15px] shadow-custom-sm w-[100%]"
+                                >
+                                    Skip
+                                </Button></> : <><LoadingPartially /></>}
+
                         </div>
                     </Box>
                 </div>

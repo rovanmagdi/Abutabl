@@ -180,11 +180,12 @@ const Units = () => {
                                                 </span></Text>
 
                                             <Box className="flex w-200 flex-wrap">
-                                                {lesson?.lessonContentData?.quizes?.map((quiz: { title: string }) => {
+                                                {lesson?.lessonContentData?.quizes?.map((quiz: { title: string, id: number }) => {
                                                     return (
                                                         <Link
-                                                            to={``}
+                                                            to={`/learn/${id}/quiz/${quiz?.id}`}
                                                             target="_blank"
+
 
                                                         >
                                                             <Box className="contentLesson">
