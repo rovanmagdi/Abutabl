@@ -18,12 +18,12 @@ import { InputWrapper } from 'components/input/styles';
 import LoadingPartially from 'components/loading-partially';
 
 export default function Quiz() {
-
     const dispatch = useDispatch();
     const { formatMessage } = useIntl();
 
     const { idQuiz } = useParams();
     const [isActive, setIsActive] = useState<boolean>();
+    const [loading, setLoading] = useState<boolean>();
     const [indexQuestion, setIndexQuestion] = useState<number>(0);
     const [draggedItem, setDraggedItem] = useState(null);
     const [idItem, setIdItem] = useState(null);
@@ -32,13 +32,13 @@ export default function Quiz() {
     const [questions, setQuestions] = useState([]);
     const [questionActive, setQuestionActive] = useState<any>({});
     const [questionMain, setQuestionMain] = useState<any>({});
-    const [questionAudio, setQuestionAudio] = useState<{ text: string, ext: string }>();
+    const [questionAudio, setQuestionAudio] = useState<{ text: string; ext: string }>();
     // -------------------------------Result------------
     const [checkResult, setCheckResult] = useState<boolean>();
     const [showAnswer, setShowAnswer] = useState<string>('');
     const [checkResultTF, setCheckResultTF] = useState<string>('');
     //------------------------------------SHN-------------------
-    const [answserSHN, setAnswerSHN] = useState<string>('')
+    const [answserSHN, setAnswerSHN] = useState<string>('');
     const detailsQuiz = useSelector((state: any) => state.QuizReducer);
 
     //***************************** */ Matching
@@ -86,15 +86,17 @@ export default function Quiz() {
 
     // **************************************side effect************
     useEffect(() => {
-        dispatch(quizDetails(idQuiz));
+        (async () => {
+            setLoading(true)
+            await dispatch(quizDetails(idQuiz));
+            setLoading(false)
+        })()
     }, [dispatch]);
     useEffect(() => {
         console.log(mergeArrays(droppedItems));
     }, [droppedItems]);
 
     useEffect(() => {
-
-
         if (
             Array.isArray(detailsQuiz?.gamesDetailstData?.questions) &&
             detailsQuiz?.gamesDetailstData?.questions.length > 0
@@ -106,13 +108,12 @@ export default function Quiz() {
         }
     }, [detailsQuiz, indexQuestion]);
 
-
     // ********************************************Functions
 
     const handleNext = () => {
         setIndexQuestion(indexQuestion + 1);
-        setCheckResult(false)
-        setShowAnswer('')
+        setCheckResult(false);
+        setShowAnswer('');
     };
     console.log(questionActive);
     const handleCheck = () => {
@@ -120,7 +121,6 @@ export default function Quiz() {
 
         // --------------------------TF------------------------------
         if (questionActive?.info?.type == 'TF') {
-
             if (questionActive?.info?.corAnswer == isActive) {
                 setCheckResultTF('');
                 setShowAnswer('correct');
@@ -136,133 +136,135 @@ export default function Quiz() {
             }
         }
         if (questionActive?.info?.type == 'SHN') {
-            console.log("hhhh");
+            console.log('hhhh');
 
             if (answserSHN.length > 0) {
                 setCheckResult(true);
                 setShowAnswer('correct');
-
             } else {
                 setCheckResult(false);
                 setShowAnswer('incorrect');
-
             }
-
-        };
-
-    }
-
+        }
+    };
 
     return (
         <>
             <PageHeader title="" route="/learn" />
 
-            {detailsQuiz?.loading ? (<><LoadingPartially /></>) : (<>
-                <Flex className="bg-white rounded-[15px] w-100 h-full ">
-                    <Box className="bg-white flex flex-col p-11 h-5/5 rounded-[15px] border-[1px] border-Platinum ml-2 mt-2 mb-2 w-3/4">
-                        {/*********************************** Progress ***********************************/}
-                        <Progress />
-                        {/*********************************** Questions ***********************************/}
-                        <Box className=" mt-5">
-                            {questionActive?.info?.type == 'TF' ? <img src={Reading} /> : <img src={Writting} />}
+            {loading ? (
+                <Flex className="bg-white rounded-[15px] h-full">
+                    <LoadingPartially />
 
-                            <Text className="font-semibold text-CharlestonGreen mt-2">{questionMain?.text}</Text>
-                            <Container className="m-5 mx-auto">
-                                <Box className="flex gap-2">
-                                    <Text className="text-gray text-sm ">Your Answer ( {questionActive?.score} points )</Text>
-                                    { }
-                                    {questionAudio?.ext == 'image' ? (
-                                        <img src={questionAudio?.text} className="w-[200px]" />
-                                    ) : (
-                                        <img
-                                            src={Sound}
-                                            className="cursor-pointer"
-                                            onClick={() => {
-                                                console.log(questionAudio);
+                </Flex>
+            ) : (
+                <>
+                    <Flex className="bg-white rounded-[15px] w-100 h-full">
+                        <Box className="bg-white flex flex-col p-11 h-5/5 rounded-[15px] border-[1px] border-Platinum ml-2 mt-2 mb-2 w-3/4">
+                            {/*********************************** Progress ***********************************/}
+                            <Progress />
+                            {/*********************************** Questions ***********************************/}
+                            <Box className=" mt-5">
+                                {questionActive?.info?.type == 'TF' ? <img src={Reading} /> : <img src={Writting} />}
 
-                                                new Audio(questionAudio?.text).play();
-                                            }}
-                                        />
-                                    )}
-                                </Box>
+                                <Text className="font-semibold text-CharlestonGreen mt-2">{questionMain?.text}</Text>
+                                <Container className="m-5 mx-auto">
+                                    <Box className="flex gap-2">
+                                        <Text className="text-gray text-sm ">Your Answer ( {questionActive?.score} points )</Text>
+                                        { }
+                                        {questionAudio?.ext == 'image' ? (
+                                            <img src={questionAudio?.text} className="w-[200px]" />
+                                        ) : (
+                                            <img
+                                                src={Sound}
+                                                className="cursor-pointer"
+                                                onClick={() => {
+                                                    console.log(questionAudio);
 
-                                {questionActive?.info?.type == 'TF' ? (
-                                    <>
+                                                    new Audio(questionAudio?.text).play();
+                                                }}
+                                            />
+                                        )}
+                                    </Box>
 
-                                        <Flex className="align-center justify-around mt-14 mb-14 w-100 gap-2">
-                                            <Text
-                                                className={`border border-Platinum rounded-[18px] p-5 shadow-custom-sm  cursor-pointer inline w-3/4 
+                                    {questionActive?.info?.type == 'TF' ? (
+                                        <>
+                                            <Flex className="align-center justify-around mt-14 mb-14 w-100 gap-2">
+                                                <Text
+                                                    className={`border border-Platinum rounded-[18px] p-5 shadow-custom-sm  cursor-pointer inline w-3/4 
                                         ${isActive == true && 'bg-blue shadow-custom-sm-blue'}
                                          ${checkResult == true &&
-                                                    isActive == true &&
-                                                    'bg-Lotion shadow-custom-sm-green'
-                                                    }
+                                                        isActive == true &&
+                                                        'bg-Lotion shadow-custom-sm-green'
+                                                        }
                                         ${checkResultTF.length != 0 &&
-                                                    `${checkResultTF == 'F'
-                                                        ? 'bg-error shadow-custom-sm-red'
-                                                        : 'bg-Lotion shadow-custom-sm-green'
-                                                    }`
-                                                    }
+                                                        `${checkResultTF == 'F'
+                                                            ? 'bg-error shadow-custom-sm-red'
+                                                            : 'bg-Lotion shadow-custom-sm-green'
+                                                        }`
+                                                        }
                                                
                                         `}
-                                                onClick={() => {
-                                                    setIsActive(true);
-                                                }}
-                                            >
-                                                True
-                                            </Text>
-                                            <Text
-                                                className={`border border-Platinum rounded-[18px] p-5 shadow-custom-sm  cursor-pointer inline w-3/4
+                                                    onClick={() => {
+                                                        setIsActive(true);
+                                                    }}
+                                                >
+                                                    True
+                                                </Text>
+                                                <Text
+                                                    className={`border border-Platinum rounded-[18px] p-5 shadow-custom-sm  cursor-pointer inline w-3/4
                                          ${isActive == false && 'bg-blue shadow-custom-sm-blue'}
                                             
                                             ${checkResult == true &&
-                                                    isActive == false &&
-                                                    'bg-Lotion shadow-custom-sm-green'
-                                                    }
+                                                        isActive == false &&
+                                                        'bg-Lotion shadow-custom-sm-green'
+                                                        }
                                             ${checkResultTF.length != 0 &&
-                                                    `${checkResultTF == 'F'
-                                                        ? 'bg-Lotion shadow-custom-sm-green'
-                                                        : 'bg-error shadow-custom-sm-red'
-                                                    }`
-                                                    }
+                                                        `${checkResultTF == 'F'
+                                                            ? 'bg-Lotion shadow-custom-sm-green'
+                                                            : 'bg-error shadow-custom-sm-red'
+                                                        }`
+                                                        }
                                         `}
-                                                onClick={() => {
-                                                    setIsActive(false);
-                                                }}
-                                            >
-                                                False
-                                                {/* {checkResult == true ?checkResultTF == 'F' ? <>green</> : <>red</>} */}
-                                            </Text>
-                                        </Flex>
-                                        {/* <Box className="text-Danger">
+                                                    onClick={() => {
+                                                        setIsActive(false);
+                                                    }}
+                                                >
+                                                    False
+                                                    {/* {checkResult == true ?checkResultTF == 'F' ? <>green</> : <>red</>} */}
+                                                </Text>
+                                            </Flex>
+                                            {/* <Box className="text-Danger">
                                         Reason{questionActive?.info?.reason_is_required == '1' && <span>*</span>}: <input type="text" name="fname" className="border border-gray rounded-[10px] p-2" onChange={(e) => {
                                             // setReason(e.target.value)
                                         }} />
 
                                     </Box> */}
-                                    </>
-                                ) : (
-
-                                    <> {questionActive?.info?.type == 'SHN' ? (<>
-                                        <Box className='border border-Platinum rounded-[18px] p-5 shadow-custom-sm  mt-5 mb-28'>
-                                            <Input
-                                                className='outline-none'
-                                                name="code"
-                                                onChange={(e) => {
-                                                    setAnswerSHN(e.target.value)
-
-                                                }}
-                                                placeholder={'Enter your answer'}
-
-                                                defaultValue="54415"
-                                            />
-                                        </Box>
-
-                                    </>) : (<></>
-                                    )}</>
-                                )}
-                                {/********************************************************* MCQ ************************************/}
-                                {/* <Flex className='align-center justify-around mt-4 w-[100]'>
+                                        </>
+                                    ) : (
+                                        <>
+                                            {' '}
+                                            {questionActive?.info?.type == 'SHN' ? (
+                                                <>
+                                                    <Box className="border border-Platinum rounded-[18px] p-5 shadow-custom-sm  mt-5 mb-28">
+                                                        <Input
+                                                            className="outline-none"
+                                                            name="code"
+                                                            onChange={(e) => {
+                                                                setAnswerSHN(e.target.value);
+                                                            }}
+                                                            placeholder={'Enter your answer'}
+                                                            defaultValue="54415"
+                                                        />
+                                                    </Box>
+                                                </>
+                                            ) : (
+                                                <></>
+                                            )}
+                                        </>
+                                    )}
+                                    {/********************************************************* MCQ ************************************/}
+                                    {/* <Flex className='align-center justify-around mt-4 w-[100]'>
                             <input type="checkbox" checked={isChecked} />
         
                             <Box className='border border-Platinum rounded-[30px] p-5 shadow-custom-sm hover:bg-Lotion cursor-pointer inline'
@@ -284,8 +286,8 @@ export default function Quiz() {
                                 <img src={man} className='w-[100px]' />
                             </Box>
                         </Flex> */}
-                                {/***********************************************Matching*********************************/}
-                                {/* <Flex className="flex justify-between">
+                                    {/***********************************************Matching*********************************/}
+                                    {/* <Flex className="flex justify-between">
                                 <Box className="gap-3">
                                     {items.map((item, index) => (
                                         <Box
@@ -353,9 +355,9 @@ export default function Quiz() {
                                     </Box>
                                 </Flex>
                             </Flex> */}
-                                {/***********************************************SHN*********************************/}
+                                    {/***********************************************SHN*********************************/}
 
-                                {/* <Box>
+                                    {/* <Box>
 
                                 <Input
                                     name="answer"
@@ -371,31 +373,39 @@ export default function Quiz() {
                                     defaultValue="54415"
                                 />
                             </Box> */}
-                            </Container>
-                        </Box>
-                        {/*********************************** Check button ***********************************/}
-                        {showAnswer.length == 0 && (
-                            <Box className="border-t-[1px] border-Platinum flex justify-start pt-5 mt-12">
-                                <Button
-                                    type="submit"
-                                    className="text-EerieBlack bg-Sunglow  rounded-[15px] shadow-custom-sm-warning w-[100px] self-end m-auto hover:bg-Warning"
-                                    onClick={() => {
-                                        handleCheck();
-                                    }}
-                                >
-                                    Check
-                                </Button>{' '}
+                                </Container>
                             </Box>
-                        )}
+                            {/*********************************** Check button ***********************************/}
+                            {showAnswer.length == 0 && (
+                                <Box className="border-t-[1px] border-Platinum flex justify-start pt-5 mt-12">
+                                    <Button
+                                        type="submit"
+                                        className="text-EerieBlack bg-Sunglow  rounded-[15px] shadow-custom-sm-warning w-[100px] self-end m-auto hover:bg-Warning"
+                                        onClick={() => {
+                                            handleCheck();
+                                        }}
+                                    >
+                                        Check
+                                    </Button>{' '}
+                                </Box>
+                            )}
 
-                        {showAnswer.length !== 0 && <>{showAnswer == 'correct' ? <CorrectAnswer handleNext={handleNext} /> : <InCorrectAnswer handleNext={handleNext} />}</>}
-                    </Box> <Insight />
-                </Flex>
-            </>)}
+                            {showAnswer.length !== 0 && (
+                                <>
+                                    {showAnswer == 'correct' ? (
+                                        <CorrectAnswer handleNext={handleNext} />
+                                    ) : (
+                                        <InCorrectAnswer handleNext={handleNext} />
+                                    )}
+                                </>
+                            )}
+                        </Box>{' '}
+                        <Insight indexQuestion={indexQuestion} questions={questions || []} />
+                    </Flex>
+                </>
+            )}
 
             {/*********************************** Insights ***********************************/}
-
-
         </>
     );
 }

@@ -85,7 +85,7 @@ export default function QuizDetails() {
                     <Box>
                         <img src={man} alt="" className="m-auto w-[100px] h-[100px]" />
 
-                        <div className="border border-Platinum bg-white w-[90%] p-5 md:p-10 flex flex-col justify-start items-center gap-6  rounded-[25px] shadow-custom-sm mx-2 ">
+                        <div className="border border-Platinum bg-white w-full p-5 md:p-10 flex flex-col justify-start items-center gap-6  rounded-[25px] shadow-custom-sm mx-2 ">
                             {!detailsQuiz?.loading ? <>
 
                                 <Text className="font-bold text-lg text-DavysGrey">Interesting quiz awaits you</Text>
@@ -94,7 +94,7 @@ export default function QuizDetails() {
                                     {contant?.map((item: { [key: string]: string | JSX.Element }) => {
                                         return (
 
-                                            <Box className="border border-Platinum rounded-[15px]  flex flex-col justify-start items-center mw-[100px] h-[130px] m-auto p-5">
+                                            <Box className="border border-Platinum rounded-[15px]  flex flex-col justify-start items-center mw-[100px] h-[130px] m-auto p-5 w-[130px]">
                                                 <img src={`${item.image}`} />
                                                 <Text className="font-medium text-l">{item.title}</Text>
                                                 <Text className="text-gray text-xs">{item.label}</Text>
