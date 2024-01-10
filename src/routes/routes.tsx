@@ -41,6 +41,10 @@ const Routes = () => {
 							element: ROUTES.learnQuiz.component,
 						},
 						{
+							path: 'learn/quiz/:idQuiz/result',
+							element: ROUTES.learnQuizResult.component,
+						},
+						{
 							path: ROUTES.profile.path,
 							element: <Outlet />,
 							children: [

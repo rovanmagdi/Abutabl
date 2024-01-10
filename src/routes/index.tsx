@@ -3,6 +3,7 @@ import { useIntl } from 'react-intl';
 import { ReactComponent as LearnIcon } from 'assets/images/svg/book.svg';
 import { ReactComponent as ProfileIcon } from 'assets/images/svg/profile.svg';
 import { ReactComponent as SupportIcon } from 'assets/images/svg/messages.svg';
+import Result from 'views/learnDetails/components/detailsQuiz/quiz/result';
 
 
 
@@ -47,6 +48,7 @@ export interface IRoutes {
 	learnDetailsGame: IRoute;
 	learnQuizDetails: IRoute;
 	learnQuiz: IRoute;
+	learnQuizResult: IRoute;
 }
 
 export function useRoutesConst() {
@@ -162,6 +164,16 @@ export function useRoutesConst() {
 				to: () => 'learn/quiz/:idQuiz',
 				fullTitle: () => [{ name: formatMessage({ id: 'learnQuiz' }) }],
 				title: () => formatMessage({ id: 'learnQuiz' }),
+				sidebarTitle: () => formatMessage({ id: 'learn' }),
+			},
+			learnQuizResult: {
+				component: <Result />,
+				path: 'learn/quiz/:idQuiz/result',
+				icon: <LearnIcon />,
+				privileges: true,
+				to: () => 'learn/quiz/:idQuiz/result',
+				fullTitle: () => [{ name: formatMessage({ id: 'learnQuizResult' }) }],
+				title: () => formatMessage({ id: 'learnQuizResult' }),
 				sidebarTitle: () => formatMessage({ id: 'learn' }),
 			},
 

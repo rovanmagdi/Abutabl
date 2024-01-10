@@ -4,7 +4,7 @@ import Writting from 'assets/images/svg/Skill.svg';
 
 import './index.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Box, Button, Container, Flex, Input, Text } from '@mantine/core';
 import Reading from '../../../../../assets/images/svg/reading.svg';
 import { useEffect, useRef, useState } from 'react';
@@ -19,7 +19,7 @@ import LoadingPartially from 'components/loading-partially';
 
 export default function Quiz() {
 	const dispatch = useDispatch();
-	const { formatMessage } = useIntl();
+	const navigate = useNavigate()
 
 	const { idQuiz } = useParams();
 	const [isActive, setIsActive] = useState<boolean>();
@@ -47,6 +47,15 @@ export default function Quiz() {
 	const [resultMatching, setResultMatching] = useState<string[]>([]);
 	const [resultMatchingCorrect, setResultMatchingCorrect] = useState<string[]>([]);
 	const [checkMatching, setCheckMatching] = useState<boolean>(true);
+
+
+	//----------------------------------MCQ--------------------------
+
+	const [selectedItems, setSelectedItems] = useState<any[]>([]);
+
+
+
+
 
 	// **************************************side effect************
 	useEffect(() => {
@@ -76,9 +85,17 @@ export default function Quiz() {
 	// ********************************************Functions********************
 
 	const handleNext = () => {
-		setIndexQuestion(indexQuestion + 1);
-		setCheckResult(false);
-		setShowAnswer('');
+		console.log(detailsQuiz?.gamesDetailstData?.questions?.length, indexQuestion);
+
+		if (indexQuestion == detailsQuiz?.gamesDetailstData?.questions?.length - 1) {
+			navigate('result')
+
+		} else {
+			setIndexQuestion(indexQuestion + 1);
+			setCheckResult(false);
+			setShowAnswer('');
+
+		}
 	};
 	//***************************** */ Matching
 	const handleDragStart = (index: any, e: any) => {
@@ -130,6 +147,20 @@ export default function Quiz() {
 		setDroppedItemsLeft((index: any) => [...index, arr2]);
 		setDraggedItem(null);
 	};
+	// **********************************MCQ*************************
+
+	const handleCheckboxChange = (event: any) => {
+		const { value, checked } = event.target;
+
+		if (checked) {
+
+			setSelectedItems((prevItems: any) => [...prevItems, value]);
+		} else {
+
+			setSelectedItems((prevItems) => prevItems.filter((item) => item !== value));
+		}
+
+	};
 
 
 	// ***********************************Next***********************
@@ -179,6 +210,23 @@ export default function Quiz() {
 
 				setResultMatchingCorrect(resultMatching);
 				console.log(resultMatching, 'Mattttttttt');
+			}
+		}
+		//---------------------------MCQ---------------------------------
+		if (questionActive?.info?.type == 'MCQ') {
+			const isEqual =
+				selectedItems.length === questionActive?.info?.corAnswer.length &&
+				selectedItems?.every((value: string, index: number) => value === questionActive?.info?.corAnswer[index]);
+			if (isEqual) {
+				console.log(selectedItems);
+				setCheckResult(true);
+				setShowAnswer('correct');
+
+			} else {
+				console.log(selectedItems);
+				setCheckResult(false);
+				setShowAnswer('incorrect');
+
 			}
 		}
 	};
@@ -325,7 +373,7 @@ export default function Quiz() {
 																							onDragStart={(e: any) => handleDragStart(index, e)}
 																						>
 																							<img src={item} className="h-[100px] w-[100px]" />
-																							{item}
+
 																						</Box>
 																					)}
 																				</>
@@ -353,7 +401,7 @@ export default function Quiz() {
 																							onDragStart={(e: any) => handleDragStart(index, e)}
 																						>
 																							<img src={item} className="h-[100px] w-[100px]" />
-																							{item}
+
 																						</Box>
 																					)}
 																				</>
@@ -383,7 +431,7 @@ export default function Quiz() {
 																						onDragStart={(e: any) => handleDragStart(index, e)}
 																					>
 																						<img src={item} className="h-[100px] w-[100px]" />
-																						{item}
+
 																					</Box>
 																				)}
 																			</>
@@ -430,7 +478,7 @@ export default function Quiz() {
 																										`}
 																										key={index}
 																									>
-																										{console.log(item)}
+
 																										{item}
 																									</Box>
 																								)}
@@ -491,7 +539,7 @@ export default function Quiz() {
 																						onDragStart={(e: any) => handleDragStart(index, e)}
 																					>
 																						<img src={item} className="h-[100px] w-[100px]" />
-																						{item}
+
 																					</Box>
 																				)}
 																			</>
@@ -501,7 +549,42 @@ export default function Quiz() {
 															</Flex>
 														</>
 													) : (
-														<></>
+														<>{questionActive?.info?.type == 'MCQ' &&
+															<Flex>
+																{items?.map((item: any, index: number) => (
+																	<>
+																		{questionActive?.info?.answers_type == 'text' && (
+																			<>
+																				<input type="checkbox" value={index + 1} name="vehicle1" onChange={handleCheckboxChange} />
+
+																				<Box
+																					className="border border-Platinum rounded-[30px] p-5 m-5 shadow-custom-sm  cursor-pointer h-[100px] w-[100px]"
+																					key={index}
+
+																				>
+																					{item}
+																				</Box>
+																			</>
+																		)}
+																		{questionActive?.info?.answers_type == 'image' && (
+																			<>
+																				<input type="checkbox" value={index + 1} name="vehicle1" onChange={handleCheckboxChange} />
+																				<Box
+																					className="border border-Platinum rounded-[30px] p-5 m-5 shadow-custom-sm  cursor-pointer h-[100px] w-[100px]"
+																					key={index}
+
+																				>
+																					<img src={item} className="h-[60px] w-[100px]" />
+
+																				</Box>
+																			</>
+																		)}
+																	</>
+																))}
+
+
+															</Flex >
+														}</>
 													)}
 												</>
 											)}
