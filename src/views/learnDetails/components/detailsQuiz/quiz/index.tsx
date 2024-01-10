@@ -131,7 +131,7 @@ export default function Quiz() {
 		setDraggedItem(null);
 	};
 
-	// console.log(mergedArray, 'mergedArray');
+
 	// ***********************************Next***********************
 	const handleCheck = () => {
 		// --------------------------TF------------------------------
@@ -183,7 +183,7 @@ export default function Quiz() {
 		}
 	};
 
-	console.log(questionMain, "questionAudio");
+	console.log(questionMain, questionAudio, "questionAudio");
 
 	return (
 		<>
