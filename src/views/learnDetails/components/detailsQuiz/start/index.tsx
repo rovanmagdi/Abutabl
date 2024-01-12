@@ -75,7 +75,7 @@ export default function QuizDetails() {
         // {detailsQuiz?.gamesDetailstData?.quize?.title}
         <>
             <PageHeader title='' route="/learn" />
-            <div className="bg-PaoloVeroneseGreen transition-all flex flex-col justify-start items-center relative">
+            <div className="bg-PaoloVeroneseGreen transition-all flex flex-col justify-start items-center relative w-max">
                 <img src={shapes} className="h-[0px] " alt="shapes" />
                 <img src={iol} alt="logo" width={250} className=" md:block md:absolute bottom-0 right-0" />
 
@@ -85,12 +85,12 @@ export default function QuizDetails() {
                     <Box>
                         <img src={man} alt="" className="m-auto w-[100px] h-[100px]" />
 
-                        <div className="border border-Platinum bg-white w-full p-5 md:p-10 flex flex-col justify-start items-center gap-6  rounded-[25px] shadow-custom-sm mx-2 ">
+                        <div className="border border-Platinum bg-white  p-5 md:p-10 flex flex-col justify-start items-center gap-6  rounded-[25px] shadow-custom-sm mx-2 ">
                             {!detailsQuiz?.loading ? <>
 
                                 <Text className="font-bold text-lg text-DavysGrey">Interesting quiz awaits you</Text>
                                 <Text className="text-gray">Play quizzes and get points to reach the next level</Text>
-                                <Flex className="gap-5 m-5">
+                                <Flex className="gap-5 m-5 flex-wrap" >
                                     {contant?.map((item: { [key: string]: string | JSX.Element }) => {
                                         return (
 
@@ -122,7 +122,7 @@ export default function QuizDetails() {
                         </div>
                     </Box>
                 </div>
-            </div>
+            </div >
         </>
     );
 }

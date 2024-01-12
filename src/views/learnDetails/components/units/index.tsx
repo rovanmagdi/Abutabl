@@ -37,7 +37,7 @@ const Units = () => {
 
     return (
         <>
-            <Box className="flex justify-between unitsAccordion">
+            <Box className="flex justify-between unitsAccordion h-full">
                 <>
                     <Box className="w-2/5 mr-5 ">
                         <Box className="contentCourse">

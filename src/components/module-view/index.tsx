@@ -6,9 +6,9 @@ interface IProps {
 export default function ModuleView(props: IProps) {
 	const { children, header } = props;
 	return (
-		<ModuleViewWrapper>
+		<ModuleViewWrapper >
 			{header && <ModuleHeaderWrapper>{header}</ModuleHeaderWrapper>}
-			<ModuleViewBodyWrapper className={`${!header ? 'no_header' : ''}`}>{children}</ModuleViewBodyWrapper>
+			<ModuleViewBodyWrapper className={`h-full ${!header ? 'no_header' : ''}`}>{children}</ModuleViewBodyWrapper>
 		</ModuleViewWrapper>
 	);
 }

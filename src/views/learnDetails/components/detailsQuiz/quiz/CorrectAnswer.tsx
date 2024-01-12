@@ -6,7 +6,7 @@ import InCorrect from 'assets/images/svg/incorrect.svg';
 
 const CorrectAnswer = ({ handleNext }: { handleNext: () => void }) => {
     return (
-        <>
+        <Box className='mt-auto'>
             <img src={Good} className="w-[150px]" />
             <Flex className="bg-Lotion justify-between ">
                 <Flex className=" p-5 gap-2">
@@ -26,7 +26,7 @@ const CorrectAnswer = ({ handleNext }: { handleNext: () => void }) => {
                     Continue
                 </Button>{' '}
             </Flex>
-        </>
+        </Box>
     )
 }
 

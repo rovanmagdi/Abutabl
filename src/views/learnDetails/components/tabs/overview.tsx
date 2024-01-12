@@ -40,7 +40,7 @@ const Overview = () => {
 
 
     return (
-        <Box className="flex justify-between m-5">
+        <Box className="flex justify-between m-5 h-full">
             <Box className="w-2/5 mr-5 overview ">
                 <img
                     src={subjectDetails?.basic_info?.photo}

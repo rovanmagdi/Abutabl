@@ -41,7 +41,7 @@ const Routes = () => {
 							element: ROUTES.learnQuiz.component,
 						},
 						{
-							path: 'learn/quiz/:idQuiz/result',
+							path: 'learn/quiz/:idQuiz/result/:score',
 							element: ROUTES.learnQuizResult.component,
 						},
 						{

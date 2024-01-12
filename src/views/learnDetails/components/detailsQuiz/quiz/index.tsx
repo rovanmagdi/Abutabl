@@ -4,7 +4,7 @@ import Writting from 'assets/images/svg/Skill.svg';
 
 import './index.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { Box, Button, Container, Flex, Input, Text } from '@mantine/core';
 import Reading from '../../../../../assets/images/svg/reading.svg';
 import { useEffect, useRef, useState } from 'react';
@@ -13,14 +13,11 @@ import { Insight } from './insight';
 import { quizDetails } from 'redux-toolkit/reducer/QuizReducer';
 import CorrectAnswer from './CorrectAnswer';
 import InCorrectAnswer from './InCorrectAnswer';
-import { useIntl } from 'react-intl';
-import { InputWrapper } from 'components/input/styles';
 import LoadingPartially from 'components/loading-partially';
 
 export default function Quiz() {
 	const dispatch = useDispatch();
-	const navigate = useNavigate()
-
+	const navigate = useNavigate();
 	const { idQuiz } = useParams();
 	const [isActive, setIsActive] = useState<boolean>();
 	const [loading, setLoading] = useState<boolean>();
@@ -34,6 +31,9 @@ export default function Quiz() {
 	const [items, setItems] = useState<any[]>([]);
 	const [questionMain, setQuestionMain] = useState<any>({});
 	const [questionAudio, setQuestionAudio] = useState<{ text: string; ext: string }>();
+	//-----------------------------TF-------------------
+	const [reason, setReason] = useState<string>('');
+
 	// -------------------------------Result------------
 	const [checkResult, setCheckResult] = useState<boolean>();
 	const [showAnswer, setShowAnswer] = useState<string>('');
@@ -48,14 +48,10 @@ export default function Quiz() {
 	const [resultMatchingCorrect, setResultMatchingCorrect] = useState<string[]>([]);
 	const [checkMatching, setCheckMatching] = useState<boolean>(true);
 
-
 	//----------------------------------MCQ--------------------------
 
 	const [selectedItems, setSelectedItems] = useState<any[]>([]);
-
-
-
-
+	const [score, setScore] = useState(0);
 
 	// **************************************side effect************
 	useEffect(() => {
@@ -88,13 +84,13 @@ export default function Quiz() {
 		console.log(detailsQuiz?.gamesDetailstData?.questions?.length, indexQuestion);
 
 		if (indexQuestion == detailsQuiz?.gamesDetailstData?.questions?.length - 1) {
-			navigate('result')
+			// setSearchParam(`score=${score.toString()}`)
+			navigate(`result/${score}`);
 
 		} else {
 			setIndexQuestion(indexQuestion + 1);
 			setCheckResult(false);
 			setShowAnswer('');
-
 		}
 	};
 	//***************************** */ Matching
@@ -153,26 +149,25 @@ export default function Quiz() {
 		const { value, checked } = event.target;
 
 		if (checked) {
-
 			setSelectedItems((prevItems: any) => [...prevItems, value]);
 		} else {
-
 			setSelectedItems((prevItems) => prevItems.filter((item) => item !== value));
 		}
-
 	};
-
 
 	// ***********************************Next***********************
 	const handleCheck = () => {
 		// --------------------------TF------------------------------
 		if (questionActive?.info?.type == 'TF') {
-			if (questionActive?.info?.corAnswer == isActive) {
+			if (questionActive?.info?.corAnswer == isActive && reason.length > 0 && questionActive?.info?.reason_is_required == '1') {
 				setCheckResultTF('');
 				setShowAnswer('correct');
 				setCheckResult(true);
+				setScore((prev: number) => prev + Number(questionActive?.score))
 			} else {
 				setShowAnswer('incorrect');
+				setScore((prev: number) => prev)
+
 				if (questionActive?.info?.corAnswer == true) {
 					setCheckResultTF('T');
 				} else {
@@ -188,9 +183,13 @@ export default function Quiz() {
 			if (answserSHN.length > 0) {
 				setCheckResult(true);
 				setShowAnswer('correct');
+				setScore((prev: number) => prev + Number(questionActive?.score))
+
 			} else {
 				setCheckResult(false);
 				setShowAnswer('incorrect');
+				setScore((prev: number) => prev)
+
 			}
 		}
 		// --------------------------Matching------------------------------
@@ -202,11 +201,15 @@ export default function Quiz() {
 			if (isEqual) {
 				setCheckResult(true);
 				setShowAnswer('correct');
+				setScore((prev: number) => prev + Number(questionActive?.score))
+
 				setCheckMatching(true);
 			} else {
 				setCheckMatching(false);
 				setCheckResult(false);
 				setShowAnswer('incorrect');
+				setScore((prev: number) => prev)
+
 
 				setResultMatchingCorrect(resultMatching);
 				console.log(resultMatching, 'Mattttttttt');
@@ -221,17 +224,18 @@ export default function Quiz() {
 				console.log(selectedItems);
 				setCheckResult(true);
 				setShowAnswer('correct');
+				setScore((prev: number) => prev + Number(questionActive?.score))
 
 			} else {
 				console.log(selectedItems);
 				setCheckResult(false);
 				setShowAnswer('incorrect');
+				setScore((prev: number) => prev)
 
 			}
 		}
 	};
-
-	console.log(questionMain, questionAudio, "questionAudio");
+	console.log(score, "score");
 
 	return (
 		<>
@@ -243,10 +247,10 @@ export default function Quiz() {
 				</Flex>
 			) : (
 				<>
-					<Flex className="bg-white rounded-[15px] w-100 h-full">
-						<Box className="bg-white flex flex-col p-11 h-5/5 rounded-[15px] border-[1px] border-Platinum ml-2 mt-2 mb-2 w-3/4">
+					<Flex className="bg-white rounded-[15px] w-100 h-auto">
+						<Box className="bg-white flex flex-col p-11  rounded-[15px] border-[1px]  border-Platinum m-2  h-[auto]  w-3/4">
 							{/*********************************** Progress ***********************************/}
-							<Progress />
+							<Progress number={indexQuestion} length={detailsQuiz?.gamesDetailstData?.questions?.length} />
 							{/*********************************** Questions ***********************************/}
 							<Box className=" mt-5">
 								{questionActive?.info?.type == 'TF' ? <img src={Reading} /> : <img src={Writting} />}
@@ -319,12 +323,19 @@ export default function Quiz() {
 													{/* {checkResult == true ?checkResultTF == 'F' ? <>green</> : <>red</>} */}
 												</Text>
 											</Flex>
-											{/* <Box className="text-Danger">
-                                        Reason{questionActive?.info?.reason_is_required == '1' && <span>*</span>}: <input type="text" name="fname" className="border border-gray rounded-[10px] p-2" onChange={(e) => {
-                                            // setReason(e.target.value)
-                                        }} />
+											<Text> Reason <span className={`${questionActive?.info?.reason_is_required == 1 && 'text-red-500'}`}>(requried)</span></Text>
+											<Box className={`${((showAnswer == 'correct' || showAnswer == 'incorrect') && reason.length == 0 && questionActive?.info?.reason_is_required == '1') ? ' bg-error shadow-custom-sm-red ' : 'bg-white'}border border-Platinum rounded-[18px] p-5 shadow-custom-sm  mt-1`}>
+												<input
+													className={`${((showAnswer == 'correct' || showAnswer == 'incorrect') && reason.length == 0 && questionActive?.info?.reason_is_required == '1') ? ' bg-error ' : 'bg-white'} outline-none`}
+													name="reason"
+													onChange={(e) => {
+														setReason(e.target.value);
+													}}
+													placeholder={'Enter your answer'}
+												/>
+											</Box>
 
-                                    </Box> */}
+
 										</>
 									) : (
 										<>
@@ -332,7 +343,7 @@ export default function Quiz() {
 
 											{questionActive?.info?.type == 'SHN' ? (
 												<>
-													<Box className="border border-Platinum rounded-[18px] p-5 shadow-custom-sm  mt-5 mb-28">
+													<Box className="border border-Platinum rounded-[18px] p-5 shadow-custom-sm  mt-5 ">
 														<Input
 															className="outline-none"
 															name="code"
@@ -373,7 +384,6 @@ export default function Quiz() {
 																							onDragStart={(e: any) => handleDragStart(index, e)}
 																						>
 																							<img src={item} className="h-[100px] w-[100px]" />
-
 																						</Box>
 																					)}
 																				</>
@@ -401,7 +411,6 @@ export default function Quiz() {
 																							onDragStart={(e: any) => handleDragStart(index, e)}
 																						>
 																							<img src={item} className="h-[100px] w-[100px]" />
-
 																						</Box>
 																					)}
 																				</>
@@ -431,7 +440,6 @@ export default function Quiz() {
 																						onDragStart={(e: any) => handleDragStart(index, e)}
 																					>
 																						<img src={item} className="h-[100px] w-[100px]" />
-
 																					</Box>
 																				)}
 																			</>
@@ -478,7 +486,6 @@ export default function Quiz() {
 																										`}
 																										key={index}
 																									>
-
 																										{item}
 																									</Box>
 																								)}
@@ -539,7 +546,6 @@ export default function Quiz() {
 																						onDragStart={(e: any) => handleDragStart(index, e)}
 																					>
 																						<img src={item} className="h-[100px] w-[100px]" />
-
 																					</Box>
 																				)}
 																			</>
@@ -549,78 +555,77 @@ export default function Quiz() {
 															</Flex>
 														</>
 													) : (
-														<>{questionActive?.info?.type == 'MCQ' &&
-															<Flex>
-																{items?.map((item: any, index: number) => (
-																	<>
-																		{questionActive?.info?.answers_type == 'text' && (
-																			<>
-																				<input type="checkbox" value={index + 1} name="vehicle1" onChange={handleCheckboxChange} />
+														<>
+															{questionActive?.info?.type == 'MCQ' && (
+																<Flex>
+																	{items?.map((item: any, index: number) => (
+																		<>
+																			{questionActive?.info?.answers_type == 'text' && (
+																				<>
+																					<input
+																						type="checkbox"
+																						value={index + 1}
+																						name="vehicle1"
+																						onChange={handleCheckboxChange}
+																					/>
 
-																				<Box
-																					className="border border-Platinum rounded-[30px] p-5 m-5 shadow-custom-sm  cursor-pointer h-[100px] w-[100px]"
-																					key={index}
+																					<Box
+																						className={`border border-Platinum rounded-[30px] p-5 m-5 shadow-custom-sm  cursor-pointer h-[100px] w-[100px]`}
+																						key={index}
+																					>
+																						{item}
+																					</Box>
+																				</>
+																			)}
+																			{questionActive?.info?.answers_type == 'image' && (
+																				<>
+																					<input
+																						type="checkbox"
+																						value={index + 1}
+																						name="vehicle1"
+																						onChange={handleCheckboxChange}
+																					/>
+																					<Box
+																						className={`border border-Platinum rounded-[30px] p-5 m-5 cursor-pointer${showAnswer.length == 0 && 'shadow-custom-sm'
+																							}  h-[100px] w-[100px]
+																					${questionActive?.info?.corAnswer?.map((a: any) => {
+																								return (
+																									a == index + 1 &&
+																									(showAnswer == 'correct' || showAnswer == 'incorrect') &&
+																									' bg-Lotion  shadow-custom-sm-green '
+																								);
+																							})}
+																					
+																							${(showAnswer == 'incorrect' && questionActive?.info?.corAnswer.includes(index + 1)) && " bg-error  shadow-custom-sm-red "}
 
-																				>
-																					{item}
-																				</Box>
-																			</>
-																		)}
-																		{questionActive?.info?.answers_type == 'image' && (
-																			<>
-																				<input type="checkbox" value={index + 1} name="vehicle1" onChange={handleCheckboxChange} />
-																				<Box
-																					className="border border-Platinum rounded-[30px] p-5 m-5 shadow-custom-sm  cursor-pointer h-[100px] w-[100px]"
-																					key={index}
 
-																				>
-																					<img src={item} className="h-[60px] w-[100px]" />
+																					
+																						`}
+																						key={index}
+																					>
 
-																				</Box>
-																			</>
-																		)}
-																	</>
-																))}
-
-
-															</Flex >
-														}</>
+																						<img src={item} className="h-[60px] w-[100px]" />
+																					</Box>
+																				</>
+																			)}
+																		</>
+																	))}
+																</Flex>
+															)}
+														</>
 													)}
 												</>
 											)}
 										</>
 									)}
-									{/********************************************************* MCQ ************************************/}
-									{/* <Flex className='align-center justify-around mt-4 w-[100]'>
-                            <input type="checkbox" checked={isChecked} />
-        
-                            <Box className='border border-Platinum rounded-[30px] p-5 shadow-custom-sm  cursor-pointer inline'
-
-                                style={{
-                                    backgroundColor: isActive ? 'white' : '#c8c7c5',
-                                }}
-                                onClick={() => {
-                                    setIsActive(currentState => {
-                                        return !currentState;
-                                    });
-                                }}>
-                                <img src={man} className='w-[100px]' />
-                            </Box>
-                            <Box className='border border-Platinum rounded-[30px] p-5 shadow-custom-sm'>
-                                <img src={man} className='w-[100px]' />
-                            </Box>
-                            <Box className='border border-Platinum rounded-[30px] p-5 shadow-custom-sm'>
-                                <img src={man} className='w-[100px]' />
-                            </Box>
-                        </Flex> */}
 								</Container>
 							</Box>
 							{/*********************************** Check button ***********************************/}
 							{showAnswer.length == 0 && (
-								<Box className="border-t-[1px] border-Platinum flex justify-start pt-5 mt-12">
+								<Box className="border-t-[1px] border-Platinum flex pt-8 mt-auto">
 									<Button
 										type="submit"
-										className="text-EerieBlack bg-Sunglow  rounded-[15px] shadow-custom-sm-warning w-[100px] self-end m-auto hover:bg-Warning"
+										className="text-EerieBlack bg-Sunglow  rounded-[15px] shadow-custom-sm-warning w-[100px]  m-auto hover:bg-Warning mb-5"
 										onClick={() => {
 											handleCheck();
 										}}
@@ -640,7 +645,7 @@ export default function Quiz() {
 								</>
 							)}
 						</Box>{' '}
-						<Insight indexQuestion={indexQuestion} questions={questions || []} />
+						<Insight indexQuestion={indexQuestion} questions={questions || []} score={score} />
 					</Flex>
 				</>
 			)}

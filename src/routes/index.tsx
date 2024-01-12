@@ -168,7 +168,7 @@ export function useRoutesConst() {
 			},
 			learnQuizResult: {
 				component: <Result />,
-				path: 'learn/quiz/:idQuiz/result',
+				path: 'learn/quiz/:idQuiz/result/:score',
 				icon: <LearnIcon />,
 				privileges: true,
 				to: () => 'learn/quiz/:idQuiz/result',

@@ -5,7 +5,7 @@ import InCorrect from 'assets/images/svg/incorrect.svg';
 const InCorrectAnswer = ({ handleNext }: { handleNext: () => void }) => {
     return (
         <>
-            <Flex className="bg-error justify-between ">
+            <Flex className="bg-error justify-between mt-auto ">
                 <Flex className=" p-5 gap-2">
                     <Box>
                         <img src={InCorrect} className="h-[42px] w-[42px]" />
