@@ -86,7 +86,6 @@ export default function Quiz() {
 		if (indexQuestion == detailsQuiz?.gamesDetailstData?.questions?.length - 1) {
 			// setSearchParam(`score=${score.toString()}`)
 			navigate(`result/${score}`);
-
 		} else {
 			setIndexQuestion(indexQuestion + 1);
 			setCheckResult(false);
@@ -159,14 +158,18 @@ export default function Quiz() {
 	const handleCheck = () => {
 		// --------------------------TF------------------------------
 		if (questionActive?.info?.type == 'TF') {
-			if (questionActive?.info?.corAnswer == isActive && reason.length > 0 && questionActive?.info?.reason_is_required == '1') {
+			if (
+				questionActive?.info?.corAnswer == isActive &&
+				reason.length > 0 &&
+				questionActive?.info?.reason_is_required == '1'
+			) {
 				setCheckResultTF('');
 				setShowAnswer('correct');
 				setCheckResult(true);
-				setScore((prev: number) => prev + Number(questionActive?.score))
+				setScore((prev: number) => prev + Number(questionActive?.score));
 			} else {
 				setShowAnswer('incorrect');
-				setScore((prev: number) => prev)
+				setScore((prev: number) => prev);
 
 				if (questionActive?.info?.corAnswer == true) {
 					setCheckResultTF('T');
@@ -183,13 +186,11 @@ export default function Quiz() {
 			if (answserSHN.length > 0) {
 				setCheckResult(true);
 				setShowAnswer('correct');
-				setScore((prev: number) => prev + Number(questionActive?.score))
-
+				setScore((prev: number) => prev + Number(questionActive?.score));
 			} else {
 				setCheckResult(false);
 				setShowAnswer('incorrect');
-				setScore((prev: number) => prev)
-
+				setScore((prev: number) => prev);
 			}
 		}
 		// --------------------------Matching------------------------------
@@ -201,18 +202,19 @@ export default function Quiz() {
 			if (isEqual) {
 				setCheckResult(true);
 				setShowAnswer('correct');
-				setScore((prev: number) => prev + Number(questionActive?.score))
+				setScore((prev: number) => prev + Number(questionActive?.score));
 
 				setCheckMatching(true);
 			} else {
 				setCheckMatching(false);
 				setCheckResult(false);
 				setShowAnswer('incorrect');
-				setScore((prev: number) => prev)
-
-
-				setResultMatchingCorrect(resultMatching);
-				console.log(resultMatching, 'Mattttttttt');
+				setScore((prev: number) => prev);
+				if (resultMatching.length > 0) {
+					setResultMatchingCorrect(resultMatching);
+				} else {
+					setResultMatchingCorrect(questionActive?.info?.corAnswer);
+				}
 			}
 		}
 		//---------------------------MCQ---------------------------------
@@ -224,18 +226,16 @@ export default function Quiz() {
 				console.log(selectedItems);
 				setCheckResult(true);
 				setShowAnswer('correct');
-				setScore((prev: number) => prev + Number(questionActive?.score))
-
+				setScore((prev: number) => prev + Number(questionActive?.score));
 			} else {
 				console.log(selectedItems);
 				setCheckResult(false);
 				setShowAnswer('incorrect');
-				setScore((prev: number) => prev)
-
+				setScore((prev: number) => prev);
 			}
 		}
 	};
-	console.log(questionAudio, "score");
+
 
 	return (
 		<>
@@ -253,7 +253,7 @@ export default function Quiz() {
 							<Progress number={indexQuestion} length={detailsQuiz?.gamesDetailstData?.questions?.length} />
 							{/*********************************** Questions ***********************************/}
 							<Box className=" mt-5">
-								{questionActive?.info?.type == 'TF' ? <img src={Reading} /> : <img src={Writting} />}
+								{(questionActive?.info?.type == 'Matching' || questionActive?.info?.type == 'MCQ') ? <img src={Reading} /> : <img src={Writting} />}
 
 								<Text className="font-semibold text-CharlestonGreen mt-2">{questionMain?.text}</Text>
 								<Container className="m-5 mx-auto">
@@ -271,7 +271,6 @@ export default function Quiz() {
 
 													new Audio(questionAudio?.text).play();
 												}}
-
 											/>
 										)}
 									</Box>
@@ -324,10 +323,28 @@ export default function Quiz() {
 													{/* {checkResult == true ?checkResultTF == 'F' ? <>green</> : <>red</>} */}
 												</Text>
 											</Flex>
-											<Text> Reason <span className={`${questionActive?.info?.reason_is_required == 1 && 'text-red-500'}`}>(requried)</span></Text>
-											<Box className={`${((showAnswer == 'correct' || showAnswer == 'incorrect') && reason.length == 0 && questionActive?.info?.reason_is_required == '1') ? ' bg-error shadow-custom-sm-red ' : 'bg-white'}border border-Platinum rounded-[18px] p-5 shadow-custom-sm  mt-1`}>
+											<Text>
+												{' '}
+												Reason{' '}
+												<span className={`${questionActive?.info?.reason_is_required == 1 && 'text-red-500'}`}>
+													(requried)
+												</span>
+											</Text>
+											<Box
+												className={`${(showAnswer == 'correct' || showAnswer == 'incorrect') &&
+													reason.length == 0 &&
+													questionActive?.info?.reason_is_required == '1'
+													? ' bg-error shadow-custom-sm-red '
+													: 'bg-white'
+													}border border-Platinum rounded-[18px] p-5 shadow-custom-sm  mt-1`}
+											>
 												<input
-													className={`${((showAnswer == 'correct' || showAnswer == 'incorrect') && reason.length == 0 && questionActive?.info?.reason_is_required == '1') ? ' bg-error ' : 'bg-white'} outline-none`}
+													className={`${(showAnswer == 'correct' || showAnswer == 'incorrect') &&
+														reason.length == 0 &&
+														questionActive?.info?.reason_is_required == '1'
+														? ' bg-error '
+														: 'bg-white'
+														} outline-none`}
 													name="reason"
 													onChange={(e) => {
 														setReason(e.target.value);
@@ -335,8 +352,6 @@ export default function Quiz() {
 													placeholder={'Enter your answer'}
 												/>
 											</Box>
-
-
 										</>
 									) : (
 										<>
@@ -571,7 +586,24 @@ export default function Quiz() {
 																					/>
 
 																					<Box
-																						className={`border border-Platinum rounded-[30px] p-5 m-5 shadow-custom-sm  cursor-pointer h-[100px] w-[100px]`}
+																						className={`border border-Platinum rounded-[30px] p-5 m-5 cursor-pointer${showAnswer.length == 0 && 'shadow-custom-sm'
+																							}  h-[100px] w-[100px]
+																					${questionActive?.info?.corAnswer?.map((a: any) => {
+																								return (
+																									a == index + 1 &&
+																									(showAnswer == 'correct' || showAnswer == 'incorrect') &&
+																									' bg-Lotion  shadow-custom-sm-green '
+																								);
+																							})}
+																					
+																							${showAnswer == 'incorrect' &&
+																							questionActive?.info?.corAnswer.includes(index + 1) &&
+																							' bg-error  shadow-custom-sm-red '
+																							}
+
+
+																					
+																						`}
 																						key={index}
 																					>
 																						{item}
@@ -597,15 +629,18 @@ export default function Quiz() {
 																								);
 																							})}
 																					
-																							${(showAnswer == 'incorrect' && questionActive?.info?.corAnswer.includes(index + 1)) && " bg-error  shadow-custom-sm-red "}
+																							${showAnswer == 'incorrect' &&
+																							questionActive?.info?.corAnswer.includes(index + 1) &&
+																							' bg-error  shadow-custom-sm-red '
+																							}
 
 
 																					
 																						`}
 																						key={index}
 																					>
-
 																						<img src={item} className="h-[60px] w-[100px]" />
+
 																					</Box>
 																				</>
 																			)}
