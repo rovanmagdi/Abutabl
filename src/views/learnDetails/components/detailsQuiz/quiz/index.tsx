@@ -69,7 +69,7 @@ export default function Quiz() {
 			setQuestions(detailsQuiz?.gamesDetailstData?.questions);
 			setQuestionActive(detailsQuiz?.gamesDetailstData?.questions[indexQuestion]);
 			setQuestionMain(detailsQuiz?.gamesDetailstData?.questions[indexQuestion]?.info?.question?.lines[indexQuestion]);
-			setQuestionAudio(detailsQuiz?.gamesDetailstData?.questions[indexQuestion]?.info?.question?.lines[1]);
+			setQuestionAudio(detailsQuiz?.gamesDetailstData?.questions[indexQuestion]?.info?.question?.lines[0]);
 			setItems(detailsQuiz?.gamesDetailstData?.questions[indexQuestion]?.info?.answer);
 		}
 	}, [detailsQuiz, indexQuestion]);
@@ -235,7 +235,7 @@ export default function Quiz() {
 			}
 		}
 	};
-	console.log(score, "score");
+	console.log(questionAudio, "score");
 
 	return (
 		<>
@@ -271,6 +271,7 @@ export default function Quiz() {
 
 													new Audio(questionAudio?.text).play();
 												}}
+
 											/>
 										)}
 									</Box>
