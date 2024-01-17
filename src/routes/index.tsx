@@ -3,6 +3,7 @@ import { useIntl } from 'react-intl';
 import { ReactComponent as LearnIcon } from 'assets/images/svg/book.svg';
 import { ReactComponent as ProfileIcon } from 'assets/images/svg/profile.svg';
 import { ReactComponent as SupportIcon } from 'assets/images/svg/messages.svg';
+import { ReactComponent as TodoIcon } from 'assets/images/svg/todo.svg';
 import Result from 'views/learnDetails/components/detailsQuiz/quiz/result';
 
 
@@ -13,6 +14,7 @@ const Learn = lazy(() => import('views/learn'));
 const LearnDetails = lazy(() => import('views/learnDetails'));
 const DetailsUnit = lazy(() => import('views/learnDetails/components/detailsLesson'));
 const Profile = lazy(() => import('views/profile'));
+const Todo = lazy(() => import('views/todo'));
 const Support = lazy(() => import('views/support'));
 const Login = lazy(() => import('views/auth/signIn'));
 const Verify = lazy(() => import('views/auth/otpVerify'));
@@ -42,6 +44,7 @@ export interface IRoutes {
 	restPassword: IRoute;
 	learn: IRoute;
 	profile: IRoute;
+	todo: IRoute;
 	support: IRoute;
 	learnDetails: IRoute;
 	learnDetailsUnit: IRoute;
@@ -175,6 +178,17 @@ export function useRoutesConst() {
 				fullTitle: () => [{ name: formatMessage({ id: 'learnQuizResult' }) }],
 				title: () => formatMessage({ id: 'learnQuizResult' }),
 				sidebarTitle: () => formatMessage({ id: 'learn' }),
+			},
+
+			todo: {
+				component: <Todo />,
+				path: 'todo',
+				icon: <TodoIcon />,
+				privileges: true,
+				to: () => '/todo',
+				fullTitle: () => [{ name: formatMessage({ id: 'todo' }) }],
+				title: () => formatMessage({ id: 'todo' }),
+				sidebarTitle: () => formatMessage({ id: 'todo' }),
 			},
 
 			profile: {

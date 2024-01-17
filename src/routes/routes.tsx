@@ -41,8 +41,28 @@ const Routes = () => {
 							element: ROUTES.learnQuiz.component,
 						},
 						{
+							path: 'learn/:id/details/:idUnit',
+							element: ROUTES.learnDetailsUnit.component,
+
+						},
+						{
+							path: 'learn/:id/detailsGame/:idGame',
+							element: ROUTES.learnDetailsGame.component,
+
+						},
+						{
 							path: 'learn/quiz/:idQuiz/result/:score',
 							element: ROUTES.learnQuizResult.component,
+						},
+						{
+							path: ROUTES.todo.path,
+							element: <Outlet />,
+							children: [
+								{
+									index: true,
+									element: ROUTES.todo.component,
+								},
+							],
 						},
 						{
 							path: ROUTES.profile.path,
@@ -85,16 +105,7 @@ const Routes = () => {
 				},
 
 
-				{
-					path: 'learn/:id/details/:idUnit',
-					element: ROUTES.learnDetailsUnit.component,
 
-				},
-				{
-					path: 'learn/:id/detailsGame/:idGame',
-					element: ROUTES.learnDetailsGame.component,
-
-				},
 
 
 			],

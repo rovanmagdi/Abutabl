@@ -8,6 +8,8 @@ export default function SideBarLinksSection() {
 	return (
 		<SideBarLinks>
 			<SideBarItem routes={ROUTES.learn || ROUTES.learnDetails} />
+			<SideBarItem routes={ROUTES.todo} />
+
 			<SideBarItem routes={ROUTES.profile} />
 			<SideBarItem routes={ROUTES.support} />
 		</SideBarLinks>
