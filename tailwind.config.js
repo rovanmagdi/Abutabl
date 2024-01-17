@@ -43,6 +43,9 @@ export default {
 				Platinum: '#E5E5E5',
 				Keppel: '#3BB4A1',
 				Sunglow: '#FFC234',
+				New: '#F3F0FF',
+				TextNew: '#5E4DB2',
+
 				'Desert-Sand': '#E9D5AC',
 			},
 			transitionProperty: {

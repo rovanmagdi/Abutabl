@@ -1,70 +1,55 @@
-import { Box, Flex, Text, Menu } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
-import ModuleView from "components/module-view";
-import { useState } from "react";
-import PageHeader from "views/learn/component/pageHeader";
-import { types } from "views/profile/types";
-import { ReactComponent as ChevronDown } from 'assets/images/svg/arrow-down.svg';
-import { ReactComponent as Recent } from 'assets/images/svg/clock.svg';
-import { ReactComponent as AlphabeticalAsc } from 'assets/images/svg/arrow-up.svg';
-import { ReactComponent as AlphabeticalDesc } from 'assets/images/svg/arrow-down-circle.svg';
+import { Box, Flex, Text, Menu, Button } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import ModuleView from 'components/module-view';
+import { useState } from 'react';
+import PageHeader from 'views/learn/component/pageHeader';
+import { types } from 'views/profile/types';
+import { ReactComponent as Assign } from 'assets/images/svg/assign.svg';
+import Man from 'assets/images/svg/man.svg';
 
+import Header from './header/header';
 
 export default function Todo() {
-
-
     return (
         <>
             <PageHeader />
-            <ModuleView>
-                <>
-                    <Flex className="items-center justify-between border-b-2 border-Cultured">
-
-                        <Box className=" flex p-5 ">
-                            <Text>
-
-                                Assigments
+            <ModuleView header={<Header />}>
+                <Flex className="align-center flex-wrap">
+                    <Text className='mb-3 font-bold'>Today</Text>
+                    <Box className="border border-Platinum rounded-xl w-[100%] p-5 flex  justify-between">
+                        <Flex>
+                            <Box className="bg-Cultured p-10 rounded-xl">
+                                <Text className="bg-New absolute top-3 right-3 text-sm px-3 text-TextNew">New</Text>
+                                <Assign />
+                            </Box>
+                            <Box className="mx-5 gap-4 flex flex-col ">
+                                <Box>
+                                    <Text className="text-LightSeaGreen">Mathematics</Text>
+                                    <Text>Video: Get to know number 1 and sing along</Text>
+                                </Box>
+                                <Box >
+                                    <Text className="text-gray text-sm pl-1">Assigned by:</Text>
+                                    <Text className='flex pt-3'> <img src={Man} width={30} className='pr-1' />Mr. Ahmed Mealy</Text>
+                                </Box>
+                            </Box>
+                        </Flex>
+                        <Box className="mt-3">
+                            <Text className="text-xs">
+                                <span className="text-gray">Due:</span>
+                                15 jan 2023 - 11:00 AM
                             </Text>
-                            <Text className="rounded-full border border-gray mx-2 w-7 h-7 flex justify-center items-center" >6</Text>
+                            <Button
+                                type="submit"
+                                className=" bg-Sunglow  rounded-[15px] shadow-custom-sm-warning  hover:bg-Warning text-black mt-5"
+                                onClick={() => {
+                                    // navigate('/learn')
+                                }}
+                            >
+                                View Assignment
+                            </Button>{' '}
                         </Box>
-                        <Box className="p-5">
-                            <Flex className="filter_container" align={'center'} justify={'flex-end'} gap={32}>
-                                <Flex align={'center'} gap={8}>
-                                    <p>SortBy</p>
-                                    <Menu shadow="md">
-                                        <Menu.Target>
-                                            <Flex gap={7} align={'center'}>
-
-                                                <ChevronDown />
-                                            </Flex>
-                                        </Menu.Target>
-
-                                        <Menu.Dropdown>
-                                            <Menu.Label>SortBy</Menu.Label>
-                                            <Menu.Item
-                                                icon={<Recent />}
-                                            // onClick={() => handleSortByMenuItemClick(formatMessage({ id: 'Recent' }))}
-                                            >
-                                                Recent
-                                            </Menu.Item>
-                                            <Menu.Item
-                                                icon={<AlphabeticalAsc />}
-                                            // onClick={() => handleSortByMenuItemClick(formatMessage({ id: 'AlphabeticalAsc' }))}
-                                            >
-                                                {/* {formatMessage({ id: 'AlphabeticalAsc' })} */}
-                                                AlphabeticalAsc
-                                            </Menu.Item>
-
-                                        </Menu.Dropdown>
-                                    </Menu>
-                                </Flex>
-
-                            </Flex>
-                        </Box>
-                    </Flex>
-                </>
-                {/* <Text> Assigments</Text> */}
-
+                    </Box>
+                </Flex>
             </ModuleView>
         </>
     );
