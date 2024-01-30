@@ -32,28 +32,7 @@ const Routes = () => {
 							path: 'learn/:id',
 							element: ROUTES.learnDetails.component,
 						},
-						{
-							path: 'learn/:id/quiz/:idQuiz',
-							element: ROUTES.learnQuizDetails.component,
-						},
-						{
-							path: 'learn/quiz/:idQuiz',
-							element: ROUTES.learnQuiz.component,
-						},
-						{
-							path: 'learn/:id/details/:idUnit',
-							element: ROUTES.learnDetailsUnit.component,
 
-						},
-						{
-							path: 'learn/:id/detailsGame/:idGame',
-							element: ROUTES.learnDetailsGame.component,
-
-						},
-						{
-							path: 'learn/quiz/:idQuiz/result/:score',
-							element: ROUTES.learnQuizResult.component,
-						},
 						{
 							path: ROUTES.todo.path,
 							element: <Outlet />,
@@ -103,7 +82,28 @@ const Routes = () => {
 
 					],
 				},
+				{
+					path: 'learn/:id/quiz/:idQuiz',
+					element: ROUTES.learnQuizDetails.component,
+				},
+				{
+					path: 'learn/quiz/:idQuiz',
+					element: ROUTES.learnQuiz.component,
+				},
+				{
+					path: 'learn/:id/details/:idUnit',
+					element: ROUTES.learnDetailsUnit.component,
 
+				},
+				{
+					path: 'learn/:id/detailsGame/:idGame',
+					element: ROUTES.learnDetailsGame.component,
+
+				},
+				{
+					path: 'learn/quiz/:idQuiz/result/:score',
+					element: ROUTES.learnQuizResult.component,
+				},
 
 
 
