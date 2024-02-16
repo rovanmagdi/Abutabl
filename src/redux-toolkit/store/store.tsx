@@ -4,6 +4,7 @@ import LessonReducer from "redux-toolkit/reducer/LessonReducer";
 import LoginReducer from "redux-toolkit/reducer/LoginReducer";
 import QuizReducer from "redux-toolkit/reducer/QuizReducer";
 import SubjectsReducer from "redux-toolkit/reducer/SubjectsReducer";
+import todoReducer from "redux-toolkit/reducer/todoReducer";
 
 
 export const store = configureStore({
@@ -13,6 +14,7 @@ export const store = configureStore({
         LessonReducer: LessonReducer,
         GamesReducer: GamesReducer,
         QuizReducer: QuizReducer,
+        todoReducer: todoReducer,
 
     }
 })

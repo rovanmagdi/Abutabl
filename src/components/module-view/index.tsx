@@ -8,7 +8,7 @@ export default function ModuleView(props: IProps) {
 	return (
 		<ModuleViewWrapper >
 			{header && <ModuleHeaderWrapper>{header}</ModuleHeaderWrapper>}
-			<ModuleViewBodyWrapper className={`h-full ${!header ? 'no_header' : ''}`}>{children}</ModuleViewBodyWrapper>
+			<ModuleViewBodyWrapper className={`h-100 ${!header ? 'no_header' : ''}`}>{children}</ModuleViewBodyWrapper>
 		</ModuleViewWrapper>
 	);
 }

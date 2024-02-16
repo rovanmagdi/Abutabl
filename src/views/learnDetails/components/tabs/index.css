@@ -27,6 +27,7 @@
 	border-radius: 0 0 15px 15px;
 	height: 80vh;
 	margin: 0px 5px 0px 5px;
+	overflow: auto;
 }
 .overview {
 	border-radius: 20px;
