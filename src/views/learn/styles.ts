@@ -26,12 +26,12 @@ export const CardWrapper = styled.div`
 	border: 2px solid ${theme.colours.Platinum};
 	box-shadow: 0px 6px 0px 0px ${theme.colours.Platinum};
 	padding: 24px;
-	// height:300px
+	// height:320px
 `;
 
 export const ImgWrapper = styled.div`
 	padding: 24px;
-	// height:180px
+	height:180px
 `;
 
 export const Details = styled.div`

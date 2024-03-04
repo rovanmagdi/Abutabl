@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Grid, Flex, Menu } from '@mantine/core';
 import { useIntl } from 'react-intl';
 import { ReactComponent as ChevronDown } from 'assets/images/svg/arrow-down.svg';
@@ -8,39 +8,41 @@ import { ReactComponent as AlphabeticalDesc } from 'assets/images/svg/arrow-down
 import { HeaderWrapper } from './styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { SubjectsList } from 'redux-toolkit/reducer/SubjectsReducer';
+import { useSearchParams } from 'react-router-dom';
 export default function Header() {
 	const { formatMessage } = useIntl();
 
 	const dispatch = useDispatch();
-	const [sortByButtonText, setSortByButtonText] = useState('A-Z');
-	const [statusButtonText, setStatusButtonText] = useState('in progress ');
 	const statusSubjects = useSelector((state: any) => state.SubjectsReducer);
+	const [sort, setSort] = useState('Recent')
+	const [status, setStatus] = useState('New')
 
 	const handleSortByMenuItemClick = (newButtonText: string) => {
-		setSortByButtonText(newButtonText);
+
+
 
 		if (newButtonText == 'Recent') {
+			setSort('Recent')
 			dispatch(SubjectsList({ order: 'Recent' }));
 		} else if (newButtonText == 'Alphabetical Asc. (A-Z)') {
+			setSort('Alphabetical Asc. (A-Z)')
+
 			dispatch(SubjectsList({ order: 'A-Z' }));
 		} else if (newButtonText == 'Alphabetical Dec. (Z-A)') {
+			setSort('Alphabetical Asc. (Z-A)')
+
 			dispatch(SubjectsList({ order: 'Z-A' }));
 		}
 	};
 
 	const handleStatusMenuItemClick = (newButtonText: string) => {
-		setStatusButtonText(newButtonText);
-		console.log(newButtonText);
 
-		if (newButtonText == 'New') {
-			dispatch(SubjectsList({ status: 'New' }));
-		} else if (newButtonText == 'In progress') {
-			dispatch(SubjectsList({ status: 'Progress' }));
-		} else if (newButtonText == 'Completed') {
-			dispatch(SubjectsList({ status: 'Completed' }));
-		}
+		setStatus(newButtonText)
+		dispatch(SubjectsList({ status: newButtonText }));
+
 	};
-	console.log(statusSubjects?.subjectsListData);
+
+
 
 	return (
 		<HeaderWrapper>
@@ -58,7 +60,7 @@ export default function Header() {
 							<Menu shadow="md">
 								<Menu.Target>
 									<Flex gap={7} align={'center'}>
-										<h4>{sortByButtonText}</h4>
+										<h4>{sort}</h4>
 										<ChevronDown />
 									</Flex>
 								</Menu.Target>
@@ -86,12 +88,12 @@ export default function Header() {
 								</Menu.Dropdown>
 							</Menu>
 						</Flex>
-						<Flex align={'center'} gap={8}>
+						{/* <Flex align={'center'} gap={8}>
 							<p>{formatMessage({ id: 'Status' })}</p>
 							<Menu shadow="md">
 								<Menu.Target>
 									<Flex gap={7} align={'center'}>
-										<h4>{statusButtonText}</h4>
+										<h4>{status}</h4>
 										<ChevronDown />
 									</Flex>
 								</Menu.Target>
@@ -115,7 +117,7 @@ export default function Header() {
 									</Menu.Item>
 								</Menu.Dropdown>
 							</Menu>
-						</Flex>
+						</Flex> */}
 					</Flex>
 				</Grid.Col>
 			</Grid>

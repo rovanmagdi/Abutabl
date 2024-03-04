@@ -17,7 +17,7 @@ function ProfileImg() {
 			</div>
 			<div>
 				<h3 className="text-[20px]" style={{ fontFamily: `${theme.fonts.CommicBold}` }}>
-					Ahmed Mealy
+					{JSON.parse(localStorage.getItem('user_info')!)?.name}
 				</h3>
 				<p className={`text-sm text-[#9C9B9B] `}>{formatMessage({ id: 'Student-Code' })}: 12345</p>
 			</div>
