@@ -20,7 +20,7 @@ export default function Quiz() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const { idQuiz } = useParams();
-	const [isActive, setIsActive] = useState<boolean>();
+	const [isActive, setIsActive] = useState<any>();
 	const [loading, setLoading] = useState<boolean>();
 	const [indexQuestion, setIndexQuestion] = useState<number>(0);
 	const [draggedItem, setDraggedItem] = useState(null);
@@ -82,7 +82,7 @@ export default function Quiz() {
 	// ********************************************Functions********************
 
 	const handleNext = () => {
-		console.log(detailsQuiz?.gamesDetailstData?.questions?.length, indexQuestion);
+
 
 		if (indexQuestion == detailsQuiz?.gamesDetailstData?.questions?.length - 1) {
 			// setSearchParam(`score=${score.toString()}`)
@@ -215,16 +215,19 @@ export default function Quiz() {
 				if (resultMatching.length > 0) {
 					setResultMatchingCorrect(resultMatching);
 				} else {
-					setResultMatchingCorrect(questionActive?.info?.corAnswer);
+					setResultMatchingCorrect(questionActive?.info?.corAnswerCol1);
 				}
 			}
 		}
 		//---------------------------MCQ---------------------------------
 		if (questionActive?.info?.type == 'MCQ') {
-			const isEqual =
-				selectedItems.length === questionActive?.info?.corAnswer.length &&
-				selectedItems?.every((value: string, index: number) => value === questionActive?.info?.corAnswer[index]);
-			if (isEqual) {
+
+
+			const b = selectedItems?.map(function (item: any) {
+				return parseInt(item, 10);
+			});
+
+			if (JSON.stringify(b) == JSON.stringify(questionActive?.info?.corAnswer)) {
 				console.log(selectedItems);
 				setCheckResult(true);
 				setShowAnswer('correct');
@@ -237,6 +240,14 @@ export default function Quiz() {
 			}
 		}
 	};
+	const b = selectedItems?.map(function (item: any) {
+		return parseInt(item, 10);
+	});
+
+	console.log(JSON.stringify(b) == JSON.stringify(questionActive?.info?.corAnswer), b, questionActive?.info?.corAnswer, "isEqual");
+
+
+
 
 	const audioRef = useRef<any>(null);
 	const [isPlaying, setIsPlaying] = useState<Boolean>(false);
@@ -760,9 +771,12 @@ export default function Quiz() {
 							{showAnswer.length !== 0 && (
 								<>
 									{showAnswer == 'correct' ? (
-										<CorrectAnswer handleNext={handleNext} />
+										<CorrectAnswer handleNext={handleNext} handleEmpty={() => { setSelectedItems([]); setIsActive(null) }} />
 									) : (
-										<InCorrectAnswer handleNext={handleNext} />
+										<InCorrectAnswer handleNext={handleNext} handleEmpty={() => {
+											setSelectedItems([]);
+											setIsActive(null);
+										}} />
 									)}
 								</>
 							)}

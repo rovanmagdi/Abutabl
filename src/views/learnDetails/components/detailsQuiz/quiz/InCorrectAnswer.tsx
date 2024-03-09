@@ -2,7 +2,7 @@ import { Box, Button, Flex, Text } from '@mantine/core';
 import Good from 'assets/images/png/good.png';
 import Done from 'assets/images/svg/done.svg';
 import InCorrect from 'assets/images/svg/incorrect.svg';
-const InCorrectAnswer = ({ handleNext }: { handleNext: () => void }) => {
+const InCorrectAnswer = ({ handleNext, handleEmpty }: { handleNext: () => void, handleEmpty: () => void }) => {
     return (
         <>
             <Flex className="bg-error justify-between mt-auto ">
@@ -18,7 +18,8 @@ const InCorrectAnswer = ({ handleNext }: { handleNext: () => void }) => {
                 <Button
                     type="submit"
                     className=" bg-Danger rounded-[15px] shadow-custom-sm-red w-[100px] mt-5 mr-5 hover:bg-Danger text-white"
-                    onClick={handleNext}
+                    onClick={() => { handleNext(); handleEmpty() }}
+
                 >
                     Continue
                 </Button>{' '}
