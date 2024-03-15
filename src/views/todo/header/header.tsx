@@ -22,58 +22,10 @@ export default function Header() {
 				<Grid.Col xs={6}>
 					<Flex align={'center'} gap={16} className="courses_info">
 						<h3>{formatMessage({ id: 'Assigments' })}</h3>
-						<span className="count">5</span>
+
 					</Flex>
 				</Grid.Col>
-				<Grid.Col xs={6}>
-					<Flex className="filter_container" align={'center'} justify={'flex-end'} gap={32}>
-						<Flex align={'center'} gap={8}>
-							<p>{formatMessage({ id: 'Status' })}</p>
-							<Menu shadow="md">
-								<Menu.Target>
-									<Flex gap={7} align={'center'}>
-										{/* <h4>{sortByButtonText}</h4> */}
-										All
-										<ChevronDown />
-									</Flex>
-								</Menu.Target>
 
-								<Menu.Dropdown>
-									<Menu.Label>{formatMessage({ id: 'All' })}</Menu.Label>
-									<Menu.Item
-										icon={<Recent />}
-									// onClick={() => handleSortByMenuItemClick(formatMessage({ id: 'Recent' }))}
-									>
-										{formatMessage({ id: 'Recent' })}
-									</Menu.Item>
-
-								</Menu.Dropdown>
-							</Menu>
-						</Flex>
-						<Flex align={'center'} gap={8}>
-							<p>{formatMessage({ id: 'Filter' })}</p>
-							<Menu shadow="md">
-								<Menu.Target>
-									<Flex gap={7} align={'center'}>
-										{/* <h4>{statusButtonText}</h4> */}
-										All
-										<ChevronDown />
-									</Flex>
-								</Menu.Target>
-
-								<Menu.Dropdown>
-									<Menu.Label>{formatMessage({ id: 'Status' })}</Menu.Label>
-									<Menu.Item icon={<Recent />}
-									//  onClick={() => handleStatusMenuItemClick(formatMessage({ id: 'New' }))}
-									>
-										{formatMessage({ id: 'New' })}
-									</Menu.Item>
-
-								</Menu.Dropdown>
-							</Menu>
-						</Flex>
-					</Flex>
-				</Grid.Col>
 			</Grid>
 		</HeaderWrapper>
 	);

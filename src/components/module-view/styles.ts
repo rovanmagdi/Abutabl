@@ -8,8 +8,7 @@ export const ModuleViewWrapper = styled.div`
 	display: inline-block;
 	display: flex;
 	flex-direction: column;
-	margin:40px;
-	
+	margin: 40px;
 `;
 
 export const ModuleHeaderWrapper = styled.div`
@@ -24,13 +23,12 @@ export const ModuleHeaderWrapper = styled.div`
 `;
 export const ModuleViewBodyWrapper = styled.div`
 	width: 100%;
-
+	height: auto;
 	padding: 32px;
 	overflow: auto;
 	background-color: ${theme.colours.white};
 	border-bottom-right-radius: 20px;
 	border-bottom-left-radius: 20px;
-	
 
 	&.no_header {
 		min-height: calc(100% - 136px);

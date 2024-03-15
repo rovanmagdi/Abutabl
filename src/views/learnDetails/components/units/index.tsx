@@ -33,8 +33,6 @@ const Units = () => {
     const [idData, setIdData] = useState<string>();
     const [loading, setLoading] = useState(false);
 
-
-
     return (
         <>
             <Box className="flex justify-between unitsAccordion h-full">
@@ -106,8 +104,6 @@ const Units = () => {
                                                             <Box
                                                                 className={`flex px-5 ${idData === lesson?.title && 'activeLesson'}`}
                                                                 onClick={async (event: any) => {
-
-
                                                                     navigate(`/learn/${id}/quiz/${quiz?.id}`);
                                                                 }}
                                                             >
@@ -127,87 +123,83 @@ const Units = () => {
                         </Accordion>
                     </Box>
                     <Box className="w-3/5 ">
-
                         {loading ? (
                             <Box style={{ marginTop: '120px' }}>
                                 <LoadingPartially />
                             </Box>
                         ) : (
                             <>
-
-                                {lesson?.lessonContentData?.contents == undefined ? <EmptyComp /> : <>
-                                    <Text className="headerLesson p-2">
+                                {lesson?.lessonContentData?.contents == undefined ||
+                                    lesson?.lessonContentData?.contents?.length == 0 ? (
+                                    <>
                                         {lesson?.lessonContentData?.lesson?.name}
-                                        {/* Lesson 2 content */}
-                                    </Text>
-                                    <Box className="flex w-200 flex-wrap">
-                                        {lesson?.lessonContentData?.contents?.map((lesson: any) => {
-                                            return (
-                                                <Link
-                                                    to={`details/${lesson?.id}`}
-                                                    target="_blank"
-                                                    onClick={() => {
-                                                        localStorage.setItem('id', lesson?.id);
-                                                    }}
-                                                >
-                                                    <Box className="contentLesson">
-                                                        <Box className="contentIcons">
-                                                            {lesson?.type == 'video' ? (
-                                                                <img src={Video} alt="imag" />
-                                                            ) : lesson?.type == 'scrom' ? (
-                                                                <img src={Zip} alt="imag" />
-                                                            ) : lesson?.type == ('word' || 'pdf') ? (
-                                                                <img src={Sheet} alt="imag" />
-                                                            ) : lesson?.type == 'audio' ? (
-                                                                <img src={Audio} alt="imag" />
-                                                            ) : lesson?.type == 'image' ? (
-                                                                <img src={Image} alt="imag" />
-                                                            ) : (
-                                                                <img src={Sheet} alt="imag" />
-                                                            )}
-                                                        </Box>
-                                                        <Text>{lesson?.name}</Text>
-                                                        <Text className="text-stone-400">{lesson?.period}</Text>
-                                                    </Box>
-                                                </Link>
-                                            );
-                                        })}
-                                    </Box>
-                                    {lesson?.lessonContentData?.quizes?.length !== 0 &&
-                                        <>
-                                            <Text className="text-stone-900 m-5 line">
-                                                <span className="text-stone-900  lineChildren">Quizes
-                                                </span></Text>
-
-                                            <Box className="flex w-200 flex-wrap">
-                                                {lesson?.lessonContentData?.quizes?.map((quiz: { title: string, id: number }) => {
-                                                    return (
-                                                        <Link
-                                                            to={`/learn/${id}/quiz/${quiz?.id}`}
-                                                            target="_blank"
-
-
-                                                        >
-                                                            <Box className="contentLesson">
-                                                                <Box className="contentIcons">
-                                                                    <img src={Quiz} alt="imag" />
-
-                                                                </Box>
-                                                                <Text>{quiz?.title}</Text>
-
+                                        <EmptyComp />
+                                    </>
+                                ) : (
+                                    <>
+                                        <Text className="headerLesson p-2">
+                                            {lesson?.lessonContentData?.lesson?.name}
+                                            {/* Lesson 2 content */}
+                                        </Text>
+                                        <Box className="flex w-200 flex-wrap">
+                                            {lesson?.lessonContentData?.contents?.map((lesson: any) => {
+                                                return (
+                                                    <Link
+                                                        to={`details/${lesson?.id}`}
+                                                        target="_blank"
+                                                        onClick={() => {
+                                                            localStorage.setItem('id', lesson?.id);
+                                                        }}
+                                                    >
+                                                        <Box className="contentLesson">
+                                                            <Box className="contentIcons">
+                                                                {lesson?.type == 'video' ? (
+                                                                    <img src={Video} alt="imag" />
+                                                                ) : lesson?.type == 'scrom' ? (
+                                                                    <img src={Zip} alt="imag" />
+                                                                ) : lesson?.type == ('word' || 'pdf') ? (
+                                                                    <img src={Sheet} alt="imag" />
+                                                                ) : lesson?.type == 'audio' ? (
+                                                                    <img src={Audio} alt="imag" />
+                                                                ) : lesson?.type == 'image' ? (
+                                                                    <img src={Image} alt="imag" />
+                                                                ) : (
+                                                                    <img src={Sheet} alt="imag" />
+                                                                )}
                                                             </Box>
-                                                        </Link>
-                                                    );
-                                                })}
-                                            </Box>
-                                        </>
-                                    }
-                                </>}
+                                                            <Text>{lesson?.name}</Text>
+                                                            <Text className="text-stone-400">{lesson?.period}</Text>
+                                                        </Box>
+                                                    </Link>
+                                                );
+                                            })}
+                                        </Box>
+                                        {lesson?.lessonContentData?.quizes?.length !== 0 && (
+                                            <>
+                                                <Text className="text-stone-900 m-5 line">
+                                                    <span className="text-stone-900  lineChildren">Quizes</span>
+                                                </Text>
+
+                                                <Box className="flex w-200 flex-wrap">
+                                                    {lesson?.lessonContentData?.quizes?.map((quiz: { title: string; id: number }) => {
+                                                        return (
+                                                            <Link to={`/learn/${id}/quiz/${quiz?.id}`} target="_blank">
+                                                                <Box className="contentLesson">
+                                                                    <Box className="contentIcons">
+                                                                        <img src={Quiz} alt="imag" />
+                                                                    </Box>
+                                                                    <Text>{quiz?.title}</Text>
+                                                                </Box>
+                                                            </Link>
+                                                        );
+                                                    })}
+                                                </Box>
+                                            </>
+                                        )}
+                                    </>
+                                )}
                             </>
-
-
                         )}
-
                     </Box>
                 </>
             </Box>

@@ -89,7 +89,7 @@ function Login() {
 										message: formatMessage({ id: 'numberOnly' }),
 									},
 								}}
-								defaultValue="54415"
+								defaultValue="332211"
 							/>
 							<InputPassword
 								name="password"

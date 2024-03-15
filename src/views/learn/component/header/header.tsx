@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Grid, Flex, Menu } from '@mantine/core';
 import { useIntl } from 'react-intl';
 import { ReactComponent as ChevronDown } from 'assets/images/svg/arrow-down.svg';
@@ -8,16 +8,17 @@ import { ReactComponent as AlphabeticalDesc } from 'assets/images/svg/arrow-down
 import { HeaderWrapper } from './styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { SubjectsList } from 'redux-toolkit/reducer/SubjectsReducer';
+import { useSearchParams } from 'react-router-dom';
 export default function Header() {
 	const { formatMessage } = useIntl();
 
 	const dispatch = useDispatch();
-	const [sortByButtonText, setSortByButtonText] = useState('A-Z');
-	const [statusButtonText, setStatusButtonText] = useState('in progress ');
 	const statusSubjects = useSelector((state: any) => state.SubjectsReducer);
-
+	const [searchParams, setSearchParams] = useSearchParams();
+	const params = new URLSearchParams(searchParams);
 	const handleSortByMenuItemClick = (newButtonText: string) => {
-		setSortByButtonText(newButtonText);
+		params.set('order', newButtonText);
+		setSearchParams(params);
 
 		if (newButtonText == 'Recent') {
 			dispatch(SubjectsList({ order: 'Recent' }));
@@ -29,18 +30,13 @@ export default function Header() {
 	};
 
 	const handleStatusMenuItemClick = (newButtonText: string) => {
-		setStatusButtonText(newButtonText);
-		console.log(newButtonText);
+		params.set('status', newButtonText);
+		setSearchParams(params);
+		dispatch(SubjectsList({ status: newButtonText }));
 
-		if (newButtonText == 'New') {
-			dispatch(SubjectsList({ status: 'New' }));
-		} else if (newButtonText == 'In progress') {
-			dispatch(SubjectsList({ status: 'Progress' }));
-		} else if (newButtonText == 'Completed') {
-			dispatch(SubjectsList({ status: 'Completed' }));
-		}
 	};
-	console.log(statusSubjects?.subjectsListData);
+
+
 
 	return (
 		<HeaderWrapper>
@@ -58,7 +54,7 @@ export default function Header() {
 							<Menu shadow="md">
 								<Menu.Target>
 									<Flex gap={7} align={'center'}>
-										<h4>{sortByButtonText}</h4>
+										<h4>{searchParams.get('order')}</h4>
 										<ChevronDown />
 									</Flex>
 								</Menu.Target>
@@ -91,7 +87,7 @@ export default function Header() {
 							<Menu shadow="md">
 								<Menu.Target>
 									<Flex gap={7} align={'center'}>
-										<h4>{statusButtonText}</h4>
+										<h4>{searchParams.get('status')}</h4>
 										<ChevronDown />
 									</Flex>
 								</Menu.Target>
