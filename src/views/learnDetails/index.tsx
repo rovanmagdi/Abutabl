@@ -32,7 +32,7 @@ export default function LearnDetails() {
         })()
     }, [dispatch])
 
-    console.log(subjectDetails, "dispatch(SubjectDetails(id))");
+
 
 
     return (

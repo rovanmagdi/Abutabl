@@ -1,5 +1,6 @@
 import PageHeader from '../../pageHeader';
 import Sound from 'assets/images/svg/sound.svg';
+import SoundMute from 'assets/images/svg//soundMute.svg';
 import Writting from 'assets/images/svg/Skill.svg';
 
 import './index.css';
@@ -19,7 +20,7 @@ export default function Quiz() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const { idQuiz } = useParams();
-	const [isActive, setIsActive] = useState<boolean>();
+	const [isActive, setIsActive] = useState<any>();
 	const [loading, setLoading] = useState<boolean>();
 	const [indexQuestion, setIndexQuestion] = useState<number>(0);
 	const [draggedItem, setDraggedItem] = useState(null);
@@ -29,7 +30,7 @@ export default function Quiz() {
 	const [questions, setQuestions] = useState([]);
 	const [questionActive, setQuestionActive] = useState<any>({});
 	const [items, setItems] = useState<any[]>([]);
-	const [questionMain, setQuestionMain] = useState<any>({});
+	const [questionMain, setQuestionMain] = useState<any>();
 	const [questionAudio, setQuestionAudio] = useState<{ text: string; ext: string }>();
 	//-----------------------------TF-------------------
 	const [reason, setReason] = useState<string>('');
@@ -68,8 +69,8 @@ export default function Quiz() {
 		) {
 			setQuestions(detailsQuiz?.gamesDetailstData?.questions);
 			setQuestionActive(detailsQuiz?.gamesDetailstData?.questions[indexQuestion]);
-			setQuestionMain(detailsQuiz?.gamesDetailstData?.questions[indexQuestion]?.info?.question?.lines[indexQuestion]);
-			setQuestionAudio(detailsQuiz?.gamesDetailstData?.questions[indexQuestion]?.info?.question?.lines[0]);
+			setQuestionMain(detailsQuiz?.gamesDetailstData?.questions[indexQuestion]?.info?.question?.lines);
+			setQuestionAudio(detailsQuiz?.gamesDetailstData?.questions[indexQuestion]?.info?.question?.lines[1]);
 			setItems(detailsQuiz?.gamesDetailstData?.questions[indexQuestion]?.info?.answer);
 		}
 	}, [detailsQuiz, indexQuestion]);
@@ -81,7 +82,7 @@ export default function Quiz() {
 	// ********************************************Functions********************
 
 	const handleNext = () => {
-		console.log(detailsQuiz?.gamesDetailstData?.questions?.length, indexQuestion);
+
 
 		if (indexQuestion == detailsQuiz?.gamesDetailstData?.questions?.length - 1) {
 			// setSearchParam(`score=${score.toString()}`)
@@ -159,9 +160,10 @@ export default function Quiz() {
 		// --------------------------TF------------------------------
 		if (questionActive?.info?.type == 'TF') {
 			if (
-				questionActive?.info?.corAnswer == isActive &&
-				reason.length > 0 &&
-				questionActive?.info?.reason_is_required == '1'
+				questionActive?.info?.corAnswer == isActive
+				// &&
+				// reason.length > 0 &&
+				// questionActive?.info?.reason_is_required == '1'
 			) {
 				setCheckResultTF('');
 				setShowAnswer('correct');
@@ -213,16 +215,19 @@ export default function Quiz() {
 				if (resultMatching.length > 0) {
 					setResultMatchingCorrect(resultMatching);
 				} else {
-					setResultMatchingCorrect(questionActive?.info?.corAnswer);
+					setResultMatchingCorrect(questionActive?.info?.corAnswerCol1);
 				}
 			}
 		}
 		//---------------------------MCQ---------------------------------
 		if (questionActive?.info?.type == 'MCQ') {
-			const isEqual =
-				selectedItems.length === questionActive?.info?.corAnswer.length &&
-				selectedItems?.every((value: string, index: number) => value === questionActive?.info?.corAnswer[index]);
-			if (isEqual) {
+
+
+			const b = selectedItems?.map(function (item: any) {
+				return parseInt(item, 10);
+			});
+
+			if (JSON.stringify(b) == JSON.stringify(questionActive?.info?.corAnswer)) {
 				console.log(selectedItems);
 				setCheckResult(true);
 				setShowAnswer('correct');
@@ -235,34 +240,79 @@ export default function Quiz() {
 			}
 		}
 	};
+	const b = selectedItems?.map(function (item: any) {
+		return parseInt(item, 10);
+	});
 
+	console.log(JSON.stringify(b) == JSON.stringify(questionActive?.info?.corAnswer), b, questionActive?.info?.corAnswer, "isEqual");
+
+
+
+
+	const audioRef = useRef<any>(null);
+	const [isPlaying, setIsPlaying] = useState<Boolean>(false);
+	const togglePlay = () => {
+		if (isPlaying) {
+			audioRef.current.pause();
+		} else {
+			audioRef.current.play();
+		}
+		setIsPlaying(!isPlaying);
+	};
+
+	console.log(questionActive?.info?.answers_type, "questionActive?.info?.answers_type ");
 
 	return (
 		<>
 			<PageHeader title="" route="/learn" />
 
 			{loading ? (
-				<Flex className="bg-white rounded-[15px] h-full">
+				<Flex className="bg-white  h-auto p-3">
 					<LoadingPartially />
 				</Flex>
 			) : (
 				<>
-					<Flex className="bg-white rounded-[15px] w-100 h-auto">
+					<Flex className="bg-PaoloVeroneseGreen  w-100 h-[800px] p-3">
 						<Box className="bg-white flex flex-col p-11  rounded-[15px] border-[1px]  border-Platinum m-2  h-[auto]  w-3/4">
 							{/*********************************** Progress ***********************************/}
 							<Progress number={indexQuestion} length={detailsQuiz?.gamesDetailstData?.questions?.length} />
 							{/*********************************** Questions ***********************************/}
 							<Box className=" mt-5">
-								{(questionActive?.info?.type == 'Matching' || questionActive?.info?.type == 'MCQ') ? <img src={Reading} /> : <img src={Writting} />}
+								{questionActive?.info?.type == 'Matching' || 'MCQ' ? <img src={Reading} /> : <img src={Writting} />}
 
-								<Text className="font-semibold text-CharlestonGreen mt-2">{questionMain?.text}</Text>
+								<Text className="font-semibold text-CharlestonGreen mt-2">
+									{questionMain?.map((a: any) => {
+										return (
+											<>
+
+												{a.type == 'file' && a.ext == 'image' && <img src={a.text} className="w-[100px] h-[100px]" />}
+
+												{a.type == 'text' && <>{a?.text}</>}
+
+												{a.type == 'file' && a.ext == 'audio' && (
+													<>
+														{' '}
+														<audio ref={audioRef} src={a.text} />
+														<img onClick={togglePlay} src={isPlaying ? Sound : SoundMute} />
+													</>
+												)}
+
+												{a.type == 'file' && a.ext == 'pdf' && (
+													<>
+														<iframe src={a.text} className='h-[200px] w-[500px]' />
+													</>
+												)}
+											</>
+										);
+									})}
+								</Text>
 								<Container className="m-5 mx-auto">
-									<Box className="flex gap-2">
+									{/* <Box className="flex gap-2">
 										<Text className="text-gray text-sm ">Your Answer ( {questionActive?.score} points )</Text>
 										{ }
 										{questionAudio?.ext == 'image' ? (
 											<img src={questionAudio?.text} className="w-[200px]" />
-										) : (
+										) : questionAudio?.ext == 'audio' ? (
 											<img
 												src={Sound}
 												className="cursor-pointer"
@@ -272,8 +322,10 @@ export default function Quiz() {
 													new Audio(questionAudio?.text).play();
 												}}
 											/>
+										) : (
+											<></>
 										)}
-									</Box>
+									</Box> */}
 									{/***********************************************TF*********************************/}
 
 									{questionActive?.info?.type == 'TF' ? (
@@ -544,26 +596,28 @@ export default function Quiz() {
 																	<Box>
 																		{questionActive?.info?.answer2?.map((item: any, index: number) => (
 																			<>
-																				{questionActive?.info?.answers_type == 'text' && (
-																					<Box
-																						className="border border-Platinum rounded-[30px] p-5 m-5 shadow-custom-sm  cursor-pointer h-[100px] w-[100px]"
-																						key={index}
-																						draggable
-																						onDragStart={(e: any) => handleDragStart(index, e)}
-																					>
-																						{item}
-																					</Box>
-																				)}
-																				{questionActive?.info?.answers_type == 'image' && (
-																					<Box
-																						className="border border-Platinum rounded-[30px] p-5 m-5 shadow-custom-sm  cursor-pointer h-[100px] w-[100px]"
-																						key={index}
-																						draggable
-																						onDragStart={(e: any) => handleDragStart(index, e)}
-																					>
-																						<img src={item} className="h-[100px] w-[100px]" />
-																					</Box>
-																				)}
+																				{questionActive?.info?.answers_type2
+																					== 'text' && (
+																						<Box
+																							className="border border-Platinum rounded-[30px] p-5 m-5 shadow-custom-sm  cursor-pointer h-[100px] w-[100px]"
+																							key={index}
+																							draggable
+																							onDragStart={(e: any) => handleDragStart(index, e)}
+																						>
+																							{item}
+																						</Box>
+																					)}
+																				{questionActive?.info?.answers_type2
+																					== 'image' && (
+																						<Box
+																							className="border border-Platinum rounded-[30px] p-5 m-5 shadow-custom-sm  cursor-pointer h-[100px] w-[100px]"
+																							key={index}
+																							draggable
+																							onDragStart={(e: any) => handleDragStart(index, e)}
+																						>
+																							<img src={item} className="h-[50px] w-[100px]" />
+																						</Box>
+																					)}
 																			</>
 																		))}
 																	</Box>
@@ -640,7 +694,50 @@ export default function Quiz() {
 																						key={index}
 																					>
 																						<img src={item} className="h-[60px] w-[100px]" />
+																					</Box>
+																				</>
+																			)}
 
+																			{questionActive?.info?.answers_type == 'audio' && (
+																				<>
+																					<input
+																						type="checkbox"
+																						value={index + 1}
+																						name="vehicle1"
+																						onChange={handleCheckboxChange}
+																					/>
+																					<Box
+																						className={`border border-Platinum rounded-[30px] p-5 m-5 cursor-pointer${showAnswer.length == 0 && 'shadow-custom-sm'
+																							}  h-[100px] w-[100px]
+																					${questionActive?.info?.corAnswer?.map((a: any) => {
+																								return (
+																									a == index + 1 &&
+																									(showAnswer == 'correct' || showAnswer == 'incorrect') &&
+																									' bg-Lotion  shadow-custom-sm-green '
+																								);
+																							})}
+																					
+																							${showAnswer == 'incorrect' &&
+																							questionActive?.info?.corAnswer.includes(index + 1) &&
+																							' bg-error  shadow-custom-sm-red '
+																							}
+
+
+																					
+																						`}
+																						key={index}
+																					>
+																						{/* <img src={item} className="h-[60px] w-[100px]" /> */}
+
+																						<img
+																							src={Sound}
+																							className="cursor-pointer"
+																							onClick={() => {
+																								// console.log(questionAudio);
+
+																								new Audio(item).play();
+																							}}
+																						/>
 																					</Box>
 																				</>
 																			)}
@@ -674,9 +771,12 @@ export default function Quiz() {
 							{showAnswer.length !== 0 && (
 								<>
 									{showAnswer == 'correct' ? (
-										<CorrectAnswer handleNext={handleNext} />
+										<CorrectAnswer handleNext={handleNext} handleEmpty={() => { setSelectedItems([]); setIsActive(null) }} />
 									) : (
-										<InCorrectAnswer handleNext={handleNext} />
+										<InCorrectAnswer handleNext={handleNext} handleEmpty={() => {
+											setSelectedItems([]);
+											setIsActive(null);
+										}} />
 									)}
 								</>
 							)}

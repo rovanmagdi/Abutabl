@@ -14,24 +14,30 @@ export default function Header() {
 
 	const dispatch = useDispatch();
 	const statusSubjects = useSelector((state: any) => state.SubjectsReducer);
-	const [searchParams, setSearchParams] = useSearchParams();
-	const params = new URLSearchParams(searchParams);
+	const [sort, setSort] = useState('Recent')
+	const [status, setStatus] = useState('New')
+
 	const handleSortByMenuItemClick = (newButtonText: string) => {
-		params.set('order', newButtonText);
-		setSearchParams(params);
+
+
 
 		if (newButtonText == 'Recent') {
+			setSort('Recent')
 			dispatch(SubjectsList({ order: 'Recent' }));
 		} else if (newButtonText == 'Alphabetical Asc. (A-Z)') {
+			setSort('Alphabetical Asc. (A-Z)')
+
 			dispatch(SubjectsList({ order: 'A-Z' }));
 		} else if (newButtonText == 'Alphabetical Dec. (Z-A)') {
+			setSort('Alphabetical Asc. (Z-A)')
+
 			dispatch(SubjectsList({ order: 'Z-A' }));
 		}
 	};
 
 	const handleStatusMenuItemClick = (newButtonText: string) => {
-		params.set('status', newButtonText);
-		setSearchParams(params);
+
+		setStatus(newButtonText)
 		dispatch(SubjectsList({ status: newButtonText }));
 
 	};
@@ -54,7 +60,7 @@ export default function Header() {
 							<Menu shadow="md">
 								<Menu.Target>
 									<Flex gap={7} align={'center'}>
-										<h4>{searchParams.get('order')}</h4>
+										<h4>{sort}</h4>
 										<ChevronDown />
 									</Flex>
 								</Menu.Target>
@@ -82,12 +88,12 @@ export default function Header() {
 								</Menu.Dropdown>
 							</Menu>
 						</Flex>
-						<Flex align={'center'} gap={8}>
+						{/* <Flex align={'center'} gap={8}>
 							<p>{formatMessage({ id: 'Status' })}</p>
 							<Menu shadow="md">
 								<Menu.Target>
 									<Flex gap={7} align={'center'}>
-										<h4>{searchParams.get('status')}</h4>
+										<h4>{status}</h4>
 										<ChevronDown />
 									</Flex>
 								</Menu.Target>
@@ -111,7 +117,7 @@ export default function Header() {
 									</Menu.Item>
 								</Menu.Dropdown>
 							</Menu>
-						</Flex>
+						</Flex> */}
 					</Flex>
 				</Grid.Col>
 			</Grid>

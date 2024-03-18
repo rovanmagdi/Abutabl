@@ -17,7 +17,7 @@ export const Insight = ({ indexQuestion, questions, score }: IInsight) => {
 
     return (
         <>
-            <Box className="border-[1px] border-Platinum mr-2 mt-2 mb-2  rounded-[15px] w-1/4 gap-5 ">
+            <Box className="border-[1px] border-Platinum mr-2 mt-2 mb-2  rounded-[15px] w-1/4 gap-5 bg-white">
 
                 <Box className="font-semibold border-b-2 border-Platinum p-5" style={{ textAlign: 'center' }}>
                     Your insights

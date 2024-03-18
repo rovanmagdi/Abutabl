@@ -1,6 +1,7 @@
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-
+// const nagivate = useNavigate()
 const axiosInstance = axios.create({
     baseURL: 'https://test.poultrystore.net/api/student/',
 });
@@ -25,6 +26,7 @@ axiosInstance.interceptors.response.use(
         if (error.response?.status === 401) {
             toast.error('Your token has expired, please login again');
             localStorage.clear();
+            // nagivate('/')
         } else {
             toast.error(error?.response.data?.message);
         }

@@ -6,6 +6,8 @@ import { ReactComponent as Video } from '../../../../assets/images/svg/video-pla
 import { ReactComponent as VideoInactive } from '../../../../assets/images/svg/videoGray.svg';
 import { ReactComponent as Game } from '../../../../assets/images/svg/game.svg';
 import { ReactComponent as GameInactive } from '../../../../assets/images/svg/gameGray.svg';
+import { ReactComponent as QuizInactive } from '../../../../assets/images/svg/quizInactive.svg';
+import { ReactComponent as QuizActive } from '../../../../assets/images/svg/quisActive.svg';
 import 'react-tabs/style/react-tabs.css';
 import './index.css';
 import Overview from './overview';
@@ -15,6 +17,7 @@ import { useSelector } from 'react-redux';
 import Units from '../units';
 
 import LearnDetailsGames from '../games';
+import LearnDetailsQuiz from '../quizzes';
 
 const TabsComponent = (loading: { loading: boolean }) => {
     const [index, setIndex] = useState(0);
@@ -47,6 +50,10 @@ const TabsComponent = (loading: { loading: boolean }) => {
                     {index == 2 ? <Game style={{ marginRight: '10px' }} /> : <GameInactive style={{ marginRight: '10px' }} />}{' '}
                     Games
                 </Tab>
+                <Tab>
+                    {index == 3 ? <QuizActive style={{ marginRight: '10px', height: "20px", marginTop: "4px" }} /> : <QuizInactive style={{ marginRight: '10px', height: "20px", marginTop: "4px" }} />}{' '}
+                    Quizzes
+                </Tab>
             </TabList>
             {loading.loading ? (
                 <TabPanel>
@@ -62,6 +69,9 @@ const TabsComponent = (loading: { loading: boolean }) => {
                     </TabPanel>
                     <TabPanel>
                         <LearnDetailsGames />
+                    </TabPanel>
+                    <TabPanel>
+                        <LearnDetailsQuiz />
                     </TabPanel>
                 </>
             )}

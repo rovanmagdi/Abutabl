@@ -33,9 +33,13 @@ const Overview = () => {
         },
         {
             image: Sheet,
-            label: <>{subjectDetails?.basic_info?.lessons_count} Lessons</>,
+            label: <>{subjectDetails?.basic_info?.units_count} Units</>,
         },
-        // { image: Certifaction, label: 'Certificate of completion' },
+        {
+            image: Sheet,
+            label: <>{subjectDetails?.basic_info?.work_sheets_count} work sheets </>,
+        },
+
     ];
 
 

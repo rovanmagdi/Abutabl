@@ -9,6 +9,7 @@ interface IProps extends Omit<DatePickerProps, 'value'> {
 	label?: string;
 	inputFormat?: string;
 	icon?: any;
+	placeholder?: string
 }
 
 function DatePickerInput({ name, rules, placeholder, label, inputFormat, icon }: IProps) {

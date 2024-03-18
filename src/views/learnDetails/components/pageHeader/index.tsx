@@ -23,6 +23,7 @@ export default function PageHeader({ title, route }: IHeader) {
 					<Flex direction={'column'} align={'flex-start'} gap={8} className="wellcome_wrapper">
 						<Flex gap={16} align={'center'} onClick={() => {
 							navigate(route)
+
 						}}>
 							<Flex align={'center'} justify={'center'} className="notification platinum_shadow">
 								<ArrowBack />

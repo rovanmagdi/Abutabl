@@ -75,12 +75,12 @@ export default function QuizDetails() {
         // {detailsQuiz?.gamesDetailstData?.quize?.title}
         <>
             <PageHeader title='' route="/learn" />
-            <div className="bg-PaoloVeroneseGreen transition-all flex flex-col justify-start items-center relative w-max">
+            <div className="bg-PaoloVeroneseGreen transition-all flex flex-col justify-start items-center relative w-full h-[680px] ">
                 <img src={shapes} className="h-[0px] " alt="shapes" />
                 <img src={iol} alt="logo" width={250} className=" md:block md:absolute bottom-0 right-0" />
 
                 <div className="w-full h-[85vh] md:p-0 flex justify-center relative">
-                    <img src={quizes} className="absolute" alt="" />
+                    <img src={quizes} alt="" className="absolute w-[100px] h-[100px]" />
 
                     <Box>
                         <img src={man} alt="" className="m-auto w-[100px] h-[100px]" />
@@ -115,6 +115,9 @@ export default function QuizDetails() {
                                 <Button
                                     type="submit"
                                     className="text-EerieBlack border-Platinum hover:bg-white rounded-[15px] shadow-custom-sm w-[100%]"
+                                    onClick={() => {
+                                        nagivate(`/learn`)
+                                    }}
                                 >
                                     Skip
                                 </Button></> : <><LoadingPartially /></>}

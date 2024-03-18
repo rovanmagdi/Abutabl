@@ -8,7 +8,7 @@ import { ReactComponent as AlphabeticalDesc } from 'assets/images/svg/arrow-down
 import { HeaderWrapper } from './styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { SubjectsList } from 'redux-toolkit/reducer/SubjectsReducer';
-export default function Header() {
+export default function Header({ length }: { length?: number }) {
 	const { formatMessage } = useIntl();
 
 

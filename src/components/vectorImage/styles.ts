@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const VectorWrapper = styled.div`
 	position: absolute;
 	top: 0;
-	width: 100%;
+	width: 50%;
 	.vector_one {
 		position: absolute;
 		top: 0;

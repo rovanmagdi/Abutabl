@@ -23,10 +23,7 @@ export default function LearnDetailsGames() {
     useEffect(() => {
         dispatch(gamesList({ id: id }));
     }, [dispatch]);
-    const handleDetails = (item: { [key: string]: string }) => {
-        navigate(`/learn/${id}/detailsGame/${item?.id}`);
 
-    };
 
     return (
         <>

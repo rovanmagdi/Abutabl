@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 export const HeaderWrapper = styled.section`
 	position: relative;
-	padding: 8px 0px 20px 0px;
+	padding: 20px 50px 20px 20px;
 	background-color: ${theme.colours.PaoloVeroneseGreen};
 	.wellcome_wrapper {
 		color: ${theme.colours.white};

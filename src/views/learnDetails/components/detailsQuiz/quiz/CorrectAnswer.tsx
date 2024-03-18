@@ -4,7 +4,7 @@ import Good from 'assets/images/png/good.png';
 import Done from 'assets/images/svg/done.svg';
 import InCorrect from 'assets/images/svg/incorrect.svg';
 
-const CorrectAnswer = ({ handleNext }: { handleNext: () => void }) => {
+const CorrectAnswer = ({ handleNext, handleEmpty }: { handleNext: () => void, handleEmpty: () => void }) => {
     return (
         <Box className='mt-auto'>
             <img src={Good} className="w-[150px]" />
@@ -21,7 +21,7 @@ const CorrectAnswer = ({ handleNext }: { handleNext: () => void }) => {
                 <Button
                     type="submit"
                     className=" bg-LightSeaGreen rounded-[15px] shadow-custom-sm-green w-[100px] mt-5 mr-5 hover:bg-LightSeaGreen text-white"
-                    onClick={handleNext}
+                    onClick={() => { handleNext(); handleEmpty() }}
                 >
                     Continue
                 </Button>{' '}

@@ -1,8 +1,8 @@
 export interface ISubject {
     id?: string
-    image: string;
+    image?: string;
     title: string;
     units?: string;
     lesson?: string;
-    progress: number;
+    progress?: number;
 }
