@@ -40,7 +40,7 @@ export default function LearnDetailsQuiz() {
                     ) : (
                         <Grid gutter={32} className='mt-3'>
                             {statusQuizzes?.quizesListData?.quizes?.map((item: { [key: string]: string }) => {
-                                const progressNumber: number = parseFloat(item?.progress);
+
                                 return (
                                     <Grid.Col sm={6} md={4} lg={3} >
 
