@@ -6,10 +6,6 @@ export const quizesList: any = createAsyncThunk('quizesList', async (body: { id:
     return result;
 });
 
-export const gameDetails: any = createAsyncThunk('gameDetails', async (id: number) => {
-    const result = await getRequest(`games/show/${id}`);
-    return result;
-});
 const initialState: any = {
     loading: true,
     quizesListData: [],
@@ -27,10 +23,7 @@ const quizzesListSlice: any = createSlice({
             state.loading = false;
             state.quizesListData = action.payload
         });
-        builder.addCase(gameDetails.fulfilled, (state, action) => {
-            state.loading = false;
-            state.gamesDetailstData = action.payload
-        });
+
     },
 });
 
