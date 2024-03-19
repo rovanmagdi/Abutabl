@@ -26,7 +26,8 @@ axiosInstance.interceptors.response.use(
         if (error.response?.status === 401) {
             toast.error('Your token has expired, please login again');
             localStorage.clear();
-            // nagivate('/')
+            window.location.href = '/';
+
         } else {
             toast.error(error?.response.data?.message);
         }

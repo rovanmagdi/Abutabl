@@ -5,7 +5,7 @@ import Writting from 'assets/images/svg/Skill.svg';
 
 import './index.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Box, Button, Container, Flex, Input, Text } from '@mantine/core';
 import Reading from '../../../../../assets/images/svg/reading.svg';
 import { useEffect, useRef, useState } from 'react';
@@ -82,8 +82,6 @@ export default function Quiz() {
 	// ********************************************Functions********************
 
 	const handleNext = () => {
-
-
 		if (indexQuestion == detailsQuiz?.gamesDetailstData?.questions?.length - 1) {
 			// setSearchParam(`score=${score.toString()}`)
 			navigate(`result/${score}`);
@@ -131,7 +129,7 @@ export default function Quiz() {
 
 	const handleDrop = (index: number, item: string) => {
 		if (draggedItem === null) return;
-		const newVlue = `${Number(draggedItem) + 1}|${index + 1}`;
+		const newVlue = `${index + 1}|${Number(draggedItem) + 1}`;
 		setResultMatching((index: any) => [...index, newVlue]);
 		const draggedItemContent = items[draggedItem];
 		const lengthQuestions: number = questionActive?.info?.answer?.length - 1;
@@ -213,7 +211,7 @@ export default function Quiz() {
 				setShowAnswer('incorrect');
 				setScore((prev: number) => prev);
 				if (resultMatching.length > 0) {
-					setResultMatchingCorrect(resultMatching);
+					setResultMatchingCorrect(questionActive?.info?.corAnswerCol1);
 				} else {
 					setResultMatchingCorrect(questionActive?.info?.corAnswerCol1);
 				}
@@ -221,14 +219,12 @@ export default function Quiz() {
 		}
 		//---------------------------MCQ---------------------------------
 		if (questionActive?.info?.type == 'MCQ') {
-
-
-			const b = selectedItems?.map(function (item: any) {
+			const b = selectedItems?.map((item: any) => {
 				return parseInt(item, 10);
 			});
 
 			if (JSON.stringify(b) == JSON.stringify(questionActive?.info?.corAnswer)) {
-				console.log(selectedItems);
+				console.log(selectedItems, "selectedItems");
 				setCheckResult(true);
 				setShowAnswer('correct');
 				setScore((prev: number) => prev + Number(questionActive?.score));
@@ -244,13 +240,19 @@ export default function Quiz() {
 		return parseInt(item, 10);
 	});
 
-	console.log(JSON.stringify(b) == JSON.stringify(questionActive?.info?.corAnswer), b, questionActive?.info?.corAnswer, "isEqual");
-
-
 
 
 	const audioRef = useRef<any>(null);
 	const [isPlaying, setIsPlaying] = useState<Boolean>(false);
+	const [isPlayings, setIsPlayings] = useState<Boolean>(false);
+	const [numberSound, setNumberSound] = useState<number>();
+	const audioRefs: any = useRef([]);
+	const playSound = (index: number) => {
+		audioRefs.current[index].play();
+	};
+	const pauseSound = (index: number) => {
+		audioRefs.current[index].pause();
+	};
 	const togglePlay = () => {
 		if (isPlaying) {
 			audioRef.current.pause();
@@ -259,8 +261,6 @@ export default function Quiz() {
 		}
 		setIsPlaying(!isPlaying);
 	};
-
-	console.log(questionActive?.info?.answers_type, "questionActive?.info?.answers_type ");
 
 	return (
 		<>
@@ -284,7 +284,6 @@ export default function Quiz() {
 									{questionMain?.map((a: any) => {
 										return (
 											<>
-
 												{a.type == 'file' && a.ext == 'image' && <img src={a.text} className="w-[100px] h-[100px]" />}
 
 												{a.type == 'text' && <>{a?.text}</>}
@@ -299,7 +298,7 @@ export default function Quiz() {
 
 												{a.type == 'file' && a.ext == 'pdf' && (
 													<>
-														<iframe src={a.text} className='h-[200px] w-[500px]' />
+														<iframe src={a.text} className="h-[200px] w-[500px]" />
 													</>
 												)}
 											</>
@@ -411,9 +410,13 @@ export default function Quiz() {
 
 											{questionActive?.info?.type == 'SHN' ? (
 												<>
-													<Box className="border border-Platinum rounded-[18px] p-5 shadow-custom-sm  mt-5 ">
+													<Box className={`border border-Platinum rounded-[18px] p-5   mt-5 
+													${(answserSHN.length == 0) && 'shadow-custom-sm'}
+													${(showAnswer == 'correct' && answserSHN.length > 0) && 'bg-Lotion  shadow-custom-sm-green'}
+													${(showAnswer == 'incorrect' && answserSHN.length == 0) && "bg-error shadow-custom-sm-red"}`}>
 														<Input
-															className="outline-none"
+
+
 															name="code"
 															onChange={(e) => {
 																setAnswerSHN(e.target.value);
@@ -596,28 +599,26 @@ export default function Quiz() {
 																	<Box>
 																		{questionActive?.info?.answer2?.map((item: any, index: number) => (
 																			<>
-																				{questionActive?.info?.answers_type2
-																					== 'text' && (
-																						<Box
-																							className="border border-Platinum rounded-[30px] p-5 m-5 shadow-custom-sm  cursor-pointer h-[100px] w-[100px]"
-																							key={index}
-																							draggable
-																							onDragStart={(e: any) => handleDragStart(index, e)}
-																						>
-																							{item}
-																						</Box>
-																					)}
-																				{questionActive?.info?.answers_type2
-																					== 'image' && (
-																						<Box
-																							className="border border-Platinum rounded-[30px] p-5 m-5 shadow-custom-sm  cursor-pointer h-[100px] w-[100px]"
-																							key={index}
-																							draggable
-																							onDragStart={(e: any) => handleDragStart(index, e)}
-																						>
-																							<img src={item} className="h-[50px] w-[100px]" />
-																						</Box>
-																					)}
+																				{questionActive?.info?.answers_type2 == 'text' && (
+																					<Box
+																						className="border border-Platinum rounded-[30px] p-5 m-5 shadow-custom-sm  cursor-pointer h-[100px] w-[100px]"
+																						key={index}
+																						draggable
+																						onDragStart={(e: any) => handleDragStart(index, e)}
+																					>
+																						{item}
+																					</Box>
+																				)}
+																				{questionActive?.info?.answers_type2 == 'image' && (
+																					<Box
+																						className="border border-Platinum rounded-[30px] p-5 m-5 shadow-custom-sm  cursor-pointer h-[100px] w-[100px]"
+																						key={index}
+																						draggable
+																						onDragStart={(e: any) => handleDragStart(index, e)}
+																					>
+																						<img src={item} className="h-[50px] w-[100px]" />
+																					</Box>
+																				)}
 																			</>
 																		))}
 																	</Box>
@@ -652,7 +653,8 @@ export default function Quiz() {
 																					
 																							${showAnswer == 'incorrect' &&
 																							questionActive?.info?.corAnswer.includes(index + 1) &&
-																							' bg-error  shadow-custom-sm-red '
+																							' bg-Lotion  shadow-custom-sm-green '
+
 																							}
 
 
@@ -678,14 +680,14 @@ export default function Quiz() {
 																					${questionActive?.info?.corAnswer?.map((a: any) => {
 																								return (
 																									a == index + 1 &&
-																									(showAnswer == 'correct' || showAnswer == 'incorrect') &&
-																									' bg-Lotion  shadow-custom-sm-green '
+																									(showAnswer == 'correct') &&
+																									' bg-error  shadow-custom-sm-red '
 																								);
 																							})}
 																					
 																							${showAnswer == 'incorrect' &&
 																							questionActive?.info?.corAnswer.includes(index + 1) &&
-																							' bg-error  shadow-custom-sm-red '
+																							' bg-Lotion  shadow-custom-sm-green '
 																							}
 
 
@@ -719,7 +721,8 @@ export default function Quiz() {
 																					
 																							${showAnswer == 'incorrect' &&
 																							questionActive?.info?.corAnswer.includes(index + 1) &&
-																							' bg-error  shadow-custom-sm-red '
+																							' bg-Lotion  shadow-custom-sm-green '
+
 																							}
 
 
@@ -728,14 +731,18 @@ export default function Quiz() {
 																						key={index}
 																					>
 																						{/* <img src={item} className="h-[60px] w-[100px]" /> */}
+																						<audio
+																							ref={(element: any) => (audioRefs.current[index] = element)}
+																							src={item}
+																						/>
 
 																						<img
-																							src={Sound}
+																							src={(numberSound == index && isPlayings) ? Sound : SoundMute}
 																							className="cursor-pointer"
 																							onClick={() => {
-																								// console.log(questionAudio);
-
-																								new Audio(item).play();
+																								setIsPlayings(!isPlayings);
+																								setNumberSound(index)
+																								isPlayings ? pauseSound(index) : playSound(index);
 																							}}
 																						/>
 																					</Box>
@@ -771,17 +778,29 @@ export default function Quiz() {
 							{showAnswer.length !== 0 && (
 								<>
 									{showAnswer == 'correct' ? (
-										<CorrectAnswer handleNext={handleNext} handleEmpty={() => { setSelectedItems([]); setIsActive(null) }} />
+										<CorrectAnswer
+											handleNext={handleNext}
+											handleEmpty={() => {
+												setSelectedItems([]);
+												setIsActive(null);
+												setShowAnswer('')
+											}}
+										/>
 									) : (
-										<InCorrectAnswer handleNext={handleNext} handleEmpty={() => {
-											setSelectedItems([]);
-											setIsActive(null);
-										}} />
+										<InCorrectAnswer
+											handleNext={handleNext}
+											handleEmpty={() => {
+												setSelectedItems([]);
+												setIsActive(null);
+												setShowAnswer('')
+
+											}}
+										/>
 									)}
 								</>
 							)}
 						</Box>{' '}
-						<Insight indexQuestion={indexQuestion} questions={questions || []} score={score} />
+						<Insight indexQuestion={indexQuestion + 1} questions={questions || []} score={score} />
 					</Flex>
 				</>
 			)}

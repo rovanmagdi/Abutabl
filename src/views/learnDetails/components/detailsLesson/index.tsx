@@ -48,7 +48,7 @@ const DetailsUnit = () => {
 
     (async () => {
       setLoading(true);
-      await dispatch(lessonContent(idUnit));
+      // await dispatch(lessonContent(idUnit));
       await dispatch(SubjectDetails(id));
       setLoading(false);
     })();

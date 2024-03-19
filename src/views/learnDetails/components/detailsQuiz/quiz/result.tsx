@@ -16,11 +16,11 @@ const Result = () => {
     return (
         <>
             <div className="bg-PaoloVeroneseGreen transition-all flex flex-col justify-start items-center relative h-[100vh]">
-                <img src={shapes} className="h-[0px] " alt="shapes" />
+                <img src={shapes} alt="shapes" />
                 <img src={iol} alt="logo" width={250} className=" md:block md:absolute bottom-0 right-0" />
 
                 <div className="w-full h-[85vh] md:p-0 flex justify-center relative">
-                    <img src={quizes} className="absolute" alt="" />
+                    <img src={quizes} className="absolute  h-[600px]" alt="" />
 
                     <Box className='flex flex-col justify-center text-center'>
 

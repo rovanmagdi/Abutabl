@@ -9,3 +9,6 @@ input[type='checkbox'] {
 	border-radius: 0.5rem;
 	accent-color: green;
 }
+.mantine-Input-input {
+	background-color: transparent;
+}
