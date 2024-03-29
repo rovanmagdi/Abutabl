@@ -224,7 +224,7 @@ export default function Quiz() {
 			});
 
 			if (JSON.stringify(b) == JSON.stringify(questionActive?.info?.corAnswer)) {
-				console.log(selectedItems, "selectedItems");
+				console.log(selectedItems, 'selectedItems');
 				setCheckResult(true);
 				setShowAnswer('correct');
 				setScore((prev: number) => prev + Number(questionActive?.score));
@@ -239,8 +239,6 @@ export default function Quiz() {
 	const b = selectedItems?.map(function (item: any) {
 		return parseInt(item, 10);
 	});
-
-
 
 	const audioRef = useRef<any>(null);
 	const [isPlaying, setIsPlaying] = useState<Boolean>(false);
@@ -272,8 +270,8 @@ export default function Quiz() {
 				</Flex>
 			) : (
 				<>
-					<Flex className="bg-PaoloVeroneseGreen  w-100 h-[800px] p-3">
-						<Box className="bg-white flex flex-col p-11  rounded-[15px] border-[1px]  border-Platinum m-2  h-[auto]  w-3/4">
+					<Flex className="bg-PaoloVeroneseGreen  w-[auto]  p-3 h-[800px]">
+						<Box className="bg-white flex flex-col p-11 rounded-[15px] border-[1px]  border-Platinum m-2 h-[auto]  w-3/4">
 							{/*********************************** Progress ***********************************/}
 							<Progress number={indexQuestion} length={detailsQuiz?.gamesDetailstData?.questions?.length} />
 							{/*********************************** Questions ***********************************/}
@@ -383,18 +381,18 @@ export default function Quiz() {
 											</Text>
 											<Box
 												className={`${(showAnswer == 'correct' || showAnswer == 'incorrect') &&
-													reason.length == 0 &&
-													questionActive?.info?.reason_is_required == '1'
-													? ' bg-error shadow-custom-sm-red '
-													: 'bg-white'
+														reason.length == 0 &&
+														questionActive?.info?.reason_is_required == '1'
+														? ' bg-error shadow-custom-sm-red '
+														: 'bg-white'
 													}border border-Platinum rounded-[18px] p-5 shadow-custom-sm  mt-1`}
 											>
 												<input
 													className={`${(showAnswer == 'correct' || showAnswer == 'incorrect') &&
-														reason.length == 0 &&
-														questionActive?.info?.reason_is_required == '1'
-														? ' bg-error '
-														: 'bg-white'
+															reason.length == 0 &&
+															questionActive?.info?.reason_is_required == '1'
+															? ' bg-error '
+															: 'bg-white'
 														} outline-none`}
 													name="reason"
 													onChange={(e) => {
@@ -410,13 +408,13 @@ export default function Quiz() {
 
 											{questionActive?.info?.type == 'SHN' ? (
 												<>
-													<Box className={`border border-Platinum rounded-[18px] p-5   mt-5 
-													${(answserSHN.length == 0) && 'shadow-custom-sm'}
-													${(showAnswer == 'correct' && answserSHN.length > 0) && 'bg-Lotion  shadow-custom-sm-green'}
-													${(showAnswer == 'incorrect' && answserSHN.length == 0) && "bg-error shadow-custom-sm-red"}`}>
+													<Box
+														className={`border border-Platinum rounded-[18px] p-5   mt-5 
+													${answserSHN.length == 0 && 'shadow-custom-sm'}
+													${showAnswer == 'correct' && answserSHN.length > 0 && 'bg-Lotion  shadow-custom-sm-green'}
+													${showAnswer == 'incorrect' && answserSHN.length == 0 && 'bg-error shadow-custom-sm-red'}`}
+													>
 														<Input
-
-
 															name="code"
 															onChange={(e) => {
 																setAnswerSHN(e.target.value);
@@ -654,7 +652,6 @@ export default function Quiz() {
 																							${showAnswer == 'incorrect' &&
 																							questionActive?.info?.corAnswer.includes(index + 1) &&
 																							' bg-Lotion  shadow-custom-sm-green '
-
 																							}
 
 
@@ -680,8 +677,8 @@ export default function Quiz() {
 																					${questionActive?.info?.corAnswer?.map((a: any) => {
 																								return (
 																									a == index + 1 &&
-																									(showAnswer == 'correct') &&
-																									' bg-error  shadow-custom-sm-red '
+																									showAnswer == 'correct' &&
+																									' bg-Lotion  shadow-custom-sm-green '
 																								);
 																							})}
 																					
@@ -722,7 +719,6 @@ export default function Quiz() {
 																							${showAnswer == 'incorrect' &&
 																							questionActive?.info?.corAnswer.includes(index + 1) &&
 																							' bg-Lotion  shadow-custom-sm-green '
-
 																							}
 
 
@@ -737,11 +733,11 @@ export default function Quiz() {
 																						/>
 
 																						<img
-																							src={(numberSound == index && isPlayings) ? Sound : SoundMute}
+																							src={numberSound == index && isPlayings ? Sound : SoundMute}
 																							className="cursor-pointer"
 																							onClick={() => {
 																								setIsPlayings(!isPlayings);
-																								setNumberSound(index)
+																								setNumberSound(index);
 																								isPlayings ? pauseSound(index) : playSound(index);
 																							}}
 																						/>
@@ -783,7 +779,8 @@ export default function Quiz() {
 											handleEmpty={() => {
 												setSelectedItems([]);
 												setIsActive(null);
-												setShowAnswer('')
+												setShowAnswer('');
+												setCheckResultTF('');
 											}}
 										/>
 									) : (
@@ -792,8 +789,8 @@ export default function Quiz() {
 											handleEmpty={() => {
 												setSelectedItems([]);
 												setIsActive(null);
-												setShowAnswer('')
-
+												setShowAnswer('');
+												setCheckResultTF('');
 											}}
 										/>
 									)}
